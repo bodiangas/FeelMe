@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import {TmdbService} from './tmdb.service';
@@ -15,6 +16,7 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AngularFireModule.initializeApp( environment.firebase ),
     AngularFireAuthModule,
