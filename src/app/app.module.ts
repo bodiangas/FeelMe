@@ -16,6 +16,10 @@ import { MoviesComponent } from './movies/movies.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { ActorsComponent } from './actors/actors.component';
 import { ActorsListComponent } from './actors-list/actors-list.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import { ActorsListComponent } from './actors-list/actors-list.component';
     MoviesComponent,
     MoviesListComponent,
     ActorsComponent,
-    ActorsListComponent
+    ActorsListComponent,
+    MainNavComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,13 @@ import { ActorsListComponent } from './actors-list/actors-list.component';
     HttpClientModule,
     AngularFireModule.initializeApp( environment.firebase ),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    MatSidenavModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [TmdbService],
   bootstrap: [AppComponent]
