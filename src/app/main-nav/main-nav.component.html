@@ -1,0 +1,40 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav mat-elevation-z6"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary"><img class="image" src="src\assets\image\film en folie.png" alt="Smiley face"/></mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#">Acceuil</a>
+      <a mat-list-item href="#">Films</a>
+      <a mat-list-item href="#">Acteurs</a>
+      <a mat-list-item href="#">Mes listes</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span class="example-spacer"></span>
+      <nav>
+        <ul>
+          <li><a href="#"><i class="material-icons md-18 icone">person</i>
+             S'inscrire</a>
+            </li>
+          <li><a href="login()"><i class="material-icons md-18 icone">arrow_right</i>Se connecter</a></li>
+        </ul>
+      </nav>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

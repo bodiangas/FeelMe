@@ -1,0 +1,18 @@
+html, body {
+    height: 100%;
+    margin-left: 2%;
+}
+
+
+
+
+
+.lists-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+  }
+  

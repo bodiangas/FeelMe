@@ -1,3 +1,4 @@
+<app-main-nav>
 <h1>TMDB + Firebase</h1>
 <nav *ngIf="user">
   <label>{{user.displayName}}</label>
@@ -6,20 +7,26 @@
   {{user.uid}}
 </nav>
 <nav *ngIf="!user">
-  <button (click)="login()">Connection via Google</button>
-</nav>
+  <button (click)= "login()">S'inscrire</button>
+  <button (click)="login()">Se connecter</button>
+  </nav>
 
-<hr/>
-<pre *ngIf="lists">
-  {{lists | async | json}}
-</pre>
+<!-- <div>
+    <hr/>
+    <pre *ngIf="lists">
+      {{lists | async | json}}
+    </pre>
+    
+    <hr/>
+    <section *ngIf="movie">
+      <img [src]="getPath(movie.poster_path)" />
+      <pre>{{movie | json}}</pre>
+    </section>
+    <section *ngIf="!movie">
+      Pas encore de films à afficher...
+    </section>
 
-<hr/>
-<section *ngIf="movie">
-  <img [src]="getPath(movie.poster_path)" />
-  <pre>{{movie | json}}</pre>
-</section>
-<section *ngIf="!movie">
-  Pas encore de films à afficher...
-</section>
+</div> -->
+</app-main-nav>
+
 
