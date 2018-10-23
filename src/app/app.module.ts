@@ -20,6 +20,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule } from '@angular/material';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule } from 
     MoviesListComponent,
     ActorsComponent,
     ActorsListComponent,
-    MainNavComponent
+    MainNavComponent,
+    routingComponents,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule } from 
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    AppRoutingModule
   ],
   providers: [TmdbService],
   bootstrap: [AppComponent]
