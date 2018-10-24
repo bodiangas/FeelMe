@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {RouterModule,Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ActorsListComponent } from './actors-list/actors-list.component';
 import { AppComponent } from './app.component';
 import { ActorsComponent } from './actors/actors.component';
@@ -11,7 +11,7 @@ import { MoviesComponent } from './movies/movies.component';
 const appRoutes: Routes = [
   {
     path: '',
-    component : MoviesComponent
+    component: MoviesComponent
   },
   {
     path: 'actors',
@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'user',
-    component: UserComponent 
+    component: UserComponent
   },
   {
     path: 'actorsList',
@@ -42,8 +42,8 @@ const appRoutes: Routes = [
 })
 export class AppRoutingModule { }
 export const routingComponents = [AppComponent,
-  ActorsComponent , 
+  ActorsComponent,
   MoviesComponent,
   MoviesListComponent,
-  UserComponent ,
-  ActorsListComponent]
+  UserComponent,
+  ActorsListComponent];
