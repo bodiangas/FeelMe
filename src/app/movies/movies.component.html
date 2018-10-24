@@ -1,3 +1,16 @@
-<p>
-  movies works!
-</p>
+<mat-card class="my-card">
+    <img src="{{ posterUrl }}" wide class="card_img" />
+    <mat-card-content>
+      <mat-card-title-group>
+        <mat-card-title class="card_title"> {{ movie.title }} </mat-card-title>
+      </mat-card-title-group>
+      <p> {{ truncatedOverview }} </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <div>
+        <button mat-button (click)="changeButton()">{{ displayButton }}</button>
+        <mat-progress-spinner [diameter]="30" mode="determinate" [value]="value"> </mat-progress-spinner>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+  

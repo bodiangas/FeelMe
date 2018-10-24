@@ -1,0 +1,44 @@
+.my-card {
+    height: 350px;
+    width: 280px;
+    margin: 28px;
+  }
+  
+  img {
+    
+    width: 100%;
+    height: 56%;
+    margin-top: 56.25%;
+    position: static;
+  }
+  
+  
+  .media {
+    background-position: 50%;
+    background-size: cover;
+  }
+  
+  .mdc-card__primary-action:after, .mdc-card__primary-action:before {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    content: "";
+  }
+  
+  .mdc-card__primary-action.mdc-ripple-upgraded:after {
+    top: 0;
+    left: 0;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+  }
+  
+  mat-progress-spinner {
+    height: 30px;
+    width: 30px;
+    float: right;
+  }

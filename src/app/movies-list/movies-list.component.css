@@ -1,0 +1,9 @@
+ul {
+    width: 97%;
+    overflow-x: auto; 
+    display: -webkit-flex;
+}
+
+li {
+    display: block;
+}
