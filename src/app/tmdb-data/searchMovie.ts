@@ -8,6 +8,11 @@ export interface SearchMovieQuery {
   primary_release_year?: number;
 }
 
+export interface SearchTrendingQuery {
+  media_type: string;
+  time_window: string;
+}
+
 export interface SearchMovieResponse {
   page?: number;
   results?: MovieResult[];

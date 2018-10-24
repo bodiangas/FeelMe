@@ -4,13 +4,13 @@
 
 export const environment = {
   production: false,
-  firebase:  {
-    apiKey: "AIzaSyC8nZZgN9DW06yfCih62QTeOxhz1PlsrYM",
-    authDomain: "feelme-43bdc.firebaseapp.com",
-    databaseURL: "https://feelme-43bdc.firebaseio.com",
-    projectId: "feelme-43bdc",
-    storageBucket: "feelme-43bdc.appspot.com",
-    messagingSenderId: "275970549612"
+  firebase: {
+    apiKey: 'AIzaSyC8nZZgN9DW06yfCih62QTeOxhz1PlsrYM',
+    authDomain: 'feelme-43bdc.firebaseapp.com',
+    databaseURL: 'https://feelme-43bdc.firebaseio.com',
+    projectId: 'feelme-43bdc',
+    storageBucket: 'feelme-43bdc.appspot.com',
+    messagingSenderId: '275970549612'
   }
 };
 

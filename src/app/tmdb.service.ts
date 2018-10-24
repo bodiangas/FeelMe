@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {MovieQuery, MovieResponse} from './tmdb-data/Movie';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {PersonQuery, PersonResponse} from './tmdb-data/Person';
-import {SearchMovieQuery, SearchMovieResponse} from './tmdb-data/searchMovie';
+import {SearchMovieQuery, SearchMovieResponse, SearchTrendingQuery} from './tmdb-data/searchMovie';
 import {SearchPeopleQuery, SearchPeopleResponse} from './tmdb-data/SearchPeople';
 import {TVQuery, TVResponse} from './tmdb-data/TV';
 import {SearchTVQuery, SearchTVResponse} from './tmdb-data/SearchTV';
@@ -39,12 +39,22 @@ export class TmdbService {
     return this;
   }
 
+  getPath(path: string): string {
+    return `https://image.tmdb.org/t/p/w500${path}`;
+  }
+
   // _______________________________________________________________________________________________________________________________________
   // Movies ________________________________________________________________________________________________________________________________
   // _______________________________________________________________________________________________________________________________________
   async getMovie(id: number, options?: MovieQuery): Promise<MovieResponse> {
     const url = `${tmdbApi}/movie/${id}`;
     const res = await this.get<MovieResponse>(url, options);
+    return res.body;
+  }
+
+  async getTrending(query: SearchTrendingQuery): Promise<SearchMovieResponse> {
+    const url = `${tmdbApi}/trending/${query.media_type}/${query.time_window}`;
+    const res = await this.get<SearchMovieResponse>(url, query);
     return res.body;
   }
 

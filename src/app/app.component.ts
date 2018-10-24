@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import {TmdbService} from './tmdb.service';
-import {MovieResponse} from './tmdb-data/Movie';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {auth, User} from 'firebase';
-import {Observable} from 'rxjs';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {filter} from 'rxjs/operators';
+import { TmdbService } from './tmdb.service';
+import { MovieResponse } from './tmdb-data/Movie';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth, User } from 'firebase';
+import { Observable } from 'rxjs';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { filter } from 'rxjs/operators';
+import { SearchTrendingQuery, MovieResult, SearchMovieResponse } from './tmdb-data/searchMovie';
 
 @Component({
   selector: 'app-root',
@@ -13,29 +14,40 @@ import {filter} from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private _movie: MovieResponse;
+  private _movies: MovieResponse[];
   private _user: User;
   private dbData: Observable<any>;
+  private _listName: string;
+  
 
   constructor(private tmdb: TmdbService, public anAuth: AngularFireAuth, private db: AngularFireDatabase) {
-    this.anAuth.user.pipe(filter( u => !!u )).subscribe( u => {
+    this.anAuth.user.pipe(filter(u => !!u)).subscribe(u => {
       this._user = u;
       const listsPath = `lists/${u.uid}`;
       const lists = db.list(listsPath);
       lists.push('coucou');
       this.dbData = lists.valueChanges();
     });
-    setTimeout( () =>
-      tmdb.init('544a04ed01152432f1d7ed782ed24b73') // Clef de TMDB
-          .getMovie(13)
-          .then( (m: MovieResponse) => console.log('Movie 13:', this._movie = m) )
-          .catch( err => console.error('Error getting movie:', err) ),
-      1000 );
-
+    /* setTimeout( () =>
+      // tmdb.init('544a04ed01152432f1d7ed782ed24b73') // Clef de TMDB
+      tmdb.init('df8455fdd25bc6ecdf2f5f60906d0f1b')
+           .getMovie(348350)
+           .then( (m: MovieResponse) => console.log('Movie 13:', this._movie = m) )
+           .catch( err => console.error('Error getting movie:', err) ),
+       1000 ); */
+    tmdb.init('df8455fdd25bc6ecdf2f5f60906d0f1b');
+    tmdb.getTrending({ media_type: 'movie', time_window: 'week' } as SearchTrendingQuery)
+      .then(d => console.log('Movies :', this._movies = d.results));
+    this._listName = 'Most Popular';
+    
   }
 
-  get movie(): MovieResponse {
-    return this._movie;
+  get movies(): MovieResponse[] {
+    return this._movies;
+  }
+  
+  get listName(): string {
+    return this._listName;
   }
 
   getPath(path: string): string {
@@ -59,4 +71,4 @@ export class AppComponent {
     return this.dbData;
   }
 }
-// /yE5d3BUhE8hCnkMUJOo1QDoOGNz.jpg
+
