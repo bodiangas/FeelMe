@@ -1,0 +1,37 @@
+<h1 mat-dialog-title class="center">Inscription</h1>
+
+<mat-dialog-actions class="conteneur">
+  <div class="center">
+    <button color="primary" mat-raised-button (click)="save(1)">Via Google</button>
+    <button color="primary" mat-raised-button (click)="save(2)">Via Facebook</button>
+  </div>
+  <div class="centerB">
+    <br/>
+    <button mat-raised-button *ngIf="!isEmail" (click)="setEmail()">Autre</button>
+  </div>
+  <div class="centerB">
+    <mat-dialog-content *ngIf="isEmail" [formGroup]="emailForm">
+      <ul>
+        <li>
+          <mat-form-field>
+            <input matInput type="email" required placeholder="Email" formControlName="email">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input matInput type="password" required placeholder="Mot de passe" formControlName="password">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input matInput required placeholder="Confirmez le mot de passe" formControlName="confirmPassword">
+          </mat-form-field>
+        </li>
+      </ul>
+    </mat-dialog-content>
+  </div>
+  <div *ngIf="isEmail" class="centerB">
+    <button mat-raised-button color="warn" (click)="close()">Annuler</button>
+    <button mat-raised-button color="primary" type="submit" (click)="save(3)">S'inscrire</button>
+  </div>
+</mat-dialog-actions>
