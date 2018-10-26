@@ -1,0 +1,34 @@
+.conteneur {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .centerB {
+      align-self: center;
+      margin-top: auto;
+  }
+
+  div .center{
+      background-color: blue;
+  }
+  
+  h1{
+      margin-bottom: 0px
+  }
+  
+  
+  ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  li {
+      margin-top: 5px;
+      margin-bottom: 5px;
+  }
+  
+  
+  .cancel{
+      color: red;
+  }
