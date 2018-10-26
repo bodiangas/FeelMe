@@ -1,0 +1,8 @@
+ul {
+    overflow-x: auto; 
+    display: -webkit-flex;
+}
+
+li {
+    display: block;
+}

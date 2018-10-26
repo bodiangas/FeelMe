@@ -12,7 +12,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { UserComponent } from './user/user.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ResearchComponent } from './research/research.component';
-import { MoviesComponent } from './movies/movies.component';
+import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
+import { MovieComponent } from './movie/movie.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { ActorsComponent } from './actors/actors.component';
 import { ActorsListComponent } from './actors-list/actors-list.component';
@@ -27,12 +28,14 @@ import { MaterialModule } from './material.module';
     UserComponent,
     HomePageComponent,
     ResearchComponent,
-    MoviesComponent,
+    MovieDetailsComponent,
+    MovieComponent,
     MoviesListComponent,
     ActorsComponent,
     ActorsListComponent,
     MainNavComponent,
     routingComponents,
+    MovieComponent
   ],
   imports: [
     BrowserModule,

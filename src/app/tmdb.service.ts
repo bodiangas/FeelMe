@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MovieQuery, MovieResponse } from './tmdb-data/Movie';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { PersonQuery, PersonResponse } from './tmdb-data/Person';
-import { SearchMovieQuery, SearchMovieResponse, SearchTrendingQuery } from './tmdb-data/searchMovie';
+import { SearchMovieQuery, SearchMovieResponse, SearchTrendingQuery, GetMoviesQuery } from './tmdb-data/searchMovie';
 import { SearchPeopleQuery, SearchPeopleResponse } from './tmdb-data/SearchPeople';
 import { TVQuery, TVResponse } from './tmdb-data/TV';
 import { SearchTVQuery, SearchTVResponse } from './tmdb-data/SearchTV';
@@ -58,6 +58,17 @@ export class TmdbService {
     return res.body;
   }
 
+  async getPopular(options?: GetMoviesQuery): Promise<SearchMovieResponse> {
+    const url = `${tmdbApi}/movie/popular`;
+    const res = await this.get<SearchMovieResponse>(url, options);
+    return res.body;
+  }
+
+  async getUpcoming(options?: GetMoviesQuery): Promise<SearchMovieResponse> {
+    const url = `${tmdbApi}/movie/upcoming`;
+    const res = await this.get<SearchMovieResponse>(url, options);
+    return res.body;
+  }
   async searchMovie(query: SearchMovieQuery): Promise<SearchMovieResponse> {
     const url = `${tmdbApi}/search/movie`;
     const res = await this.get<SearchMovieResponse>(url, query);

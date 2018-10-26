@@ -5,13 +5,15 @@ import { AppComponent } from './app.component';
 import { ActorsComponent } from './actors/actors.component';
 import { UserComponent } from './user/user.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
-import { MoviesComponent } from './movies/movies.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 const appRoutes: Routes = [
   {
     path: '',
-    component: MoviesComponent
+    component: HomePageComponent
   },
   {
     path: 'actors',
@@ -19,10 +21,10 @@ const appRoutes: Routes = [
   },
   {
     path: 'movies',
-    component: MoviesComponent
+    component: MoviesListComponent
   },
   {
-    path: 'moviesList',
+    path: 'Lists',
     component: MoviesListComponent
   },
   {
@@ -32,6 +34,15 @@ const appRoutes: Routes = [
   {
     path: 'actorsList',
     component: ActorsListComponent
+  },
+  {
+    path: 'movie/:id',
+    component: MovieDetailsComponent
+  },
+  { path: 'movie/:id', redirectTo: '/movies/:id' },
+  {
+    path: '**',
+    component: PageNotFoundComponent
   }
 ];
 
@@ -43,7 +54,10 @@ const appRoutes: Routes = [
 export class AppRoutingModule { }
 export const routingComponents = [AppComponent,
   ActorsComponent,
-  MoviesComponent,
+  MovieDetailsComponent,
   MoviesListComponent,
   UserComponent,
-  ActorsListComponent];
+  HomePageComponent,
+  ActorsListComponent,
+  PageNotFoundComponent
+];

@@ -1,8 +1,10 @@
 <div *ngIf="movies">
   <h2> {{ name }}</h2>
-  <ul>
-    <li *ngFor="let movie of movies">
-      <app-movies [movie]="movie"></app-movies>
-    </li>
-  </ul>
+  <div>
+    <div>
+      <li *ngFor="let movie of movies">
+        <app-movie [movie]="movie"></app-movie>
+      </li>
+    </div>
+  </div>
 </div>

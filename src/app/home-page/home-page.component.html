@@ -1,3 +1,17 @@
-<p>
-  home-page works!
-</p>
+<div *ngIf="movies">
+  <!-- <ul>
+    <li *ngFor="let movies of moviesTab"> -->
+      <h2> {{ name }}</h2>
+      <div>
+        <ul>
+          <li *ngFor="let movie of movies">
+            <app-movie [movie]="movie"></app-movie>
+          </li>
+        </ul>
+      </div>
+    <!-- </li>
+  </ul> -->
+</div>
+
+
+<!-- x 3 -->

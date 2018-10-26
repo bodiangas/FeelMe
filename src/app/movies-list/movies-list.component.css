@@ -1,7 +1,6 @@
-ul {
-    width: 97%;
+div {
     overflow-x: auto; 
-    display: -webkit-flex;
+    display: block;
 }
 
 li {

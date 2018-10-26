@@ -1,0 +1,76 @@
+.my-card {
+    width: 480px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0px;
+  }
+  
+  img { 
+    width: 185px;
+    height: 278px;
+    line-height: 0;
+  }
+  
+  .content {
+    width: 298px;
+    height: 278px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 10px 16px 16px 16px;
+    overflow: hidden;
+  }
+  
+  .overview {
+    font-size: 0.9em;
+    line-height: 1.2em;
+    margin-top: 25px;
+  }
+  .right {
+    float: right;
+  }
+
+  button {
+      margin-right: 8px;
+  }
+  mat-progress-spinner {
+    height: 30px;
+    width: 30px;
+    float: right;
+  }
+
+  .actions {
+    width: 270px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 16px;
+  }
+
+  .user-score {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+      p {
+        z-index: 1;
+        color: #3f51b5;
+        position: relative;
+        top: -25px;
+        font-weight: bolder;
+      }
+  }
+
+  .outer-ring {
+    width: 32px;
+    height: 32px;
+    padding: 3px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%; 
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  }
+
+  .consensus {
+    box-sizing: border-box;
+  }

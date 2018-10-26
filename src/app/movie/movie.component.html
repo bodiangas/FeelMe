@@ -1,0 +1,33 @@
+<mat-card class="my-card">
+  <img src="{{ posterUrl }}" wide class="card_img" />
+  <div class="content">
+    <mat-card-title-group>
+      <mat-card-title class="card_title"> {{ movie.title }} </mat-card-title>
+      <mat-card-subtitle class="card_title"> {{ movie.release_date | date }} </mat-card-subtitle>
+      <div class="consensus">
+        <div class="outer-ring">
+          <div class="user-score">
+            <mat-progress-spinner [diameter]="32" mode="determinate" [value]="value"> </mat-progress-spinner>
+            <p> {{ value }} </p>
+          </div>
+        </div>
+      </div>
+    </mat-card-title-group>
+    <p class="overview"> {{ truncatedOverview }} </p>
+    <div class="actions">
+      <!--  (click)="changeButton()" -->
+      <button mat-raised-button [routerLink]="['/movie', movie.id]">{{ displayButton }}</button>
+      <!-- <div *ngIf="display">
+        <app-movie-details id="{{ movie.id }}"></app-movie-details>
+      </div> -->
+      <div *ngIf="connected" class="right">
+        <button mat-mini-fab color="warn">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-mini-fab color="primitive">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-card>
