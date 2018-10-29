@@ -1,7 +1,7 @@
 <h1 mat-dialog-title class="center">Inscription</h1>
 
 <mat-dialog-actions class="conteneur">
-  <div class="center">
+  <div *ngIf="!isEmail" class="center">
     <button color="primary" mat-raised-button (click)="save(1)">Via Google</button>
     <button color="primary" mat-raised-button (click)="save(2)">Via Facebook</button>
   </div>
@@ -9,8 +9,8 @@
     <br/>
     <button mat-raised-button *ngIf="!isEmail" (click)="setEmail()">Autre</button>
   </div>
-  <div class="centerB">
-    <mat-dialog-content *ngIf="isEmail" [formGroup]="emailForm">
+  <div *ngIf="isEmail" class="centerB">
+    <mat-dialog-content [formGroup]="emailForm">
       <ul>
         <li>
           <mat-form-field>
@@ -24,7 +24,7 @@
         </li>
         <li>
           <mat-form-field>
-            <input matInput required placeholder="Confirmez le mot de passe" formControlName="confirmPassword">
+            <input matInput type="password" required placeholder="Confirmez le mot de passe" formControlName="confirmPassword">
           </mat-form-field>
         </li>
       </ul>

@@ -6,6 +6,8 @@ import { ActorsComponent } from './actors/actors.component';
 import { UserComponent } from './user/user.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { MoviesComponent } from './movies/movies.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 
 const appRoutes: Routes = [
@@ -23,6 +25,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'moviesList',
+    canActivate: [AuthGuardService],
     component: MoviesListComponent
   },
   {
@@ -32,6 +35,14 @@ const appRoutes: Routes = [
   {
     path: 'actorsList',
     component: ActorsListComponent
+  },
+  {
+    path: 'not-found',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found'
   }
 ];
 
@@ -46,4 +57,5 @@ export const routingComponents = [AppComponent,
   MoviesComponent,
   MoviesListComponent,
   UserComponent,
-  ActorsListComponent];
+  ActorsListComponent,
+  NotFoundComponent];

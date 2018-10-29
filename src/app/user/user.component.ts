@@ -1,10 +1,8 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import {filter} from 'rxjs/operators';
 import { User } from 'firebase';
-import { AngularFireDatabase } from '@angular/fire/database';
-import { Observable } from 'rxjs';
-import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
+import { Subscription } from 'rxjs';
+import { MatDialog} from '@angular/material';
 import { SigninChoiceComponent } from './signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { UserService, ConexionData } from '../services/user.service';
@@ -17,69 +15,58 @@ import { UserService, ConexionData } from '../services/user.service';
 export class UserComponent implements OnInit {
 
   private _user: User;
- 
+  public isConnected = false;
+  isConnectedSubscribtion: Subscription;
+
   @Input()
   emailPasswords: ConexionData[];
 
   constructor(
-    public anAuth: AngularFireAuth, 
-    public dialog:MatDialog, 
-    private userservices:UserService) { 
-      this.anAuth.user.pipe(filter(u => !!u)).subscribe(u => {
-        this._user = u;
-        /*const listsPath = `users/${u.uid}`;
-        const lists = this.db.list(listsPath);
-        lists.push("coucou");
-        this.dbData = lists.valueChanges();*/
-      });
-  }
+    public anAuth: AngularFireAuth,
+    public dialog: MatDialog,
+    private userservices: UserService) {  }
 
   ngOnInit() {
+    this.isConnectedSubscribtion = this.userservices.connectedSubject.subscribe(
+      (isconnected: boolean) => {
+        console.log('here user init', isconnected);
+        this.isConnected = isconnected;
+      }
+    );
+    this.userservices.emmitIsConnected();
   }
 
-  signin(){
-    let via;
-    let email:string;
-    let password:string;
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.data= {
-      via,
-      email,
-      password
-    };
-    
-    const dialogRef=this.dialog.open(SigninChoiceComponent,dialogConfig);
+  signin() {
+    const dialogRef = this.dialog.open(SigninChoiceComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result, this.isConnected);
+      if (result) {
+        this.userservices.signinVia(result).then(() => {
+          console.log('Sign up succes', this.isConnected);
+        }).catch(error => this.handleError(error));
+      }
+    });
+  }
+
+  login() {
+    const dialogRef = this.dialog.open(LoginDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.userservices.signinVia(result);
+      if (result) { this.userservices.loginVia(result).then(() => {
+        console.log('Log in succes', this.isConnected);
+      }).catch(error => this.handleError(error));
+    }
     });
-    
   }
 
-  login(){
-    let email:string;
-    let password:string;
-    let via;
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.data= {
-      via,
-      email,
-      password
-    };
-    
-    const dialogRef=this.dialog.open(LoginDialogComponent,dialogConfig);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      this.userservices.loginVia(result);
-    });
-   
-  }
-
-  logout(){
+  logout() {
     this.userservices.signOut();
-    this._user=undefined;
+    this._user = undefined;
   }
 
+
+  private handleError(error: Error) {
+    console.error(error);
+    console.log(error.message, 'error');
+  }
 }
