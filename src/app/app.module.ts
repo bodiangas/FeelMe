@@ -25,6 +25,7 @@ import { UserService } from './services/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { MaterialModule } from './material.module';
+import { SearchService } from './search.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { MaterialModule } from './material.module';
     LoginDialogComponent,
     DialogOverviewComponent,
   ],
-  providers: [TmdbService, UserService],
+  providers: [TmdbService, UserService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

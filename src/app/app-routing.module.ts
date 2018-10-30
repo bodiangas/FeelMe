@@ -8,6 +8,7 @@ import { MoviesListComponent } from './movies-list/movies-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ResearchComponent } from './research/research.component';
 
 
 const appRoutes: Routes = [
@@ -16,7 +17,7 @@ const appRoutes: Routes = [
     component: HomePageComponent
   },
   {
-    path: 'actors',
+    path: 'actors/:id',
     component: ActorsComponent
   },
   {
@@ -24,7 +25,7 @@ const appRoutes: Routes = [
     component: MoviesListComponent
   },
   {
-    path: 'Lists',
+    path: 'lists',
     component: MoviesListComponent
   },
   {
@@ -43,6 +44,9 @@ const appRoutes: Routes = [
   {
     path: '**',
     component: PageNotFoundComponent
+  },
+  { path: 'search',
+    component: ResearchComponent
   }
 ];
 

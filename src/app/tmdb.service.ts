@@ -6,6 +6,7 @@ import { SearchMovieQuery, SearchMovieResponse, SearchTrendingQuery, GetMoviesQu
 import { SearchPeopleQuery, SearchPeopleResponse } from './tmdb-data/SearchPeople';
 import { TVQuery, TVResponse } from './tmdb-data/TV';
 import { SearchTVQuery, SearchTVResponse } from './tmdb-data/SearchTV';
+import {PersonlistResponse} from './tmdb-data/PersonList';
 
 const tmdbApi = 'https://api.themoviedb.org/3';
 type HTTP_METHOD = 'GET' | 'POST' | 'DELETE' | 'PUT';
@@ -93,6 +94,12 @@ export class TmdbService {
   async getPerson(id: number, options?: PersonQuery): Promise<PersonResponse> {
     const url = `${tmdbApi}/person/${id}`;
     const res = await this.get<PersonResponse>(url, options);
+    return res.body;
+  }
+
+  async getListPerson(options: Object): Promise<PersonlistResponse> {
+    const url = `${tmdbApi}/person/popular`;
+    const res = await this.get<PersonlistResponse>(url, options);
     return res.body;
   }
 
