@@ -12,32 +12,38 @@ export class HomePageComponent implements OnInit {
   @Input() param?;
 
   private listName = null;
-  private _movies: MovieResult[] = null;
   private _moviesTab: MovieResult[][] = null;
-  private _movieSelected = false;
+  // private _movieSelected = false;
+  private slideIndex = 1;
 
   constructor(tmdb: TmdbService) {
     tmdb.init('544a04ed01152432f1d7ed782ed24b73');
     setTimeout(() =>
-      tmdb.getTrending({ media_type: 'movie', time_window: 'week' } as SearchTrendingQuery)
-        .then((d: SearchMovieResponse) => console.log('Movies tend:', this._movies = d.results)), 1000);
-     /*   console.log('dddddddddd', this._moviesTab[0]);
-    // this._moviesTab.push(this._movies );
-    setTimeout(() =>
-      tmdb.getPopular()
-        .then((d: SearchMovieResponse) => console.log('Movies Pop:', this._movies = d.results)), 1000);
-    this._moviesTab.push(this._movies);
-    setTimeout(() =>
-      tmdb.getUpcoming()
-        .then((d: SearchMovieResponse) => console.log('Movies Upcom:', this._movies = d.results)), 1000);
-    this._moviesTab.push(this._movies);*/
+      tmdb.getHomeMovies().then((d: SearchMovieResponse[]) => console.log('tab :', this._moviesTab = d.map(e => e.results))));
   }
 
   ngOnInit() {
     this.listName = name;
     console.log(this.listName);
+    this.showDivs(this.slideIndex);
   }
+
   get movies() {
-    return this._movies;
+    return this._moviesTab;
+  }
+
+  plusDivs(n: number) {
+    this.showDivs(this.slideIndex += n);
+  }
+
+  showDivs(n: number) {
+    let i;
+    const x = document.getElementsByClassName('mySlides');
+    if (n > x.length) { this.slideIndex = 1; }
+    if (n < 1) { this.slideIndex = x.length; }
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = 'none';
+    }
+    x[this.slideIndex - 1].style.display = 'block';
   }
 }

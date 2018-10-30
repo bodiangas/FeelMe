@@ -13,7 +13,9 @@
         </div>
       </div>
     </mat-card-title-group>
-    <p class="overview"> {{ truncatedOverview }} </p>
+    <a class="overview" (click)="openDialog()" style="color:black">
+      <p> {{ truncatedOverview }} </p>
+    </a>
     <div class="actions">
       <!--  (click)="changeButton()" -->
       <button mat-raised-button [routerLink]="['/movie', movie.id]">{{ displayButton }}</button>
@@ -21,9 +23,9 @@
         <app-movie-details id="{{ movie.id }}"></app-movie-details>
       </div> -->
       <div *ngIf="connected" class="right">
-        <button mat-mini-fab color="warn">
+        <!-- <button mat-mini-fab color="warn">
           <mat-icon>favorite</mat-icon>
-        </button>
+        </button> -->
         <button mat-mini-fab color="primitive">
           <mat-icon>add</mat-icon>
         </button>

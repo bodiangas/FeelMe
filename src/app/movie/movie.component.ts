@@ -1,7 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
 import { MovieResponse } from '../tmdb-data/Movie';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+// import { DialogOverviewComponent } from './dialog-overview.component';
+
+export interface DialogData {
+  overview: string;
+  title: string;
+}
 
 @Component({
   selector: 'app-movie',
@@ -17,17 +24,15 @@ export class MovieComponent implements OnInit {
   display = false;
   displayButton = 'Display details';
   private value;
-  private connected = false;
+  private connected = true;
   truncatedOverview;
 
-  constructor(private tmdbservice: TmdbService) { }
+  constructor(private tmdbservice: TmdbService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.value = this.movie.vote_average ? this.movie.vote_average * 10 : 0;
     console.log(this.movie.id);
-    this.movie.poster_path === null ?
-      this.posterUrl = 'http://via.placeholder.com/154x218?text=Not+avaliable' :
-      this.posterUrl = this.tmdbservice.getPath(this.movie.poster_path);
+    this.posterUrl = this.tmdbservice.getPath(this.movie.poster_path);
     this.truncatedOverview = this.truncate(this.movie.overview, 130, '...');
   }
 
@@ -41,6 +46,32 @@ export class MovieComponent implements OnInit {
   truncate(elem, limit, after) {
     if (!elem || !limit) { return; }
     return elem.trim().slice(0, limit) + (after ? after : '');
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogOverviewComponent, {
+      width: '300px',
+      data: { title: this.movie.title, overview: this.movie.overview }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    });
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-overview',
+  templateUrl: './dialog-overview.html',
+})
+export class DialogOverviewComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+  onNoClick() {
+    this.dialogRef.close();
   }
 
 }

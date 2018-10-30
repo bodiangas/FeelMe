@@ -40,8 +40,11 @@ export class TmdbService {
   }
 
   getPath(path: string): string {
-    return `https://image.tmdb.org/t/p/w500${path}`;
+    return path === null ?
+      'http://via.placeholder.com/154x218?text=Not+avaliable' :
+      `https://image.tmdb.org/t/p/w500${path}`;
   }
+
 
   // _______________________________________________________________________________________________________________________________________
   // Movies ________________________________________________________________________________________________________________________________
@@ -73,6 +76,15 @@ export class TmdbService {
     const url = `${tmdbApi}/search/movie`;
     const res = await this.get<SearchMovieResponse>(url, query);
     return res.body;
+  }
+
+  async getHomeMovies(): Promise<SearchMovieResponse[]> {
+    const p1 = this.getTrending({ media_type: 'movie', time_window: 'week' } as SearchTrendingQuery);
+    const p2 = this.getPopular();
+    const p3 = this.getUpcoming();
+    const promises = Promise.all([p1, p2, p3]);
+    const data: SearchMovieResponse[] = await promises;
+    return data;
   }
 
   // _______________________________________________________________________________________________________________________________________

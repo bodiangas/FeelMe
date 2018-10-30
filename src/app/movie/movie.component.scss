@@ -1,20 +1,20 @@
 .my-card {
-    width: 480px;
-    margin: 20px;
+    width: 430px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     padding: 0px;
   }
   
   img { 
-    width: 185px;
-    height: 278px;
+    width: 175px;
+    height: 262px;
     line-height: 0;
   }
   
   .content {
-    width: 298px;
-    height: 278px;
+    width: 255px;
+    height: 262px;
     position: relative;
     box-sizing: border-box;
     padding: 10px 16px 16px 16px;
@@ -40,7 +40,7 @@
   }
 
   .actions {
-    width: 270px;
+    width: 223px;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -73,4 +73,5 @@
 
   .consensus {
     box-sizing: border-box;
+    margin-right: -10px;
   }

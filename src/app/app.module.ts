@@ -13,13 +13,12 @@ import { UserComponent } from './user/user.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ResearchComponent } from './research/research.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
-import { MovieComponent } from './movie/movie.component';
+import { MovieComponent, DialogOverviewComponent } from './movie/movie.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { ActorsComponent } from './actors/actors.component';
 import { ActorsListComponent } from './actors-list/actors-list.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule, MatDialogModule, MatFormField, MatFormFieldModule, MatInputModule, MatSidenavModule } from '@angular/material';
 import { SigninChoiceComponent } from './user/signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './user/login-dialog/login-dialog.component';
 import { UserService } from './services/user.service';
@@ -42,7 +41,8 @@ import { MaterialModule } from './material.module';
     SigninChoiceComponent,
     LoginDialogComponent,
     routingComponents,
-    MovieComponent
+    MovieComponent,
+    DialogOverviewComponent
   ],
   imports: [
     FormsModule,
@@ -53,14 +53,7 @@ import { MaterialModule } from './material.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    MatSidenavModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule,
-    MatInputModule,
     ReactiveFormsModule,
     AppRoutingModule,
     MaterialModule,
@@ -68,6 +61,7 @@ import { MaterialModule } from './material.module';
   entryComponents: [
     SigninChoiceComponent,
     LoginDialogComponent,
+    DialogOverviewComponent,
   ],
   providers: [TmdbService, UserService],
   bootstrap: [AppComponent]

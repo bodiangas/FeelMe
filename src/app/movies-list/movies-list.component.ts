@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
-import { SearchMovieResponse, SearchTrendingQuery, MovieResult } from '../tmdb-data/searchMovie';
+import { MovieResult } from '../tmdb-data/searchMovie';
+import { FirebaseDatabase } from '@angular/fire';
 
 @Component({
   selector: 'app-movies-list',
@@ -12,14 +13,11 @@ export class MoviesListComponent implements OnInit {
   @Input() param?;
 
   private listName = null;
+  // public myLists: FirebaseListObservable<any[]>;
   private _movies: MovieResult[] = null;
   private _movieSelected = false;
 
-  constructor(tmdb: TmdbService) {
-    tmdb.init('544a04ed01152432f1d7ed782ed24b73');
-    setTimeout(() =>
-      tmdb.getTrending({ media_type: 'movie', time_window: 'week' } as SearchTrendingQuery)
-        .then((d: SearchMovieResponse) => console.log('Movies :', this._movies = d.results)), 1000);
+  constructor(tmdb: TmdbService, db: FirebaseDatabase) {
   }
 
   ngOnInit() {

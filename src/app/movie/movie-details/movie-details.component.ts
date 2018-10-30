@@ -17,6 +17,7 @@ export class MovieDetailsComponent implements OnInit {
 
   private id;
   private _movieDetails: MovieResponse;
+  posterUrl;
 
   constructor(private tmdbservice: TmdbService,
     private router: Router, private route: ActivatedRoute) {
@@ -27,14 +28,11 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-
     setTimeout(() =>
       this.tmdbservice.init('544a04ed01152432f1d7ed782ed24b73').getMovie(this.id)
-        .then((m: MovieResponse) => console.log('Movie with ', this._movieDetails = m)));
-
-    // this.tmdbservice.init('544a04ed01152432f1d7ed782ed24b73');
-    // this.tmdbservice.getMovie(this.id)
-    //   .then((m: MovieResponse) => console.log('Movie ', this._movieDetails = m));
+        .then((m: MovieResponse) => {
+          console.log('Movie with ', this._movieDetails = m);
+        }));
   }
 
   get movieDetails(): MovieResponse {
@@ -45,5 +43,9 @@ export class MovieDetailsComponent implements OnInit {
     const movieId = movie ? movie.id : null;
     // pass id movie to movies
     this.router.navigate(['/movies', { id: movieId }]);
+  }
+
+  getPath(path: string): string {
+    return this.posterUrl = this.tmdbservice.getPath(path);
   }
 }

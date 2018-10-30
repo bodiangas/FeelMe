@@ -1,17 +1,28 @@
 <div *ngIf="movies">
-  <!-- <ul>
-    <li *ngFor="let movies of moviesTab"> -->
-      <h2> {{ name }}</h2>
-      <div>
-        <ul>
-          <li *ngFor="let movie of movies">
-            <app-movie [movie]="movie"></app-movie>
-          </li>
-        </ul>
-      </div>
-    <!-- </li>
-  </ul> -->
+  <h2 class="title"> Tendances </h2>
+  <div>
+    <ul>
+      <!-- <button class="w3-button w3-display-right" (click)="plusDivs(+1)">&#10095;</button> -->
+      <li *ngFor="let movie of movies[0]">
+        <app-movie [movie]="movie"></app-movie>
+        <a class="next" (click)="plusSlides(1)">&#10095;</a>
+      </li>
+    </ul>
+  </div>
+  <h2 class="title"> Populaires </h2>
+  <div>
+    <ul>
+      <li *ngFor="let movie of movies[1]">
+        <app-movie [movie]="movie"></app-movie>
+      </li>
+    </ul>
+  </div>
+  <h2 class="title"> Prochainement </h2>
+  <div>
+    <ul>
+      <li *ngFor="let movie of movies[2]">
+        <app-movie [movie]="movie"></app-movie>
+      </li>
+    </ul>
+  </div>
 </div>
-
-
-<!-- x 3 -->
