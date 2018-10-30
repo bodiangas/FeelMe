@@ -14,7 +14,7 @@ const appRoutes: Routes = [
     component: MoviesComponent
   },
   {
-    path: 'actors',
+    path: 'actors/:id',
     component: ActorsComponent
   },
   {
