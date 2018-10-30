@@ -1,3 +1,7 @@
-<p>
-  research works!
-</p>
+<div *ngIf="movies">
+  <div *ngFor="let movie of resMovies.results">
+    <p>
+      {{movie.original_title}}
+    </p>
+  </div>
+</div>
