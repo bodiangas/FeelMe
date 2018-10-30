@@ -18,8 +18,14 @@ import { ActorsComponent } from './actors/actors.component';
 import { ActorsListComponent } from './actors-list/actors-list.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule, MatDialogModule, MatFormField, MatFormFieldModule, MatInputModule, MatSidenavModule } from '@angular/material';
+import { SigninChoiceComponent } from './user/signin-choice/signin-choice.component';
+import { LoginDialogComponent } from './user/login-dialog/login-dialog.component';
+import { UserService } from './services/user.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { MaterialModule } from './material.module';
+import { SearchService } from './search.service';
 
 @NgModule({
   declarations: [
@@ -32,9 +38,12 @@ import { MaterialModule } from './material.module';
     ActorsComponent,
     ActorsListComponent,
     MainNavComponent,
+    SigninChoiceComponent,
+    LoginDialogComponent,
     routingComponents,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -42,10 +51,23 @@ import { MaterialModule } from './material.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    MatSidenavModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     MaterialModule,
   ],
-  providers: [TmdbService],
+  entryComponents: [
+    SigninChoiceComponent,
+    LoginDialogComponent,
+  ],
+  providers: [TmdbService, UserService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

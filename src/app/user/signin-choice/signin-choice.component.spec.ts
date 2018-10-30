@@ -1,22 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { UserComponent } from './user.component';
+import { SigninChoiceComponent } from './signin-choice.component';
 
-describe('UserComponent', () => {
-  let component: UserComponent;
-  let fixture: ComponentFixture<UserComponent>;
+describe('SigninChoiceComponent', () => {
+  let component: SigninChoiceComponent;
+  let fixture: ComponentFixture<SigninChoiceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[MatSidenavModule],
-      declarations: [ UserComponent ]
+      declarations: [ SigninChoiceComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserComponent);
+    fixture = TestBed.createComponent(SigninChoiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
