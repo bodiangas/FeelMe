@@ -20,7 +20,7 @@ export class MainNavComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private router: Router, private search: SearchService) { }
-  
+
   navigation() {
     this.search.searchText = this.searchText;
     this.router.navigateByUrl('/search');

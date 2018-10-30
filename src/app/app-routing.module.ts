@@ -51,4 +51,4 @@ export const routingComponents = [AppComponent,
   MoviesComponent,
   MoviesListComponent,
   UserComponent,
-  ActorsListComponent]
+  ActorsListComponent];
