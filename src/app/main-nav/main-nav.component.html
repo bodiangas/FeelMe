@@ -5,12 +5,12 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Acceuil</a>
       <a mat-list-item routerLink="/movies" routerLinkActive="active">Films</a>
-      <a mat-list-item routerLink="/actors" routerLinkActive="active">Acteurs</a>
+      <a mat-list-item routerLink="/actorsList" routerLinkActive="active">Acteurs</a>
       <a mat-list-item routerLink="/moviesList" routerLinkActive="active">Mes listes</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary style="z-index: 6;">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
