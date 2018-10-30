@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import {TmdbService} from './tmdb.service';
-import {MovieResponse} from './tmdb-data/Movie';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {auth, User} from 'firebase';
-import {Observable} from 'rxjs';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {filter} from 'rxjs/operators';
+import { TmdbService } from './tmdb.service';
+import { MovieResponse } from './tmdb-data/Movie';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth, User } from 'firebase';
+import { Observable } from 'rxjs';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -18,19 +18,19 @@ export class AppComponent {
   private dbData: Observable<any>;
 
   constructor(private tmdb: TmdbService, public anAuth: AngularFireAuth, private db: AngularFireDatabase) {
-    this.anAuth.user.pipe(filter( u => !!u )).subscribe( u => {
+    this.anAuth.user.pipe(filter(u => !!u)).subscribe(u => {
       this._user = u;
       const listsPath = `lists/${u.uid}`;
       const lists = db.list(listsPath);
       lists.push('coucou');
       this.dbData = lists.valueChanges();
     });
-    setTimeout( () =>
+    setTimeout(() =>
       tmdb.init('544a04ed01152432f1d7ed782ed24b73') // Clef de TMDB
-          .getMovie(13)
-          .then( (m: MovieResponse) => console.log('Movie 13:', this._movie = m) )
-          .catch( err => console.error('Error getting movie:', err) ),
-      1000 );
+        .getMovie(13)
+        .then((m: MovieResponse) => console.log('Movie 13:', this._movie = m))
+        .catch(err => console.error('Error getting movie:', err)),
+      1000);
 
   }
 
@@ -59,4 +59,3 @@ export class AppComponent {
     return this.dbData;
   }
 }
-// /yE5d3BUhE8hCnkMUJOo1QDoOGNz.jpg

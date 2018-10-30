@@ -6,6 +6,7 @@ import { ActorsComponent } from './actors/actors.component';
 import { UserComponent } from './user/user.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { MoviesComponent } from './movies/movies.component';
+import { ResearchComponent } from './research/research.component';
 
 
 const appRoutes: Routes = [
@@ -32,6 +33,10 @@ const appRoutes: Routes = [
   {
     path: 'actorsList',
     component: ActorsListComponent
+  },
+  {
+    path: 'search',
+    component: ResearchComponent
   }
 ];
 
