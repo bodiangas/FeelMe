@@ -8,16 +8,15 @@ import { FirebaseDatabase } from '@angular/fire';
   templateUrl: './movies-list.component.html',
   styleUrls: ['./movies-list.component.css']
 })
+
 export class MoviesListComponent implements OnInit {
-  @Input() name: string;
-  @Input() param?;
 
   private listName = null;
   // public myLists: FirebaseListObservable<any[]>;
   private _movies: MovieResult[] = null;
   private _movieSelected = false;
 
-  constructor(tmdb: TmdbService, db: FirebaseDatabase) {
+  constructor() {
   }
 
   ngOnInit() {

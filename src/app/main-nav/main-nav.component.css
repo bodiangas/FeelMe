@@ -36,3 +36,7 @@ nav ul li {
     width: 60px;
     align-self: center;
   }
+
+  a {
+    border-bottom: #f0ecec 1px solid;
+  }

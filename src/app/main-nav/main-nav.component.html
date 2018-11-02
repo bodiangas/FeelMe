@@ -5,8 +5,21 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Acceuil</a>
       <a mat-list-item routerLink="/movies" routerLinkActive="active">Films</a>
-      <a mat-list-item routerLink="/lists" routerLinkActive="active">Acteurs</a>
-      <a mat-list-item routerLink="/moviesList" routerLinkActive="active">Mes listes</a>
+      <a mat-list-item routerLink="/actorsList" routerLinkActive="active">Acteurs</a>
+      <!-- <a mat-list-item routerLink="/lists" routerLinkActive="active">Mes listes -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Mes listes
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- *ngFor="let list of lists" -->
+        <div  style="display: block;">
+          <!-- <button mat-button [routerLink]="['/movie', movie.id]">
+            fdfd 
+          </button> -->
+        </div>
+      </mat-expansion-panel>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

@@ -21,7 +21,19 @@ const appRoutes: Routes = [
     component: ActorsComponent
   },
   {
+    path: 'actorsList',
+    component: ActorsListComponent
+  },
+  {
+    path: 'movie/:id',
+    component: MovieDetailsComponent
+  },
+  {
     path: 'movies',
+    component: MoviesListComponent
+  },
+  {
+    path: 'list/:id',
     component: MoviesListComponent
   },
   {
@@ -33,20 +45,12 @@ const appRoutes: Routes = [
     component: UserComponent
   },
   {
-    path: 'actorsList',
-    component: ActorsListComponent
+    path: 'search',
+    component: ResearchComponent
   },
-  {
-    path: 'movie/:id',
-    component: MovieDetailsComponent
-  },
-  { path: 'movie/:id', redirectTo: '/movies/:id' },
   {
     path: '**',
     component: PageNotFoundComponent
-  },
-  { path: 'search',
-    component: ResearchComponent
   }
 ];
 

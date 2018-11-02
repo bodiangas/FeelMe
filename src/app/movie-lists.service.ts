@@ -36,7 +36,7 @@ export class MovieListsService {
   }
 
   renameList($key: string, id: number) {
-    this.myLists.update($key, {});
+    // this.myLists.update($key,);
   }
 
 
