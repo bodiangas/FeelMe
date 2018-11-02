@@ -8,7 +8,7 @@ import { MoviesListComponent } from './movies-list/movies-list.component';
 import { MoviesComponent } from './movies/movies.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
-
+import { ResearchComponent } from './research/research.component';
 
 const appRoutes: Routes = [
   {
@@ -16,7 +16,7 @@ const appRoutes: Routes = [
     component: MoviesComponent
   },
   {
-    path: 'actors',
+    path: 'actors/:id',
     component: ActorsComponent
   },
   {
@@ -35,6 +35,10 @@ const appRoutes: Routes = [
   {
     path: 'actorsList',
     component: ActorsListComponent
+  },
+  {
+    path: 'search',
+    component: ResearchComponent
   },
   {
     path: 'not-found',

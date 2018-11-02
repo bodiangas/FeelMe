@@ -1,3 +1,28 @@
-<p>
-  actors-list works!
-</p>
+<div  style="display: inline-block;">
+  <div *ngFor="let actor of people" style="display: inline-block; margin: 8px;">
+
+      <mat-card class="actor-card">
+        <a [routerLink]="['/actors',actor.id]" routerLinkActive="active">
+          <img src="https://image.tmdb.org/t/p/w300/{{actor.profile_path}}">
+        </a>
+
+          <mat-card-content style="height: 90px;">
+            <a [routerLink]="['/actors',actor.id]" routerLinkActive="active">
+              <p style="height: 4px;"><strong style="color:#000000;"> {{actor.name}} </strong></p>
+            </a>
+            <div *ngFor="let movie of actor.known_for">
+              <span style="font-size:smaller ;"> - {{movie.title}} </span>
+            </div>
+
+            <mat-card-actions style="padding-left: 250px;">
+              <a [routerLink]="['/actors',actor.id]" routerLinkActive="active">
+              <button mat-button>
+                <Strong style="color:#000000;">Plus ...</Strong>
+              </button>
+              </a>
+            </mat-card-actions>
+          </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+

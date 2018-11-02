@@ -31,6 +31,7 @@ import { ForgetPasswordComponent } from './user/forget-password/forget-password.
 import { AuthGuardService } from './services/auth-guard.service';
 import { LoginEmailComponent } from './user/login-email/login-email.component';
 import { FirebaseService } from './services/firebase.service';
+import { SearchService } from './search.service';
 
 @NgModule({
   declarations: [
