@@ -9,6 +9,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResearchComponent } from './research/research.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 
 const appRoutes: Routes = [
@@ -30,6 +32,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'movies',
+    canActivate: [AuthGuardService],
     component: MoviesListComponent
   },
   {
@@ -51,6 +54,14 @@ const appRoutes: Routes = [
   {
     path: '**',
     component: PageNotFoundComponent
+  },
+  {
+    path: 'not-found',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found'
   }
 ];
 
@@ -67,5 +78,6 @@ export const routingComponents = [AppComponent,
   UserComponent,
   HomePageComponent,
   ActorsListComponent,
-  PageNotFoundComponent
+  PageNotFoundComponent,
+  NotFoundComponent
 ];

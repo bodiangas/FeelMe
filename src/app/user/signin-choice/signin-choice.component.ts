@@ -1,7 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { UserService, ConexionData } from 'src/app/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-signin-choice',
@@ -11,24 +10,23 @@ import { UserService, ConexionData } from 'src/app/services/user.service';
 export class SigninChoiceComponent implements OnInit {
   emailForm: FormGroup;
   form: FormGroup;
-  private isEmail = false;
+  isEmail = false;
 
   constructor(private fb: FormBuilder,
-    private dialogRef: MatDialogRef<SigninChoiceComponent>,
-    @Inject(MAT_DIALOG_DATA) { via, email, password }: ConexionData) {
-    this.emailForm = this.fb.group({
-      via: [1, via],
-      email: [email, [Validators.required, Validators.email]],
-      password: [password, Validators.required],
-      confirmPassword: ['', [Validators.required, this.matchFieldValidator('password')]]
-    });
+    private dialogRef: MatDialogRef<SigninChoiceComponent>) {
+      this.emailForm = this.fb.group({
+        via: [1],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', Validators.required],
+        confirmPassword: ['', [Validators.required, this.matchFieldValidator('password')]]
+      });
   }
 
   matchFieldValidator(fieldToMatch: string): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any; } => {
       const confirmField = control.root.get(fieldToMatch);
 
-      return (confirmField && control.value !== confirmField.value) ? { match: false } : null;
+      return (confirmField && control.value !== confirmField.value) ? {match: false} : null;
     };
   }
 
@@ -50,6 +48,9 @@ export class SigninChoiceComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    if (!this.isEmail) {
+      this.dialogRef.close();
+    }
+    this.isEmail = false;
   }
 }

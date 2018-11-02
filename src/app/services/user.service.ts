@@ -4,7 +4,8 @@ import { auth, User } from 'firebase';
 import { TmdbService } from '../tmdb.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { filter } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { reject } from 'q';
 
 export interface ConexionData {
   via;
@@ -16,8 +17,9 @@ export interface ConexionData {
   providedIn: 'root'
 })
 export class UserService {
-  private _user: User;
-  private connected = false;
+  _user: User;
+  connected = false;
+  connectedSubject: Subject<boolean> = new Subject<boolean>();
   private dbData: Observable<any>;
 
   constructor(
@@ -28,6 +30,8 @@ export class UserService {
     this.anAuth.user.pipe(filter(u => !!u)).subscribe(u => {
       this._user = u;
       this.connected = true;
+      console.log('here connection');
+      this.emmitIsConnected();
       const listsPath = `users/${u.uid}`;
       const lists = this.db.list(listsPath);
       lists.push('coucou');
@@ -35,91 +39,101 @@ export class UserService {
     });
   }
 
-  public isConnected(): boolean {
-    return this.connected;
+  emmitIsConnected() {
+    this.connectedSubject.next(this.connected);
   }
 
-  public signinVia(data: ConexionData) {
+  signinVia(data: ConexionData) {
     if (data.via === 1) {
-      this.googleLogin();
+      return this.googleLogin();
     }
     if (data.via === 2) {
-      this.facebookLogin();
+      return this.facebookLogin();
     }
     if (data.via === 3) {
-      this.emailSignUp(data.email, data.password);
+      return this.emailSignUp(data.email, data.password);
     }
   }
 
-  public loginVia(data: ConexionData) {
+  loginVia(data: ConexionData) {
     if (data.via === 1) {
-      this.googleLogin();
+      return this.googleLogin();
     }
     if (data.via === 2) {
-      this.facebookLogin();
+      return this.facebookLogin();
     }
     if (data.via === 3) {
-      this.emailLogin(data.email, data.password);
+      return this.emailLogin(data.email, data.password);
     }
   }
 
-  public googleLogin() {
+  googleLogin() {
     const provider = new auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
 
-  public facebookLogin() {
+  facebookLogin() {
     const provider = new auth.FacebookAuthProvider();
     return this.oAuthLogin(provider);
   }
 
-  private async oAuthLogin(provider: any) {
-    try {
-      const credential = await this.anAuth.auth
-        .signInWithPopup(provider);
-      console.log('Welcome to Firestarter!!!', 'success');
-      this._user = credential.user;
-      this.connected = true;
-    } catch (error) {
-      return this.handleError(error);
-    }
+  private oAuthLogin(provider: any) {
+    return new Promise<User>((resolve) => {
+      this.anAuth.auth
+        .signInWithPopup(provider)
+        .then(credential => {
+          console.log('Welcome to Firestarter!!!', 'success');
+          this._user = credential.user;
+          resolve(this._user);
+          this.connected = true;
+        })
+        .catch(error => this.handleError(error));
+        this.emmitIsConnected();
+    });
   }
 
   //// Email/Password Auth ////
 
-  public async emailSignUp(email: string, password: string) {
-    try {
-      const credential = await this.anAuth.auth
-        .createUserWithEmailAndPassword(email, password);
-      console.log('Welcome new user!', 'success');
-      this._user = credential.user; // if using firestore
-      this.connected = true;
-    } catch (error) {
-      return this.handleError(error);
-    }
+  async emailSignUp(email: string, password: string) {
+    return new Promise<User>((resolve) => {
+      this.anAuth.auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(credential => {
+          console.log('Welcome new user!', 'success');
+          this._user = credential.user; // if using firestore
+          resolve(this._user);
+          this.connected = true;
+          this.emmitIsConnected();
+        })
+        .catch(error => reject(error));
+    });
   }
 
-  public async emailLogin(email: string, password: string) {
-    try {
-      const credential = await this.anAuth.auth
-        .signInWithEmailAndPassword(email, password);
-      console.log('Welcome back!', 'success');
-      this._user = credential.user;
-      this.connected = true;
-    } catch (error) {
-      return this.handleError(error);
-    }
+  async emailLogin(email: string, password: string) {
+    return new Promise<User>((resolve) => {
+      this.anAuth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(credential => {
+        console.log('Welcome back!', 'success');
+        this._user = credential.user;
+        resolve(this._user);
+        this.connected = true;
+        this.emmitIsConnected();
+      })
+      .catch(error => {
+        this.handleError(error);
+        reject(error);
+      });
+    });
   }
 
   // Sends email allowing user to reset password
-  public async resetPassword(email: string) {
+  async resetPassword(email: string) {
     const fbAuth = auth();
-    try {
-      await fbAuth.sendPasswordResetEmail(email);
-      return console.log('Password update email sent', 'info');
-    } catch (error) {
-      return this.handleError(error);
-    }
+    return fbAuth
+        .sendPasswordResetEmail(email)
+        .then(() => console.log('Password update email sent', 'info'))
+        .catch(error => this.handleError(error));
   }
 
   public signOut() {
@@ -128,6 +142,7 @@ export class UserService {
       // this.router.navigate(['/']);
       this._user = undefined;
       this.connected = false;
+      this.emmitIsConnected();
     });
   }
 

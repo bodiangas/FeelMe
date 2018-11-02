@@ -27,6 +27,9 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { SearchService } from './search.service';
 import { MovieListsService } from './movie-lists.service';
+import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { LoginEmailComponent } from './user/login-email/login-email.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,9 @@ import { MovieListsService } from './movie-lists.service';
     LoginDialogComponent,
     routingComponents,
     MovieComponent,
-    DialogOverviewComponent
+    DialogOverviewComponent,
+    ForgetPasswordComponent,
+    LoginEmailComponent
   ],
   imports: [
     FormsModule,
@@ -64,8 +69,10 @@ import { MovieListsService } from './movie-lists.service';
     SigninChoiceComponent,
     LoginDialogComponent,
     DialogOverviewComponent,
+    LoginEmailComponent,
+    ForgetPasswordComponent
   ],
-  providers: [TmdbService, UserService, SearchService, MovieListsService],
+  providers: [TmdbService, UserService, SearchService, AuthGuardService, MovieListsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
