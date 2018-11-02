@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 import { Subscription } from 'rxjs';
@@ -6,34 +6,62 @@ import { MatDialog} from '@angular/material';
 import { SigninChoiceComponent } from './signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { UserService, ConexionData } from '../services/user.service';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
 
   private _user: User;
   public isConnected = false;
-  isConnectedSubscribtion: Subscription;
-
-  @Input()
-  emailPasswords: ConexionData[];
+  private userSubscription: Subscription = new Subscription();
 
   constructor(
     public anAuth: AngularFireAuth,
     public dialog: MatDialog,
-    private userservices: UserService) {  }
+    private userservices: UserService,
+    private firebaseService: FirebaseService) {
+    }
 
   ngOnInit() {
-    this.isConnectedSubscribtion = this.userservices.connectedSubject.subscribe(
+    /*this.isConnectedSubscribtion = this.userservices.connectedSubject.subscribe(
       (isconnected: boolean) => {
         console.log('here user init', isconnected);
         this.isConnected = isconnected;
       }
+    );*/
+    this.userSubscription = this.userservices.userSubject.subscribe(
+      (user) => {
+        if (user) {
+          this._user = user;
+          this.isConnected = true;
+          this.firebaseService.getMoviesLists(user.uid);
+        }
+      }
     );
-    this.userservices.emmitIsConnected();
+    this.userservices.emmitUser();
+  }
+
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
+
+  test() {
+    this.firebaseService.createNewList(this._user.uid, {
+      name: 'Liste 3',
+      movies: [
+        {
+          budget: 3000000,
+          adult: false,
+          title: 'Jolie film'
+        }
+      ]
+    });
+    console.log('user component test stockage');
+    this.firebaseService.getMoviesLists(this._user.uid);
   }
 
   signin() {
@@ -62,6 +90,7 @@ export class UserComponent implements OnInit {
   logout() {
     this.userservices.signOut();
     this._user = undefined;
+    this.isConnected = false;
   }
 
 

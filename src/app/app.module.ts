@@ -26,10 +26,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { SearchService } from './search.service';
-import { MovieListsService } from './movie-lists.service';
 import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { LoginEmailComponent } from './user/login-email/login-email.component';
+import { FirebaseService } from './services/firebase.service';
 
 @NgModule({
   declarations: [
@@ -72,7 +72,7 @@ import { LoginEmailComponent } from './user/login-email/login-email.component';
     LoginEmailComponent,
     ForgetPasswordComponent
   ],
-  providers: [TmdbService, UserService, SearchService, AuthGuardService, MovieListsService],
+  providers: [TmdbService, UserService, SearchService, AuthGuardService, FirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

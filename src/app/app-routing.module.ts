@@ -43,10 +43,10 @@ const appRoutes: Routes = [
     path: 'lists',
     component: MoviesListComponent
   },
-  {
+  /*{
     path: 'user',
     component: UserComponent
-  },
+  },*/
   {
     path: 'search',
     component: ResearchComponent
