@@ -1,10 +1,12 @@
-import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { auth, User } from "firebase";
-import { TmdbService } from "../tmdb.service";
-import { AngularFireDatabase } from "@angular/fire/database";
-import { filter } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { Injectable, OnDestroy } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth, User } from 'firebase';
+import { TmdbService } from '../tmdb.service';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { filter } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { reject } from 'q';
+import { FirebaseService } from './firebase.service';
 
 export interface ConexionData {
   via;
@@ -13,122 +15,151 @@ export interface ConexionData {
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class UserService {
-  private _user: User;
-  private connected: boolean = false;
+export class UserService implements OnDestroy {
+  _user: User;
+  userSubject: Subject<User> = new Subject<User>();
+  connectedSubject: Subject<boolean> = new Subject<boolean>();
   private dbData: Observable<any>;
 
   constructor(
     private anAuth: AngularFireAuth,
-    private tmdb: TmdbService,
-    private db: AngularFireDatabase
+    // private db: AngularFireDatabase,
   ) {
     this.anAuth.user.pipe(filter(u => !!u)).subscribe(u => {
       this._user = u;
-      this.connected=true;
-      const listsPath = `users/${u.uid}`;
-      const lists = this.db.list(listsPath);
-      lists.push("coucou");
-      this.dbData = lists.valueChanges();
+      console.log('connection user service connection ok');
+      this.emmitUser();
+      /*this.firebase.saveUser(u.uid);
+      this.firebase.saveList({
+        userId: u.uid,
+        lists: {
+          name: 'Liste 3',
+          movies: [{
+            budget: 1000000,
+            adult: false
+          }]
+        }
+      });
+      this.firebase.getList(u.uid, 'Liste 3').then( data => {
+        console.log('data returned for Liste 3', JSON.parse('budget', data.toString));
+      });*/
     });
   }
 
-  public isConnected(): boolean {
-    return this.connected;
+  ngOnDestroy() {
+    this.dbData = null;
+    this.connectedSubject = null;
   }
 
-  public signinVia(data: ConexionData) {
-    if (data.via == 1) {
-      this.googleLogin();
-    }
-    if (data.via == 2) {
-      this.facebookLogin();
-    }
-    if (data.via == 3) {
-      this.emailSignUp(data.email, data.password);
-    }
+  emmitUser() {
+    this.userSubject.next(this._user);
+    // this.firebase.saveUser(this._user.uid);
   }
 
-  public loginVia(data: ConexionData) {
-    if (data.via == 1) {
-      this.googleLogin();
+  signinVia(data: ConexionData) {
+    if (data.via === 1) {
+      return this.googleLogin();
     }
-    if (data.via == 2) {
-      this.facebookLogin();
+    if (data.via === 2) {
+      return this.facebookLogin();
     }
-    if (data.via == 3) {
-      this.emailLogin(data.email, data.password);
+    if (data.via === 3) {
+      return this.emailSignUp(data.email, data.password);
     }
   }
 
-  public googleLogin() {
+  loginVia(data: ConexionData) {
+    if (data.via === 1) {
+      return this.googleLogin();
+    }
+    if (data.via === 2) {
+      return this.facebookLogin();
+    }
+    if (data.via === 3) {
+      return this.emailLogin(data.email, data.password);
+    }
+  }
+
+  googleLogin() {
     const provider = new auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
 
-  public facebookLogin() {
+  facebookLogin() {
     const provider = new auth.FacebookAuthProvider();
     return this.oAuthLogin(provider);
   }
 
   private oAuthLogin(provider: any) {
-    return this.anAuth.auth
-      .signInWithPopup(provider)
-      .then(credential => {
-        console.log("Welcome to Firestarter!!!", "success");
-        this._user = credential.user;
-        this.connected = true;
-      })
-      .catch(error => this.handleError(error));
+    return new Promise((resolve) => {
+      this.anAuth.auth
+        .signInWithPopup(provider)
+        .then(credential => {
+          console.log('Welcome to Firestarter!!!', 'success');
+          this._user = credential.user;
+          resolve();
+          this.emmitUser();
+        })
+        .catch(error => this.handleError(error));
+    });
   }
 
   //// Email/Password Auth ////
 
-  public emailSignUp(email: string, password: string) {
-    return this.anAuth.auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(credential => {
-        console.log("Welcome new user!", "success");
-        this._user = credential.user; // if using firestore
-        this.connected = true;
-      })
-      .catch(error => this.handleError(error));
+  async emailSignUp(email: string, password: string) {
+    return new Promise((resolve) => {
+      this.anAuth.auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(credential => {
+          console.log('Welcome new user!', 'success');
+          this._user = credential.user; // if using firestore
+          resolve();
+          this.emmitUser();
+        })
+        .catch(error => reject(error));
+    });
   }
 
-  public emailLogin(email: string, password: string) {
-    return this.anAuth.auth
+  async emailLogin(email: string, password: string) {
+    return new Promise((resolve) => {
+      this.anAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        console.log("Welcome back!", "success");
+        console.log('Welcome back!', 'success');
         this._user = credential.user;
-        this.connected = true;
+        resolve();
+        this.emmitUser();
       })
-      .catch(error => this.handleError(error));
+      .catch(error => {
+        this.handleError(error);
+        reject(error);
+      });
+    });
   }
 
   // Sends email allowing user to reset password
-  public resetPassword(email: string) {
+  async resetPassword(email: string) {
     const fbAuth = auth();
     return fbAuth
-      .sendPasswordResetEmail(email)
-      .then(() => console.log("Password update email sent", "info"))
-      .catch(error => this.handleError(error));
+        .sendPasswordResetEmail(email)
+        .then(() => console.log('Password update email sent', 'info'))
+        .catch(error => this.handleError(error));
   }
 
   public signOut() {
     this.anAuth.auth.signOut().then(() => {
-      console.log("deconnected");
-      //this.router.navigate(['/']);
+      console.log('deconnected');
+      // this.router.navigate(['/']);
       this._user = undefined;
-      this.connected = false;
+      this.emmitUser();
     });
   }
 
   // If error, console log and notify user
   private handleError(error: Error) {
     console.error(error);
-    console.log(error.message, "error");
+    console.log(error.message, 'error');
   }
 }

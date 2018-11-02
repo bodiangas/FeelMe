@@ -25,6 +25,7 @@ export interface SpokenLanguage {
 }
 
 export interface MovieResponse {
+  listName?: Array<string>;
   adult?: boolean;
   backdrop_path?: string;
   belongs_to_collection?: Object;

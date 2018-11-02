@@ -18,13 +18,19 @@ import { ActorsComponent } from './actors/actors.component';
 import { ActorsListComponent } from './actors-list/actors-list.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule, MatDialogModule, MatFormField, MatFormFieldModule, MatInputModule, MatSidenavModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule,
+  MatDialogModule, MatFormField, MatFormFieldModule, MatInputModule, MatSidenavModule } from '@angular/material';
 import { SigninChoiceComponent } from './user/signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './user/login-dialog/login-dialog.component';
 import { UserService } from './services/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { MaterialModule } from './material.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { LoginEmailComponent } from './user/login-email/login-email.component';
+import { FirebaseService } from './services/firebase.service';
 import { SearchService } from './search.service';
 
 @NgModule({
@@ -41,6 +47,8 @@ import { SearchService } from './search.service';
     SigninChoiceComponent,
     LoginDialogComponent,
     routingComponents,
+    ForgetPasswordComponent,
+    LoginEmailComponent
   ],
   imports: [
     FormsModule,
@@ -62,12 +70,15 @@ import { SearchService } from './search.service';
     ReactiveFormsModule,
     AppRoutingModule,
     MaterialModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     SigninChoiceComponent,
     LoginDialogComponent,
+    LoginEmailComponent,
+    ForgetPasswordComponent
   ],
-  providers: [TmdbService, UserService, SearchService],
+  providers: [TmdbService, UserService, AuthGuardService, FirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

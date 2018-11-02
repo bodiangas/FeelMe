@@ -3,7 +3,7 @@
   <button inline-block (click)="login()">Se connecter</button>
 </div-->
 
-<div *ngIf="!_user">
+<div *ngIf="!isConnected">
   <ul class="mdc-list">
     <li class="mdc-list-item"><a (click)="signin()"><i class="material-icons md-18 icone">person</i>
         S'inscrire</a>
@@ -11,6 +11,7 @@
     <li class="mdc-list-item"><a (click)="login()"><i class="material-icons md-18 icone">arrow_right</i>Se connecter</a></li>
   </ul>
 </div>
-<div *ngIf="_user">
+<div *ngIf="isConnected">
   <button mat-raised-button (click)="logout()"> Se déconnecter</button>
+  <button mat-raised-button (click)="test()">Test</button>
 </div>
