@@ -3,7 +3,7 @@ import { TmdbService } from '../tmdb.service';
 import { MovieResponse } from '../tmdb-data/Movie';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-// import { DialogOverviewComponent } from './dialog-overview.component';
+import { FirebaseService } from '../services/firebase.service';
 
 export interface DialogData {
   overview: string;
@@ -19,7 +19,6 @@ export class MovieComponent implements OnInit {
 
   @Input() movie: MovieResponse;
 
-  movieDetails: MovieDetailsComponent;
   posterUrl: string;
   display = false;
   displayButton = 'Display details';
@@ -27,7 +26,9 @@ export class MovieComponent implements OnInit {
   private connected = true;
   truncatedOverview;
 
-  constructor(private tmdbservice: TmdbService, public dialog: MatDialog) { }
+  constructor(private tmdbservice: TmdbService, private firebase: FirebaseService, public dialog: MatDialog) {
+    this.firebase.movieSubject.subscribe();
+  }
 
   ngOnInit() {
     this.value = this.movie.vote_average ? this.movie.vote_average * 10 : 0;
@@ -56,6 +57,12 @@ export class MovieComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
     });
+  }
+
+  addMovie() {
+  }
+
+  deleteMovie() {
   }
 
 }

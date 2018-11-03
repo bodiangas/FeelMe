@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActorsListComponent } from './actors-list/actors-list.component';
 import { AppComponent } from './app.component';
-import { ActorsComponent } from './actors/actors.component';
+import { ActorDetailsComponent } from './actors-list/actor-details/actor-details.component';
 import { UserComponent } from './user/user.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -19,11 +19,11 @@ const appRoutes: Routes = [
     component: HomePageComponent
   },
   {
-    path: 'actors/:id',
-    component: ActorsComponent
+    path: 'actor/:id',
+    component: ActorDetailsComponent
   },
   {
-    path: 'actorsList',
+    path: 'actors',
     component: ActorsListComponent
   },
   {
@@ -36,17 +36,21 @@ const appRoutes: Routes = [
     component: MoviesListComponent
   },
   {
-    path: 'list/:id',
+    path: 'list/:name',
     component: MoviesListComponent
   },
+  // {
+  //   path: 'list/:id',
+  //   component: MoviesListComponent
+  // },
   {
     path: 'lists',
     component: MoviesListComponent
   },
-  /*{
+  {
     path: 'user',
     component: UserComponent
-  },*/
+  },
   {
     path: 'search',
     component: ResearchComponent
@@ -72,12 +76,12 @@ const appRoutes: Routes = [
 })
 export class AppRoutingModule { }
 export const routingComponents = [AppComponent,
-  ActorsComponent,
+  ActorDetailsComponent,
+  ActorsListComponent,
   MovieDetailsComponent,
   MoviesListComponent,
   UserComponent,
   HomePageComponent,
-  ActorsListComponent,
   PageNotFoundComponent,
   NotFoundComponent
 ];

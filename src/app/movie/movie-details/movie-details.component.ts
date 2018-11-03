@@ -17,7 +17,6 @@ export class MovieDetailsComponent implements OnInit {
 
   private id;
   private _movieDetails: MovieResponse;
-  posterUrl;
 
   constructor(private tmdbservice: TmdbService,
     private router: Router, private route: ActivatedRoute) {
@@ -46,6 +45,6 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   getPath(path: string): string {
-    return this.posterUrl = this.tmdbservice.getPath(path);
+    return this.tmdbservice.getPath(path);
   }
 }

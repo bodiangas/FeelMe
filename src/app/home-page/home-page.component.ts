@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
 import { SearchMovieResponse, SearchTrendingQuery, MovieResult } from '../tmdb-data/searchMovie';
+import { MovieResponse } from '../tmdb-data/Movie';
 
 @Component({
   selector: 'app-home-page',
@@ -10,15 +11,14 @@ import { SearchMovieResponse, SearchTrendingQuery, MovieResult } from '../tmdb-d
 export class HomePageComponent implements OnInit {
 
   private _moviesTab: MovieResult[][] = null;
-  private slideIndex = 1;
-  dom;
+  private dom;
 
-  constructor(tmdb: TmdbService) {
-    tmdb.init('544a04ed01152432f1d7ed782ed24b73');
+  constructor(private tmdb: TmdbService) {
+    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73');
     setTimeout(() =>
-      tmdb.getHomeMovies().then((d: SearchMovieResponse[]) => console.log('tab :', this._moviesTab = d.map(e => e.results))));
+      this.tmdb.getHomeMovies().then((d: SearchMovieResponse[]) => console.log('tab :', this._moviesTab = d.map(e => e.results))));
     setTimeout(() => {
-    this.dom = document.querySelectorAll('.lnr');
+      this.dom = document.querySelectorAll('.lnr');
       console.log('dom', this.dom);
       this.slidingDM(this.dom);
     }, 3000);

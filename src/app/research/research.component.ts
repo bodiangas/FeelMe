@@ -36,7 +36,7 @@ export class ResearchComponent implements OnInit {
   getSearch(): void {
     this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').searchMovie(this.moviesQuery)
       .then((res: SearchMovieResponse) => this.resMovies = res)
-      .catch(err => console.error('Error searching movies:', err))
+      .catch(err => console.error('Error searching movies:', err));
   }
 
 }

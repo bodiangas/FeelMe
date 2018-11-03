@@ -3,7 +3,6 @@ div.single_column {
     margin: 0 auto;
     padding-top: 40px;
     padding-bottom: 40px;
-    z-index: 0;
     display: flex;
     align-items: flex-start;
     flex-wrap: nowrap;
@@ -39,7 +38,11 @@ div.poster img {
 
 .title {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+.title > p {
+    font-size: 20px;
 }
 
 h2 {

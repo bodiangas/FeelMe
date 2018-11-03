@@ -6,7 +6,7 @@ import { SearchMovieQuery, SearchMovieResponse, SearchTrendingQuery, GetMoviesQu
 import { SearchPeopleQuery, SearchPeopleResponse } from './tmdb-data/SearchPeople';
 import { TVQuery, TVResponse } from './tmdb-data/TV';
 import { SearchTVQuery, SearchTVResponse } from './tmdb-data/SearchTV';
-import {PersonlistResponse} from './tmdb-data/PersonList';
+import { PersonlistResponse } from './tmdb-data/SearchPeople';
 
 const tmdbApi = 'https://api.themoviedb.org/3';
 type HTTP_METHOD = 'GET' | 'POST' | 'DELETE' | 'PUT';
@@ -42,7 +42,7 @@ export class TmdbService {
 
   getPath(path: string): string {
     return path === null ?
-      'http://via.placeholder.com/154x218?text=Not+avaliable' :
+      'http://via.placeholder.com/500x750?text=Not+avalaible' :
       `https://image.tmdb.org/t/p/w500${path}`;
   }
 
@@ -73,6 +73,7 @@ export class TmdbService {
     const res = await this.get<SearchMovieResponse>(url, options);
     return res.body;
   }
+
   async searchMovie(query: SearchMovieQuery): Promise<SearchMovieResponse> {
     const url = `${tmdbApi}/search/movie`;
     const res = await this.get<SearchMovieResponse>(url, query);
@@ -97,7 +98,7 @@ export class TmdbService {
     return res.body;
   }
 
-  async getListPerson(options: Object): Promise<PersonlistResponse> {
+  async getPopularPerson(options: Object): Promise<PersonlistResponse> {
     const url = `${tmdbApi}/person/popular`;
     const res = await this.get<PersonlistResponse>(url, options);
     return res.body;

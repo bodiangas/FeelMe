@@ -19,10 +19,13 @@
     <div class="actions">
       <button mat-raised-button [routerLink]="['/movie', movie.id]">{{ displayButton }}</button>
       <div *ngIf="connected" class="right">
-        <button mat-mini-fab color="primitive">
+        <button mat-mini-fab color="primitive" (onclick)="addMovie()">
           <mat-icon>add</mat-icon>
         </button>
       </div>
     </div>
   </div>
+  <button mat-mini-fab (onclick)="deleteMovie()" color="warn" class="clear">
+      <mat-icon>clear</mat-icon>
+    </button>
 </mat-card>

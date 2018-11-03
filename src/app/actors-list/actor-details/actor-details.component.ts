@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-
-import {TmdbService} from '../tmdb.service';
-
-import {PersonResponse} from '../tmdb-data/Person';
-import {ActivatedRoute} from '@angular/router';
+import { TmdbService } from '../../tmdb.service';
+import { PersonResponse } from '../../tmdb-data/Person';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-actors',
-  templateUrl: './actors.component.html',
-  styleUrls: ['./actors.component.css']
+  selector: 'app-actor-details',
+  templateUrl: './actor-details.component.html',
+  styleUrls: ['./actor-details.component.css']
 })
 
-export class ActorsComponent implements OnInit {
+export class ActorDetailsComponent implements OnInit {
   private _person: PersonResponse;
   public g: String;
   public bio: String;
@@ -22,8 +20,8 @@ export class ActorsComponent implements OnInit {
   ngOnInit() {
     this.tmdb
       .getPerson(this.route.params['_value'].id)
-      .then( (a: PersonResponse) => console.log('id', this._person = a) )
-      .catch( err => console.error('Error getting actor:', err) );
+      .then((a: PersonResponse) => console.log('id', this._person = a))
+      .catch(err => console.error('Error getting actor:', err));
   }
 
   get Person(): PersonResponse {

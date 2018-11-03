@@ -1,34 +1,3 @@
 <app-main-nav>
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </app-main-nav>
-
-<!--h1>TMDB + Firebase</h1-->
-<!--nav *ngIf="user">
-  <label>{{user.displayName}}</label>
-  <img [src]="user.photoURL" />
-  <button (click)="logout()">Déconnection</button>
-  {{user.uid}}
-</nav>
-<nav *ngIf="!user">
-  <button (click)= "login()">S'inscrire</button>
-  <button (click)="login()">Se connecter</button>
-  </nav-->
-
-  <!-- <div>
-    <hr/>
-    <pre *ngIf="lists">
-      {{lists | async | json}}
-    </pre>
-    
-    <hr/>
-    <section *ngIf="movie">
-      <img [src]="getPath(movie.poster_path)" />
-      <pre>{{movie | json}}</pre>
-    </section>
-    <section *ngIf="!movie">
-      Pas encore de films à afficher...
-    </section>
-
-</div> -->
-
-

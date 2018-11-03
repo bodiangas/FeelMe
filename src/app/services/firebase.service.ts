@@ -14,32 +14,29 @@ export interface MovieList {
   providedIn: 'root'
 })
 export class FirebaseService {
-  private moviesListList: MovieList[] = [];
-  private firebaseLists: AngularFireList<MovieList[]>;
+  private moviesLists: MovieList[] = [];
+  // private firebaseLists: AngularFireList<MovieList[]>;
   movieSubject: Subject<MovieList[]> = new Subject();
 
-  constructor(
-    private firebase: AngularFireDatabase,
-  ) {
-  }
+  constructor(private firebase: AngularFireDatabase) { }
 
   emmitUserMoviesList() {
-    this.movieSubject.next(this.moviesListList);
-    console.log('emit movie lists', this.moviesListList);
+    this.movieSubject.next(this.moviesLists);
+    // console.log('emit movie lists', this.moviesLists);
   }
 
   saveMoviesLists(userId: string) {
     console.log('saving list data', userId);
-    this.firebase.database.ref(`/users/${userId}/lists/`).set(this.moviesListList);
+    this.firebase.database.ref(`/users/${userId}/lists/`).set(this.moviesLists);
   }
 
   getMoviesLists(userId: string) {
     this.firebase.database.ref(`/users/${userId}/lists/`)
       .on('value', (data: DataSnapshot) => {
-          this.moviesListList = data.val() ? data.val() : [];
-          console.log('getting list film', data.val(), this.moviesListList);
-          this.emmitUserMoviesList();
-        }
+        this.moviesLists = data.val() ? data.val() : [];
+        console.log('getting list film', data.val(), this.moviesLists);
+        this.emmitUserMoviesList();
+      }
       );
   }
 
@@ -58,21 +55,26 @@ export class FirebaseService {
   }
 
   createNewList(userId: string, newList: MovieList) {
-    this.moviesListList.push(newList);
+    this.moviesLists.push(newList);
     this.saveMoviesLists(userId);
     this.emmitUserMoviesList();
   }
 
   removeList(userId: string, list: MovieList) {
-    const listIndexToRemove = this.moviesListList.findIndex(
+    const listIndexToRemove = this.moviesLists.findIndex(
       (listEl) => {
         if (listEl === list) {
           return true;
         }
       }
     );
-    this.moviesListList.splice(listIndexToRemove, 1);
+    this.moviesLists.splice(listIndexToRemove, 1);
     this.saveMoviesLists(userId);
     this.emmitUserMoviesList();
+  }
+
+  removeListBis(userId: string, idList: number) {
+    this.firebase.database.ref(`/users/${userId}/lists/${idList}`)
+      .remove();
   }
 }

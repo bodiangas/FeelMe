@@ -14,7 +14,6 @@ export interface GetMoviesQuery {
   region?: string;
 }
 
-
 export interface SearchTrendingQuery {
   media_type: string;
   time_window: string;

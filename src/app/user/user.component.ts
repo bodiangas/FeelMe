@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 import { Subscription } from 'rxjs';
-import { MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { SigninChoiceComponent } from './signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { UserService, ConexionData } from '../services/user.service';
@@ -24,7 +24,7 @@ export class UserComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private userservices: UserService,
     private firebaseService: FirebaseService) {
-    }
+  }
 
   ngOnInit() {
     /*this.isConnectedSubscribtion = this.userservices.connectedSubject.subscribe(
@@ -57,10 +57,27 @@ export class UserComponent implements OnInit, OnDestroy {
           budget: 3000000,
           adult: false,
           title: 'Jolie film'
+        },
+        {
+          budget: 4444,
+          adult: false,
+          title: 'Beau film'
         }
       ]
     });
     console.log('user component test stockage');
+    this.firebaseService.getMoviesLists(this._user.uid);
+    this.firebaseService.removeList(this._user.uid, {
+      name: 'Liste 3',
+      movies: [
+        {
+          budget: 3000000,
+          adult: false,
+          title: 'Jolie film'
+        }
+      ]
+    });
+    console.log('sssssssssssssssssssssssssss');
     this.firebaseService.getMoviesLists(this._user.uid);
   }
 
@@ -80,10 +97,11 @@ export class UserComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(LoginDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      if (result) { this.userservices.loginVia(result).then(() => {
-        console.log('Log in succes', this.isConnected);
-      }).catch(error => this.handleError(error));
-    }
+      if (result) {
+        this.userservices.loginVia(result).then(() => {
+          console.log('Log in succes', this.isConnected);
+        }).catch(error => this.handleError(error));
+      }
     });
   }
 
