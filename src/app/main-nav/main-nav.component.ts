@@ -27,7 +27,6 @@ export class MainNavComponent {
     this.firebase.movieSubject.subscribe(movies => {
       this.userLists = movies;
     });
-
   }
 
   navigation() {

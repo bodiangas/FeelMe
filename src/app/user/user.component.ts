@@ -38,6 +38,7 @@ export class UserComponent implements OnInit, OnDestroy {
         if (user) {
           this._user = user;
           this.isConnected = true;
+          console.log('getting list saved for first time');
           this.firebaseService.getMoviesLists(user.uid);
         }
       }
@@ -50,7 +51,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   test() {
-    this.firebaseService.createNewList(this._user.uid, {
+    /*this.firebaseService.createNewList(this._user.uid, {
       name: 'Liste 3',
       movies: [
         {
@@ -64,7 +65,8 @@ export class UserComponent implements OnInit, OnDestroy {
           title: 'Beau film'
         }
       ]
-    });
+    });*/
+    this.firebaseService.saveMoviesLists(this._user.uid);
     console.log('user component test stockage');
     this.firebaseService.getMoviesLists(this._user.uid);
     this.firebaseService.removeList(this._user.uid, {
