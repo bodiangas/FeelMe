@@ -7,7 +7,7 @@
       <!-- /// <button class="w3-button w3-display-right" (click)="plusDivs(+1)">&#10095;</button>  -->
       <div class="testimonial-carousel">
         <li *ngFor="let movie of movies[0]" class="testimonial-item ">
-          <app-movie [movie]="movie"></app-movie>
+          <app-movie [movie]="movie" (isConnected)="false"></app-movie>
           <!-- /// <a class="next" (click)="plusSlides(1)">&#10095;</a>  -->
         </li>
       </div>
@@ -24,7 +24,7 @@
     <ul>
       <div class="testimonial-carousel">
         <li *ngFor="let movie of movies[1]">
-          <app-movie [movie]="movie"></app-movie>
+          <app-movie [movie]="movie" [isConnected]="false"></app-movie>
         </li>
       </div>
       <div class="icon-container">
@@ -39,7 +39,7 @@
     <ul>
       <div class="testimonial-carousel">
         <li *ngFor="let movie of movies[2]">
-          <app-movie [movie]="movie"></app-movie>
+          <app-movie [movie]="movie" [isConnected]="false"></app-movie>
         </li>
       </div>
       <div class="icon-container">

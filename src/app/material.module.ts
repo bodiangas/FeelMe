@@ -24,7 +24,8 @@ import {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatFormFieldModule
   ],
   exports: [
     MatToolbarModule,

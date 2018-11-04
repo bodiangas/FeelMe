@@ -2,16 +2,23 @@
   <div *ngIf="random">
     <div class="films">
       <li *ngFor="let film of movies">
-        <app-movie [movie]="film"></app-movie>
+        <app-movie [movie]="film" isConnected="true"></app-movie>
       </li>
     </div>
   </div>
   <div *ngIf="!random">
-    <h2> Le titre </h2>
-    <div class="cards">
-      <li *ngFor="let movie of movies">
-        <app-movie [movie]="movie"></app-movie>
-      </li>
+    <div class="list">
+      <div class="list-header">
+        <h2> {{ name }} </h2>
+        <button mat-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="cards">
+        <li *ngFor="let movie of movies">
+          <app-movie [movie]="movie" [isConnected]="isConnected"></app-movie>
+        </li>
+      </div>
     </div>
   </div>
 

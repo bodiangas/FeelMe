@@ -40,3 +40,11 @@ nav ul li {
   a {
     border-bottom: #f0ecec 1px solid;
   }
+
+  button {
+    white-space: nowrap; 
+    /* width: 100%;  */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+   

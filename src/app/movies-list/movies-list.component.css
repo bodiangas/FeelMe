@@ -14,3 +14,25 @@ li {
     margin-left: 2%;
     margin-top: 15px;
 }
+
+.list {
+    width: 100%;
+    flex-wrap: nowrap;
+    display: flex;
+}
+
+.list-header {
+    width: 100%;
+    padding-left: 2%;
+    overflow:hidden;
+    display: inline-flex;
+    border-bottom: #f0ecec 3px solid;
+    position: inherit;
+    margin-bottom: 25px;
+}
+
+button {
+    margin: 15px 10px 0px 0px;
+    position: absolute;
+    right: 0px;
+}

@@ -12,7 +12,7 @@ export class ActorsListComponent implements OnInit {
   private _people: PersonResult[] = [];
 
   constructor(private tmdb: TmdbService) {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 3; i++) {
       tmdb.init('544a04ed01152432f1d7ed782ed24b73') // Clef de TMDB
         .getPopularPerson({ 'page': i })
         .then((p: PersonlistResponse) => {

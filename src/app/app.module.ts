@@ -17,7 +17,7 @@ import { MovieComponent, DialogOverviewComponent } from './movie/movie.component
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { ActorDetailsComponent } from './actors-list/actor-details/actor-details.component';
 import { ActorsListComponent } from './actors-list/actors-list.component';
-import { MainNavComponent } from './main-nav/main-nav.component';
+import { MainNavComponent, DialogCreateListComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SigninChoiceComponent } from './user/signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './user/login-dialog/login-dialog.component';
@@ -48,6 +48,7 @@ import { FirebaseService } from './services/firebase.service';
     routingComponents,
     MovieComponent,
     DialogOverviewComponent,
+    DialogCreateListComponent,
     ForgetPasswordComponent,
     LoginEmailComponent
   ],
@@ -64,13 +65,15 @@ import { FirebaseService } from './services/firebase.service';
     ReactiveFormsModule,
     AppRoutingModule,
     MaterialModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ],
   entryComponents: [
     SigninChoiceComponent,
     LoginDialogComponent,
     DialogOverviewComponent,
     LoginEmailComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    DialogCreateListComponent
   ],
   providers: [TmdbService, UserService, SearchService, AuthGuardService, FirebaseService],
   bootstrap: [AppComponent]

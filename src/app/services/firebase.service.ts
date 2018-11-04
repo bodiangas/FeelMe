@@ -16,24 +16,52 @@ export interface MovieList {
 export class FirebaseService {
   private moviesLists: MovieList[] = [
     {
-      name: 'Liste 1',
+      name: 'Liste 122227666666666666622222',
       movies: [
         {
-          budget: 3000000,
+          poster_path: '/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg',
           adult: false,
-          title: 'Jolie film'
-        }, {
-          budget: 4000000,
+          overview: 'Framed in the 1940s for the doubleor his integrity and unquenchable sense of hope.',
+          release_date: '1994-09-10',
+          id: 278,
+          original_title: 'The Shawshank Redemption',
+          original_language: 'en',
+          title: 'The Shawshank Redemption',
+          backdrop_path: '/xBKGJQsAIeweesB79KC89FpBrVr.jpg',
+          popularity: 6.741296,
+          vote_count: 5238,
+          video: false,
+          vote_average: 8.32
+        },
+        {
+          poster_path: '/lIv1QinFqz4dlp5U4lQ6HaiskOZ.jpg',
           adult: false,
-          title: 'Mauvais film'
-        }, {
-          budget: 2000000,
+          overview: 'Under the direction of egins to pursue perfection at any cost, even his humanity.',
+          release_date: '2014-10-10',
+          id: 244786,
+          original_title: 'Whiplash',
+          original_language: 'en',
+          title: 'Whiplash',
+          backdrop_path: '/6bbZ6XyvgfjhQwbplnUh1LSj1ky.jpg',
+          popularity: 10.776056,
+          vote_count: 2059,
+          video: false,
+          vote_average: 8.29
+        },
+        {
+          poster_path: '/d4KNaTrltq6bpkFS01pYtyXa09m.jpg',
           adult: false,
-          title: 'J\'adore film'
-        }, {
-          budget: 10000000,
-          adult: false,
-          title: 'Deadpool'
+          overview: 'The story spans the years from 1945 to 1955 and chronicles the fictional Italian-Amedy revenge.',
+          release_date: '1972-03-15',
+          id: 238,
+          original_title: 'The Godfather',
+          original_language: 'en',
+          title: 'The Godfather',
+          backdrop_path: '/6xKCYgH16UuwEGAyroLU6p8HLIn.jpg',
+          popularity: 4.554654,
+          vote_count: 3570,
+          video: false,
+          vote_average: 8.26
         }
       ]
     }, {
@@ -63,11 +91,10 @@ export class FirebaseService {
 
   emmitUserMoviesList() {
     this.movieSubject.next(this.moviesLists);
-    // console.log('emit movie lists', this.moviesLists);
   }
 
   saveMoviesLists(userId: string) {
-    console.log('saving list data', userId);
+    console.log('saving list data for user :', userId);
     this.moviesLists.forEach(e => {
       this.firebase.database.ref(`/users/${userId}/lists/${e.name}`).set(e.movies);
     });
@@ -79,17 +106,16 @@ export class FirebaseService {
       .on('value', (data: DataSnapshot) => {
         const newMoviesLists = [];
         data.forEach(e => {
-          console.log('test ', e, e.key, e.val());
           newMoviesLists.push({
             name: e.key,
             movies: e.val(),
           });
         });
-          // this.moviesListList = data.val() ? data.val() : [];
-          if (newMoviesLists.length !== 0) { this.moviesLists = newMoviesLists; }
-          console.log('getting list film', data.val(), this.moviesLists);
-          this.emmitUserMoviesList();
-        }
+        // this.moviesListList = data.val() ? data.val() : [];
+        if (newMoviesLists.length !== 0) { this.moviesLists = newMoviesLists; }
+        console.log('getting list film', data.val(), this.moviesLists);
+        this.emmitUserMoviesList();
+      }
       );
   }
 
@@ -110,24 +136,26 @@ export class FirebaseService {
   createNewList(userId: string, newList: MovieList) {
     this.moviesLists.push(newList);
     this.saveMoviesLists(userId);
-    this.emmitUserMoviesList();
+    // this.emmitUserMoviesList();
   }
 
-  removeList(userId: string, list: MovieList) {
-    const listIndexToRemove = this.moviesLists.findIndex(
-      (listEl) => {
-        if (listEl === list) {
-          return true;
-        }
-      }
-    );
-    this.moviesLists.splice(listIndexToRemove, 1);
-    this.saveMoviesLists(userId);
-    this.emmitUserMoviesList();
-  }
+  // removeList(userId: string, list: MovieList) {
+  //   const listIndexToRemove = this.moviesLists.findIndex(
+  //     (listEl) => {
+  //       if (listEl === list) {
+  //         return true;
+  //       }
+  //     }
+  //   );
+  //   this.moviesLists.splice(listIndexToRemove, 1);
+  //   this.saveMoviesLists(userId);
+  //   this.emmitUserMoviesList();
+  // }
 
-  removeListBis(userId: string, idList: number) {
+  removeList(userId: string, idList: string) {
     this.firebase.database.ref(`/users/${userId}/lists/${idList}`)
       .remove();
+    this.getMoviesLists(userId);
+    this.emmitUserMoviesList();
   }
 }

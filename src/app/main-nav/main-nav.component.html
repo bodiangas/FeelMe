@@ -12,17 +12,18 @@
             Mes listes
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div *ngFor="let list of lists" style="display: block;">
-          <button mat-button [routerLink]="['/list', list.name]">
-            {{ list.name }}
-          </button>
+        <div *ngIf="isConnected">
+          <div *ngFor="let list of lists" style="display: block;">
+            <button mat-button [routerLink]="['/list', list.name]" style="width: 100%;">
+                {{ list.name }}
+            </button>
+          </div>
+          <div>
+            <button mat-button (click)="openDialog()">
+              <mat-icon>add</mat-icon> Ajouter une liste
+            </button>
+          </div>
         </div>
-        <!-- <div *ngIf="connected"> <div>
-          <a><mat-icon>add</mat-icon> Ajout </a>
-        </div> -->
-        <!-- <mat-form-field>
-            <input matInput placeholder="Ajouter une Liste" formControlName="Input">
-          </mat-form-field> </div>-->
       </mat-expansion-panel>
     </mat-nav-list>
   </mat-sidenav>

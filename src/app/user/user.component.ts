@@ -22,7 +22,7 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(
     public anAuth: AngularFireAuth,
     public dialog: MatDialog,
-    private userservices: UserService,
+    private userService: UserService,
     private firebaseService: FirebaseService) {
   }
 
@@ -33,7 +33,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.isConnected = isconnected;
       }
     );*/
-    this.userSubscription = this.userservices.userSubject.subscribe(
+    this.userSubscription = this.userService.userSubject.subscribe(
       (user) => {
         if (user) {
           this._user = user;
@@ -43,7 +43,7 @@ export class UserComponent implements OnInit, OnDestroy {
         }
       }
     );
-    this.userservices.emmitUser();
+    this.userService.emmitUser();
   }
 
   ngOnDestroy() {
@@ -51,34 +51,21 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   test() {
-    /*this.firebaseService.createNewList(this._user.uid, {
-      name: 'Liste 3',
-      movies: [
-        {
-          budget: 3000000,
-          adult: false,
-          title: 'Jolie film'
-        },
-        {
-          budget: 4444,
-          adult: false,
-          title: 'Beau film'
-        }
-      ]
-    });*/
     this.firebaseService.saveMoviesLists(this._user.uid);
     console.log('user component test stockage');
     this.firebaseService.getMoviesLists(this._user.uid);
-    this.firebaseService.removeList(this._user.uid, {
-      name: 'Liste 3',
-      movies: [
-        {
-          budget: 3000000,
-          adult: false,
-          title: 'Jolie film'
-        }
-      ]
-    });
+    // this.firebaseService.removeList(this._user.uid, {
+    //   name: 'Liste 3',
+    //   movies: [
+    //     {
+    //       budget: 3000000,
+    //       adult: false,
+    //       title: 'Jolie film'
+    //     }
+    //   ]
+    // });
+    this.firebaseService.removeList(this._user.uid, 'Liste 3');
+    this.firebaseService.createNewList(this._user.uid, { name: 'Liste 4', movies: [{ adult: false, budget: 232332, title: 'ok' }] });
     console.log('sssssssssssssssssssssssssss');
     this.firebaseService.getMoviesLists(this._user.uid);
   }
@@ -88,7 +75,7 @@ export class UserComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result, this.isConnected);
       if (result) {
-        this.userservices.signinVia(result).then(() => {
+        this.userService.signinVia(result).then(() => {
           console.log('Sign up succes', this.isConnected);
         }).catch(error => this.handleError(error));
       }
@@ -100,7 +87,7 @@ export class UserComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       if (result) {
-        this.userservices.loginVia(result).then(() => {
+        this.userService.loginVia(result).then(() => {
           console.log('Log in succes', this.isConnected);
         }).catch(error => this.handleError(error));
       }
@@ -108,7 +95,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.userservices.signOut();
+    this.userService.signOut();
     this._user = undefined;
     this.isConnected = false;
   }

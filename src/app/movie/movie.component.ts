@@ -18,6 +18,7 @@ export interface DialogData {
 export class MovieComponent implements OnInit {
 
   @Input() movie: MovieResponse;
+  @Input() isConnected: boolean;
 
   posterUrl: string;
   display = false;
@@ -28,6 +29,7 @@ export class MovieComponent implements OnInit {
 
   constructor(private tmdbservice: TmdbService, private firebase: FirebaseService, public dialog: MatDialog) {
     this.firebase.movieSubject.subscribe();
+    console.log('Connected ', this.isConnected);
   }
 
   ngOnInit() {
