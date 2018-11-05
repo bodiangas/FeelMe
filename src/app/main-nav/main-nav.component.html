@@ -15,7 +15,7 @@
         <div *ngIf="isConnected">
           <div *ngFor="let list of lists" style="display: block;">
             <button mat-button [routerLink]="['/list', list.name]" style="width: 100%;">
-                {{ list.name }}
+              {{ list.name }}
             </button>
           </div>
           <div>
@@ -33,19 +33,11 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <div class="flex_container">
-        <input [(ngModel)]="searchText" placeholder="Rechercher film ou acteur" class=" research spacer">
-        <button class="search_box" (click)="navigation()">search</button>
+        <input matInput appearance="outline" [(ngModel)]="searchText" placeholder="Rechercher film ou acteur" class=" research spacer">
+        <button mat-button class="search_box" (click)="navigation()">search</button>
         <span class="example-spacer"></span>
       </div>
       <span class="example-spacer"></span>
-      <!-- <nav>
-        <ul>
-          <li><a routerLink="user"><i class="material-icons md-18 icone">person</i>
-             S'inscrire</a>
-            </li>
-          <li><a href="login()"><i class="material-icons md-18 icone">arrow_right</i>Se connecter</a></li>
-        </ul>
-      </nav> -->
       <app-user></app-user>
     </mat-toolbar>
     <!-- Add Content Here -->

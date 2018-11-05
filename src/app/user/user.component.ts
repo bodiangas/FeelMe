@@ -27,12 +27,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    /*this.isConnectedSubscribtion = this.userservices.connectedSubject.subscribe(
-      (isconnected: boolean) => {
-        console.log('here user init', isconnected);
-        this.isConnected = isconnected;
-      }
-    );*/
     this.userSubscription = this.userService.userSubject.subscribe(
       (user) => {
         if (user) {
@@ -64,7 +58,7 @@ export class UserComponent implements OnInit, OnDestroy {
     //     }
     //   ]
     // });
-    this.firebaseService.removeList(this._user.uid, 'Liste 3');
+    this.firebaseService.deleteList(this._user.uid, 'Liste 3');
     this.firebaseService.createNewList(this._user.uid, { name: 'Liste 4', movies: [{ adult: false, budget: 232332, title: 'ok' }] });
     console.log('sssssssssssssssssssssssssss');
     this.firebaseService.getMoviesLists(this._user.uid);

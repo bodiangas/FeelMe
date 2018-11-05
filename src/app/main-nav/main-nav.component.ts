@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -16,12 +16,14 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./main-nav.component.css']
 })
 export class MainNavComponent implements OnInit {
+// , OnDestroy {
 
   public searchText: string;
   private userLists: MovieList[];
   public isConnected = false;
   private _user: User;
   private userSubscription = new Subscription();
+  private firebaseSubscription = new Subscription();
   title;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -32,11 +34,7 @@ export class MainNavComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
     private router: Router, private search: SearchService,
     private firebase: FirebaseService, private userService: UserService,
-    public dialog: MatDialog) {
-    this.firebase.movieSubject.subscribe(movies => {
-      this.userLists = movies;
-    });
-  }
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.userSubscription = this.userService.userSubject.subscribe(
@@ -47,8 +45,17 @@ export class MainNavComponent implements OnInit {
         }
       }
     );
-    this.userService.emmitUser();
+
+    this.firebaseSubscription = this.firebase.movieSubject.subscribe(movies => {
+      this.userLists = movies;
+    });
+    // this.firebase.getMoviesLists(this._user.uid);
   }
+
+  // ngOnDestroy(): void {
+  //   this.userSubscription.unsubscribe();
+  //   this.firebaseSubscription.unsubscribe();
+  // }
 
   navigation() {
     this.search.searchText = this.searchText;
@@ -67,8 +74,17 @@ export class MainNavComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: string) => {
-      console.log('Resultat', result);
       this.title = result;
+      this.firebase.createNewList(this._user.uid, {
+        name: this.title, movies: [
+          {
+            id: 213,
+            title: 'Movie',
+            overview: 'Add movies .. ',
+            poster_path: null,
+            vote_average: 10
+          }]
+      });
     });
   }
 
@@ -84,8 +100,7 @@ export class DialogCreateListComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogCreateListComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string },
-    private fb: FormBuilder) { }
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }) { }
 
   ngOnInit(): void {
     this.titleForm = new FormGroup({
@@ -95,10 +110,6 @@ export class DialogCreateListComponent implements OnInit {
 
   get text() {
     return this.titleForm.get('text');
-  }
-
-  onSubmit(): void {
-    console.log(this.titleForm.value);  // {first: 'Nancy', last: 'Drew'}
   }
 
   onNoClick() {

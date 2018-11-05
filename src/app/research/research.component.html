@@ -1,7 +1,7 @@
 <div *ngIf="movies">
-  <div *ngFor="let movie of resMovies.results">
-    <p>
-      {{movie.original_title}}
-    </p>
+  <div class="films">
+    <li *ngFor="let film of movies.results">
+      <app-movie [movie]="film" [add]="true"></app-movie>
+    </li>
   </div>
 </div>

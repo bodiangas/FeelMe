@@ -17,12 +17,11 @@ import { User } from 'firebase';
 
 export class MoviesListComponent implements OnInit, OnDestroy {
 
-  private listName = null;
   private idList;
-  // public myLists: FirebaseListObservable<any[]>;
   private _movies: MovieResult[] | MovieResponse[] = null;
-  private _moviesList: MovieList[];
+  private _user: User;
   private userSubscription = new Subscription();
+  private firebaseSubscription = new Subscription();
   isConnected = false;
   random = false;
 
@@ -31,47 +30,38 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       this.idList = params['name'];
     });
-    console.log('ID ' + this.idList);
-    // this.firebase.movieSubject.subscribe(movies => {
-    //   console.log('RESULTAT ', this._moviesList = movies.find(e => e.name = this.idList));
-    // });
-    // console.log('AAAAAAAAAA', this._moviesList);
-    // this._movies = this._moviesList.movies;
-  }
-
-  ngOnInit() {
-    let _user: User;
-    this.listName = this.idList;
-    this.userSubscription = this.userService.userSubject.subscribe(
-      (user) => {
-        if (user) {
-          _user = user;
-          this.isConnected = true;
-        }
-      }
-    );
-    this.userService.emmitUser();
     if (this.router.url === '/movies') {
       this.random = true;
       setTimeout(() => this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').searchMovie({ query: 'a' })
         .then(e => this._movies = e.results));
     } else {
-      this.firebase.movieSubject.subscribe(m => {
-        let LISTE: MovieList;
-        console.log('MES LISTES', this._moviesList = m);
-        console.log('LA LISTE', LISTE = this._moviesList.find(
-          (movie) => movie.name === this.idList));
-        const nMovies: MovieResponse[] = null;
-        this._movies = LISTE.movies;
-        console.log('LA VRAIE LISTE ', this._movies);
+      this.firebaseSubscription = this.firebase.movieSubject.subscribe(m => {
+        this._movies = m.find(
+          (movie) => movie.name === this.idList).movies;
       });
-      // find((m: MovieList) => m.name = this.listName).movies);
     }
+  }
 
+  ngOnInit() {
+    this.userSubscription = this.userService.userSubject.subscribe(
+      (user) => {
+        if (user) {
+          this._user = user;
+          this.isConnected = true;
+        }
+      }
+    );
+    this.userService.emmitUser();
   }
 
   ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+    this.firebaseSubscription.unsubscribe();
+  }
 
+  deleteList() {
+    this.firebase.deleteList(this._user.uid, this.idList);
+    this.router.navigateByUrl('/');
   }
 
   get movies() {
@@ -79,7 +69,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   }
 
   get name(): string {
-    return this.listName;
+    return this.idList;
   }
 
 }

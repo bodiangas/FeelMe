@@ -4,6 +4,7 @@ import { MovieResponse } from '../tmdb-data/Movie';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { UserService } from './user.service';
 import { DataSnapshot } from '@angular/fire/database/interfaces';
+import { MovieResult } from '../tmdb-data/searchMovie';
 
 export interface MovieList {
   name: string;
@@ -84,7 +85,6 @@ export class FirebaseService {
       ]
     }
   ];
-  private firebaseLists: AngularFireList<MovieList[]>;
   movieSubject: Subject<MovieList[]> = new Subject();
 
   constructor(private firebase: AngularFireDatabase) { }
@@ -136,26 +136,27 @@ export class FirebaseService {
   createNewList(userId: string, newList: MovieList) {
     this.moviesLists.push(newList);
     this.saveMoviesLists(userId);
-    // this.emmitUserMoviesList();
+    this.emmitUserMoviesList();
   }
 
-  // removeList(userId: string, list: MovieList) {
-  //   const listIndexToRemove = this.moviesLists.findIndex(
-  //     (listEl) => {
-  //       if (listEl === list) {
-  //         return true;
-  //       }
-  //     }
-  //   );
-  //   this.moviesLists.splice(listIndexToRemove, 1);
-  //   this.saveMoviesLists(userId);
-  //   this.emmitUserMoviesList();
-  // }
-
-  removeList(userId: string, idList: string) {
+  deleteList(userId: string, idList: string) {
     this.firebase.database.ref(`/users/${userId}/lists/${idList}`)
       .remove();
     this.getMoviesLists(userId);
     this.emmitUserMoviesList();
   }
+
+  deleteMovie(userId: string, idList: string, idMovie: number) {
+    this.firebase.database.ref(`/users/${userId}/lists/${idList}/${idMovie}`)
+      .remove();
+    this.getMoviesLists(userId);
+    this.emmitUserMoviesList();
+  }
+
+  addMovie(userId: string, idList: string, idMovie: number, movie: MovieResponse | MovieResult) {
+    this.firebase.database.ref(`/users/${userId}/lists/${idList}/${idMovie}`).set(movie);
+    this.getMoviesLists(userId);
+    this.emmitUserMoviesList();
+  }
+
 }
