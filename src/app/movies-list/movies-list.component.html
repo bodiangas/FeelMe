@@ -1,3 +1,25 @@
-<p>
-  movies-list works!
-</p>
+<div>
+  <div *ngIf="random">
+    <div class="films">
+      <li *ngFor="let film of movies">
+        <app-movie [movie]="film" [add]="true"></app-movie>
+      </li>
+    </div>
+  </div>
+  <div *ngIf="!random">
+    <div class="list">
+      <div class="list-header">
+        <h2> {{ name }} </h2>
+        <button mat-button (click)="deleteList()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="cards">
+        <li *ngFor="let movie of movies">
+          <app-movie [movie]="movie" [add]="false" [listName]="idList"></app-movie>
+        </li>
+      </div>
+    </div>
+  </div>
+
+</div>

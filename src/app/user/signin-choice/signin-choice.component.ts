@@ -1,7 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { UserService, ConexionData } from 'src/app/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-signin-choice',

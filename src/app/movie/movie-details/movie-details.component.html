@@ -1,0 +1,21 @@
+<div *ngIf="movieDetails">
+    <div class="single_column">
+        <div class="poster">
+            <div class="image_content">
+                <img class="poster" [src]="getPath(movieDetails.poster_path)" alt="{{movieDetails.original_title}}" />
+            </div>
+        </div>
+        <div class="container">
+            <div class="title">
+                <h2> {{ movieDetails.original_title }} </h2>
+                <p> {{ movieDetails.release_date | date : 'yyyy' }} </p>
+            </div>
+            <div class="infos">
+                <h3> Synopsis </h3>
+                <div class="overview">
+                    <p> {{ movieDetails.overview }} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

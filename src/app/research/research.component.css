@@ -1,0 +1,9 @@
+.films {
+    display: block; 
+    margin-left: 2%;
+    margin-top: 15px;
+}
+
+li {
+    display: inline-block; 
+}

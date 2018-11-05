@@ -1,3 +1,87 @@
-<p>
-  home-page works!
-</p>
+<div *ngIf="movies">
+  <div class="title">
+    <p> Tendances </p>
+  </div>
+  <div>
+    <ul>
+      <!-- /// <button class="w3-button w3-display-right" (click)="plusDivs(+1)">&#10095;</button>  -->
+      <div class="testimonial-carousel">
+        <li *ngFor="let movie of movies[0]" class="testimonial-item ">
+          <app-movie [movie]="movie" [add]="true"></app-movie>
+          <!-- /// <a class="next" (click)="plusSlides(1)">&#10095;</a>  -->
+        </li>
+      </div>
+      <div class="icon-container">
+        <button class="lnr lnr-arrow-right-circle"></button>
+      </div>
+
+    </ul>
+  </div>
+  <div class="title">
+    <p> Populaires </p>
+  </div>
+  <div>
+    <ul>
+      <div class="testimonial-carousel">
+        <li *ngFor="let movie of movies[1]">
+          <app-movie [movie]="movie" [add]="true"></app-movie>
+        </li>
+      </div>
+      <div class="icon-container">
+        <button class="lnr lnr-arrow-right-circle"></button>
+      </div>
+    </ul>
+  </div>
+  <div class="title">
+    <h4> Prochainement </h4>
+  </div>
+  <div>
+    <ul>
+      <div class="testimonial-carousel">
+        <li *ngFor="let movie of movies[2]">
+          <app-movie [movie]="movie" [add]="true"></app-movie>
+        </li>
+      </div>
+      <div class="icon-container">
+        <button class="lnr lnr-arrow-right-circle"></button>
+      </div>
+    </ul>
+  </div>
+
+</div>
+
+
+<!-- /////
+<div class="callout-text">
+	<h4>Testimonials</h4>
+	<div class="testimonial-carousel">
+		/// Circled Left 2 icon by Icons8
+		<div class="icon-container">
+			<button class="lnr lnr-arrow-left-circle"></button>
+		</div>
+		<div class="testimonial-items">
+			<div class="testimonial-item first">
+				<blockquote>
+					<p class="testimonial-quote">Thank you very much for the great job you made of my cooker. You made a horrible job look easy and I can't thank you enough. I hate cleaning oven racks and they sparkle now. Thanks again.</p>
+					<p class="testimonial-author"><cite>— H Scott, Edinburgh</cite></p>
+				</blockquote>
+			</div>
+			<div class="testimonial-item second">
+				<blockquote>
+					<p class="testimonial-quote">Just a wee note to say 'WOW!' and thank you to you, and colleagues. Our old flat is sparkling and looks absolutely fantastic, I still can't believe how clean the oven is! Thanks so much again for all your hard work yesterday.</p>
+					<p class="testimonial-author"><cite>— Nicola, Leith, Edinburgh</cite></p>
+				</blockquote>
+			</div>
+			<div class="testimonial-item third">
+				<blockquote>
+					<p class="testimonial-quote">As mentioned I was very satisfied with the quality of the cleaning. The lady was very cheerful and enthusiastic. I will definitely consider using Quality Cleaning Services again.</p>
+					<p class="testimonial-author"><cite>— W S Khan, Lothian Road, Edinburgh</cite></p>
+				</blockquote>
+			</div>
+		</div>
+	/// End .testimonial-items 
+		<div class="icon-container">
+			<button class="lnr lnr-arrow-right-circle" ></button>
+		</div>
+	</div>
+</div> -->

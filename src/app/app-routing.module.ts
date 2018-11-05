@@ -2,43 +2,62 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActorsListComponent } from './actors-list/actors-list.component';
 import { AppComponent } from './app.component';
-import { ActorsComponent } from './actors/actors.component';
+import { ActorDetailsComponent } from './actors-list/actor-details/actor-details.component';
 import { UserComponent } from './user/user.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
-import { MoviesComponent } from './movies/movies.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ResearchComponent } from './research/research.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
-import { ResearchComponent } from './research/research.component';
+
 
 const appRoutes: Routes = [
   {
     path: '',
-    component: MoviesComponent
+    component: HomePageComponent
   },
   {
-    path: 'actors/:id',
-    component: ActorsComponent
+    path: 'actor/:id',
+    component: ActorDetailsComponent
+  },
+  {
+    path: 'actors',
+    component: ActorsListComponent
+  },
+  {
+    path: 'movie/:id',
+    component: MovieDetailsComponent
   },
   {
     path: 'movies',
-    component: MoviesComponent
-  },
-  {
-    path: 'moviesList',
     canActivate: [AuthGuardService],
     component: MoviesListComponent
   },
-  /*{
+  {
+    path: 'list/:name',
+    component: MoviesListComponent
+  },
+  // {
+  //   path: 'list/:id',
+  //   component: MoviesListComponent
+  // },
+  {
+    path: 'lists',
+    component: MoviesListComponent
+  },
+  {
     path: 'user',
     component: UserComponent
-  },*/
-  {
-    path: 'actorsList',
-    component: ActorsListComponent
   },
   {
     path: 'search',
     component: ResearchComponent
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
   },
   {
     path: 'not-found',
@@ -57,9 +76,12 @@ const appRoutes: Routes = [
 })
 export class AppRoutingModule { }
 export const routingComponents = [AppComponent,
-  ActorsComponent,
-  MoviesComponent,
+  ActorDetailsComponent,
+  ActorsListComponent,
+  MovieDetailsComponent,
   MoviesListComponent,
   UserComponent,
-  ActorsListComponent,
-  NotFoundComponent];
+  HomePageComponent,
+  PageNotFoundComponent,
+  NotFoundComponent
+];

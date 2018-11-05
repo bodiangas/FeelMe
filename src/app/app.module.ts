@@ -12,26 +12,24 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { UserComponent } from './user/user.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ResearchComponent } from './research/research.component';
-import { MoviesComponent } from './movies/movies.component';
+import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
+import { MovieComponent, DialogOverviewComponent } from './movie/movie.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
-import { ActorsComponent } from './actors/actors.component';
+import { ActorDetailsComponent } from './actors-list/actor-details/actor-details.component';
 import { ActorsListComponent } from './actors-list/actors-list.component';
-import { MainNavComponent } from './main-nav/main-nav.component';
+import { MainNavComponent, DialogCreateListComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatIconModule, MatListModule,
-  MatDialogModule, MatFormField, MatFormFieldModule, MatInputModule, MatSidenavModule } from '@angular/material';
 import { SigninChoiceComponent } from './user/signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './user/login-dialog/login-dialog.component';
 import { UserService } from './services/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { MaterialModule } from './material.module';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SearchService } from './search.service';
 import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { LoginEmailComponent } from './user/login-email/login-email.component';
 import { FirebaseService } from './services/firebase.service';
-import { SearchService } from './search.service';
 
 @NgModule({
   declarations: [
@@ -39,14 +37,18 @@ import { SearchService } from './search.service';
     UserComponent,
     HomePageComponent,
     ResearchComponent,
-    MoviesComponent,
+    MovieDetailsComponent,
+    MovieComponent,
     MoviesListComponent,
-    ActorsComponent,
+    ActorDetailsComponent,
     ActorsListComponent,
     MainNavComponent,
     SigninChoiceComponent,
     LoginDialogComponent,
     routingComponents,
+    MovieComponent,
+    DialogOverviewComponent,
+    DialogCreateListComponent,
     ForgetPasswordComponent,
     LoginEmailComponent
   ],
@@ -59,26 +61,21 @@ import { SearchService } from './search.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    MatSidenavModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule,
-    MatInputModule,
     ReactiveFormsModule,
     AppRoutingModule,
     MaterialModule,
-    MatProgressSpinnerModule
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ],
   entryComponents: [
     SigninChoiceComponent,
     LoginDialogComponent,
+    DialogOverviewComponent,
     LoginEmailComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    DialogCreateListComponent
   ],
-  providers: [TmdbService, UserService, AuthGuardService, FirebaseService],
+  providers: [TmdbService, UserService, SearchService, AuthGuardService, FirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

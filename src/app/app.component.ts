@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {TmdbService} from './tmdb.service';
-import {MovieResponse} from './tmdb-data/Movie';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {auth, User} from 'firebase';
-import {Observable, Subscription} from 'rxjs';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {filter} from 'rxjs/operators';
+import { TmdbService } from './tmdb.service';
+import { MovieResponse } from './tmdb-data/Movie';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth, User } from 'firebase';
+import { Observable, Subscription } from 'rxjs';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { filter } from 'rxjs/operators';
 import { FirebaseService } from './services/firebase.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { FirebaseService } from './services/firebase.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   private _movie: MovieResponse;
   private _user: User;
   private dbData: Observable<any>;
@@ -22,18 +22,11 @@ export class AppComponent implements OnInit{
 
   constructor(private tmdb: TmdbService, public anAuth: AngularFireAuth, private db: AngularFireDatabase
     , private fbService: FirebaseService) {
-    // setTimeout( () =>
-    //   tmdb.init('544a04ed01152432f1d7ed782ed24b73') // Clef de TMDB
-    //       .getMovie(13)
-    //       .then( (m: MovieResponse) => console.log('Movie 13:', this._movie = m) )
-    //       .catch( err => console.error('Error getting movie:', err) ),
-    //   1000 );
-
   }
 
   ngOnInit() {
     this.moviesListSubscription = this.fbService.movieSubject.subscribe(
-      movies => console.log( 'movies changed', movies)
+      movies => console.log('movies changed', movies)
     );
     this.fbService.emmitUserMoviesList();
   }

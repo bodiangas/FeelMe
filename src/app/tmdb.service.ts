@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { MovieQuery, MovieResponse } from './tmdb-data/Movie';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { PersonQuery, PersonResponse } from './tmdb-data/Person';
-import { SearchMovieQuery, SearchMovieResponse, SearchTrendingQuery } from './tmdb-data/searchMovie';
+import { SearchMovieQuery, SearchMovieResponse, SearchTrendingQuery, GetMoviesQuery } from './tmdb-data/searchMovie';
 import { SearchPeopleQuery, SearchPeopleResponse } from './tmdb-data/SearchPeople';
 import { TVQuery, TVResponse } from './tmdb-data/TV';
 import { SearchTVQuery, SearchTVResponse } from './tmdb-data/SearchTV';
-import {PersonlistResponse} from './tmdb-data/PersonList';
+import { PersonlistResponse } from './tmdb-data/SearchPeople';
 
 const tmdbApi = 'https://api.themoviedb.org/3';
 type HTTP_METHOD = 'GET' | 'POST' | 'DELETE' | 'PUT';
@@ -41,8 +41,11 @@ export class TmdbService {
   }
 
   getPath(path: string): string {
-    return `https://image.tmdb.org/t/p/w500${path}`;
+    return path === null ?
+      'http://via.placeholder.com/500x750?text=Not+avalaible' :
+      `https://image.tmdb.org/t/p/w500${path}`;
   }
+
 
   // _______________________________________________________________________________________________________________________________________
   // Movies ________________________________________________________________________________________________________________________________
@@ -59,10 +62,31 @@ export class TmdbService {
     return res.body;
   }
 
+  async getPopular(options?: GetMoviesQuery): Promise<SearchMovieResponse> {
+    const url = `${tmdbApi}/movie/popular`;
+    const res = await this.get<SearchMovieResponse>(url, options);
+    return res.body;
+  }
+
+  async getUpcoming(options?: GetMoviesQuery): Promise<SearchMovieResponse> {
+    const url = `${tmdbApi}/movie/upcoming`;
+    const res = await this.get<SearchMovieResponse>(url, options);
+    return res.body;
+  }
+
   async searchMovie(query: SearchMovieQuery): Promise<SearchMovieResponse> {
     const url = `${tmdbApi}/search/movie`;
     const res = await this.get<SearchMovieResponse>(url, query);
     return res.body;
+  }
+
+  async getHomeMovies(): Promise<SearchMovieResponse[]> {
+    const p1 = this.getTrending({ media_type: 'movie', time_window: 'week' } as SearchTrendingQuery);
+    const p2 = this.getPopular();
+    const p3 = this.getUpcoming();
+    const promises = Promise.all([p1, p2, p3]);
+    const data: SearchMovieResponse[] = await promises;
+    return data;
   }
 
   // _______________________________________________________________________________________________________________________________________
@@ -74,7 +98,7 @@ export class TmdbService {
     return res.body;
   }
 
-  async getListPerson(options: Object): Promise<PersonlistResponse> {
+  async getPopularPerson(options: Object): Promise<PersonlistResponse> {
     const url = `${tmdbApi}/person/popular`;
     const res = await this.get<PersonlistResponse>(url, options);
     return res.body;

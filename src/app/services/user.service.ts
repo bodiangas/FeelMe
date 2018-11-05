@@ -17,6 +17,7 @@ export interface ConexionData {
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService implements OnDestroy {
   _user: User;
   userSubject: Subject<User> = new Subject<User>();
@@ -125,17 +126,17 @@ export class UserService implements OnDestroy {
   async emailLogin(email: string, password: string) {
     return new Promise((resolve) => {
       this.anAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(credential => {
-        console.log('Welcome back!', 'success');
-        this._user = credential.user;
-        resolve();
-        this.emmitUser();
-      })
-      .catch(error => {
-        this.handleError(error);
-        reject(error);
-      });
+        .signInWithEmailAndPassword(email, password)
+        .then(credential => {
+          console.log('Welcome back!', 'success');
+          this._user = credential.user;
+          resolve();
+          this.emmitUser();
+        })
+        .catch(error => {
+          this.handleError(error);
+          reject(error);
+        });
     });
   }
 
@@ -143,9 +144,9 @@ export class UserService implements OnDestroy {
   async resetPassword(email: string) {
     const fbAuth = auth();
     return fbAuth
-        .sendPasswordResetEmail(email)
-        .then(() => console.log('Password update email sent', 'info'))
-        .catch(error => this.handleError(error));
+      .sendPasswordResetEmail(email)
+      .then(() => console.log('Password update email sent', 'info'))
+      .catch(error => this.handleError(error));
   }
 
   public signOut() {
