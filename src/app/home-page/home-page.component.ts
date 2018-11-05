@@ -17,8 +17,7 @@ export class HomePageComponent implements OnInit {
     setTimeout(() =>
       this.tmdb.getHomeMovies().then((d: SearchMovieResponse[]) => console.log('tab :', this._moviesTab = d.map(e => e.results))));
     setTimeout(() => {
-      this.dom = document.querySelectorAll('.lnr');
-      this.slidingDM(this.dom);
+      this.slidingDM(document.querySelectorAll('.lnr'));
     }, 3000);
   }
 
@@ -30,18 +29,17 @@ export class HomePageComponent implements OnInit {
   }
 
   slidingDM(arrows) {
-    const slides = document.querySelectorAll('.testimonial-item');
+    let slides;
+    let bouger;
     let carouselCount = 0;
 
-    arrows[0].addEventListener('click', function (e) {
-      e = e || window.event;
-      e.preventDefault();
-      carouselCount -= 100;
-      slider();
-    });
+    arrows[0].addEventListener('click', sliderEvent);
     arrows[1].addEventListener('click', sliderEvent);
+    arrows[2].addEventListener('click', sliderEvent);
 
-    function sliderEvent(e) {
+    function sliderEvent(e: Event) {
+      bouger = e.srcElement.getAttribute('id');
+      slides = document.querySelectorAll(`.testimonial-item#${bouger}`);
       e = e || window.event;
       e.preventDefault();
       carouselCount += 100;
@@ -50,10 +48,7 @@ export class HomePageComponent implements OnInit {
 
     function slider() {
       switch (carouselCount) {
-        case -100:
-          carouselCount = 0;
-          break;
-        case 300:
+        case 1900:
           carouselCount = 0;
           break;
         default:
