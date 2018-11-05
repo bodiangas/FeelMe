@@ -22,8 +22,7 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(
     public anAuth: AngularFireAuth,
     public dialog: MatDialog,
-    private userService: UserService,
-    private firebaseService: FirebaseService) {
+    private userService: UserService) {
   }
 
   ngOnInit() {
@@ -45,7 +44,6 @@ export class UserComponent implements OnInit, OnDestroy {
   signin() {
     const dialogRef = this.dialog.open(SigninChoiceComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result, this.isConnected);
       if (result) {
         this.userService.signinVia(result).then(() => {
           console.log('Sign up succes', this.isConnected);

@@ -24,24 +24,35 @@ export class FirebaseService {
   }
 
   saveMoviesLists(userId: string) {
+    console.log('save list');
     this.moviesLists.forEach(e =>
       this.firebase.database.ref(`/users/${userId}/lists/${e.name}`).set(e.movies)
     );
   }
 
   getMoviesLists(userId: string) {
-    this.saveMoviesLists(userId);
+    this.moviesLists = [];
     this.firebase.database.ref(`/users/${userId}/lists/`)
       .on('value', (data: DataSnapshot) => {
-        const newMoviesLists = [];
+        const newMoviesLists: MovieList[] = [];
         data.forEach(e => {
           newMoviesLists.push({
             name: e.key,
             movies: e.val(),
           });
         });
+        newMoviesLists.forEach(list => {
+          const realmovies: MovieResponse[] = [];
+          list.movies.forEach(movie => {
+            realmovies.push(movie);
+          });
+          this.moviesLists.push({
+            name: list.name,
+            movies: realmovies
+          }
+          );
+        });
         console.log('get movies list');
-        if (newMoviesLists.length !== 0) { this.moviesLists = newMoviesLists; }
         this.emmitUserMoviesList();
       }
       );

@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase:  {
-    apiKey: 'AIzaSyDAZdJ7CRiUD87Yc0mseKuWchs0F8sNItc',
-    authDomain: 'film-en-folie.firebaseapp.com',
-    databaseURL: 'https://film-en-folie.firebaseio.com',
-    projectId: 'film-en-folie',
-    storageBucket: 'film-en-folie.appspot.com',
-    messagingSenderId: '617333302234'
+    apiKey: 'AIzaSyA9e8MRjLiZK9Vs1i8qyCRG3vXKdiPVVA0',
+    authDomain: 'ihm-m1-2018.firebaseapp.com',
+    databaseURL: 'https://ihm-m1-2018.firebaseio.com',
+    projectId: 'ihm-m1-2018',
+    storageBucket: 'ihm-m1-2018.appspot.com',
+    messagingSenderId: '345300010790'
   }
 };
 

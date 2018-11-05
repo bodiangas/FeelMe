@@ -24,7 +24,7 @@ export class MovieComponent implements OnInit {
   @Input() listName?: string;
 
   posterUrl: string;
-  private value;
+  value;
   truncatedOverview;
   private userSubscription = new Subscription();
   private firebaseSubscription = new Subscription();

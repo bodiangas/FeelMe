@@ -3,11 +3,11 @@
     <p>Entrez le nom de votre liste :</p>
     <div >
         <mat-form-field>
-            <input matInput [(ngModel)]="data.title">
+            <input matInput [(ngModel)]="data.name">
         </mat-form-field>
     </div>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Annuler</button>
-    <button mat-button [mat-dialog-close]="data.title" cdkFocusInitial>Ok</button>
+    <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button>
 </div>
