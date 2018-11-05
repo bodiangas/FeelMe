@@ -35,16 +35,9 @@ export class MovieComponent implements OnInit {
 
   constructor(private tmdbservice: TmdbService, private firebase: FirebaseService,
     private userService: UserService,
-    public dialog: MatDialog) {
-    this.firebase.movieSubject.subscribe();
-
-  }
+    public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.value = this.movie.vote_average ? this.movie.vote_average * 10 : 0;
-    console.log(this.movie.id);
-    this.posterUrl = this.tmdbservice.getPath(this.movie.poster_path);
-    this.truncatedOverview = this.truncate(this.movie.overview, 130, '...');
     this.userSubscription = this.userService.userSubject.subscribe(
       (user) => {
         if (user) {
@@ -56,6 +49,11 @@ export class MovieComponent implements OnInit {
     this.userService.emmitUser();
     this.firebaseSubscription = this.firebase.movieSubject.subscribe(m =>
       this.lists = m);
+    // this.firebase.emmitUserMoviesList();
+
+    this.value = this.movie.vote_average ? this.movie.vote_average * 10 : 0;
+    this.posterUrl = this.tmdbservice.getPath(this.movie.poster_path);
+    this.truncatedOverview = this.truncate(this.movie.overview, 130, '...');
   }
 
 
@@ -74,7 +72,7 @@ export class MovieComponent implements OnInit {
     });
   }
 
-  addMovie() {
+  addMovieDefault() {
     const l = this.lists.length - 1;
     const val = this.lists[l].name;
     const idm = this.lists[l].movies.length;
@@ -82,6 +80,7 @@ export class MovieComponent implements OnInit {
   }
 
   deleteMovie() {
+    console.log('DELETE');
     const val = this.lists.find(m => m.name === this.listName).movies.findIndex(m => m === this.movie);
     this.firebase.deleteMovie(this._user.uid, this.listName, val);
   }

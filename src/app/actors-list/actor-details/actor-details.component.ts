@@ -24,10 +24,10 @@ export class ActorDetailsComponent implements OnInit {
       .catch(err => console.error('Error getting actor:', err));
   }
 
-  get Person(): PersonResponse {
+  get person(): PersonResponse {
     return this._person;
   }
-  get Gender(): String {
+  get gender(): String {
     if (this._person.gender === 0) {
       this.g = 'Femme';
     } else {
@@ -36,14 +36,14 @@ export class ActorDetailsComponent implements OnInit {
     return this.g;
   }
 
-  get Poster(): String {
+  get poster(): String {
     return this._person.profile_path;
   }
 
   get name(): String {
     return this._person.name;
   }
-  get Biograhie(): String {
+  get biograhie(): String {
     if (this._person.biography.length === 0) {
       this.bio = this._person.name + ' ';
     } else {

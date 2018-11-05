@@ -41,7 +41,7 @@ export class TmdbService {
   }
 
   getPath(path: string): string {
-    return path === null ?
+    return path === undefined || path === null ?
       'http://via.placeholder.com/500x750?text=Not+avalaible' :
       `https://image.tmdb.org/t/p/w500${path}`;
   }

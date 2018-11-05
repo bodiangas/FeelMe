@@ -15,8 +15,8 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.css']
 })
-export class MainNavComponent implements OnInit {
-// , OnDestroy {
+export class MainNavComponent implements OnInit, OnDestroy {
+  // , OnDestroy {
 
   public searchText: string;
   private userLists: MovieList[];
@@ -49,13 +49,12 @@ export class MainNavComponent implements OnInit {
     this.firebaseSubscription = this.firebase.movieSubject.subscribe(movies => {
       this.userLists = movies;
     });
-    // this.firebase.getMoviesLists(this._user.uid);
   }
 
-  // ngOnDestroy(): void {
-  //   this.userSubscription.unsubscribe();
-  //   this.firebaseSubscription.unsubscribe();
-  // }
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+    this.firebaseSubscription.unsubscribe();
+  }
 
   navigation() {
     this.search.searchText = this.searchText;
@@ -75,15 +74,18 @@ export class MainNavComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       this.title = result;
+      console.log('Enregistrement lise vide ', this.title);
       this.firebase.createNewList(this._user.uid, {
-        name: this.title, movies: [
+        name: this.title,
+        movies: [
           {
             id: 213,
             title: 'Movie',
             overview: 'Add movies .. ',
             poster_path: null,
             vote_average: 10
-          }]
+          }
+        ]
       });
     });
   }

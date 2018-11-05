@@ -1,8 +1,7 @@
-import { Injectable, OnInit } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { Injectable } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { MovieResponse } from '../tmdb-data/Movie';
-import { Subject, Observable, Subscription } from 'rxjs';
-import { UserService } from './user.service';
+import { Subject } from 'rxjs';
 import { DataSnapshot } from '@angular/fire/database/interfaces';
 import { MovieResult } from '../tmdb-data/searchMovie';
 
@@ -94,10 +93,9 @@ export class FirebaseService {
   }
 
   saveMoviesLists(userId: string) {
-    console.log('saving list data for user :', userId);
-    this.moviesLists.forEach(e => {
-      this.firebase.database.ref(`/users/${userId}/lists/${e.name}`).set(e.movies);
-    });
+    this.moviesLists.forEach(e =>
+      this.firebase.database.ref(`/users/${userId}/lists/${e.name}`).set(e.movies)
+    );
   }
 
   getMoviesLists(userId: string) {
@@ -111,9 +109,7 @@ export class FirebaseService {
             movies: e.val(),
           });
         });
-        // this.moviesListList = data.val() ? data.val() : [];
         if (newMoviesLists.length !== 0) { this.moviesLists = newMoviesLists; }
-        console.log('getting list film', data.val(), this.moviesLists);
         this.emmitUserMoviesList();
       }
       );

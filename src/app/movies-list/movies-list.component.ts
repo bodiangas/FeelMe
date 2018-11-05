@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
 import { MovieResult, SearchMovieResponse } from '../tmdb-data/searchMovie';
 import { FirebaseDatabase } from '@angular/fire';
@@ -55,12 +55,14 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
-    this.firebaseSubscription.unsubscribe();
+
+     this.userSubscription.unsubscribe();
+    // this.firebaseSubscription.unsubscribe();
   }
 
   deleteList() {
     this.firebase.deleteList(this._user.uid, this.idList);
+    this.firebase.emmitUserMoviesList();
     this.router.navigateByUrl('/');
   }
 
