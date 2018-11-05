@@ -1,12 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth, User } from 'firebase';
-import { TmdbService } from '../tmdb.service';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { filter } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { reject } from 'q';
-import { FirebaseService } from './firebase.service';
 
 export interface ConexionData {
   via;
@@ -32,20 +29,6 @@ export class UserService implements OnDestroy {
       this._user = u;
       console.log('connection user service connection ok');
       this.emmitUser();
-      /*this.firebase.saveUser(u.uid);
-      this.firebase.saveList({
-        userId: u.uid,
-        lists: {
-          name: 'Liste 3',
-          movies: [{
-            budget: 1000000,
-            adult: false
-          }]
-        }
-      });
-      this.firebase.getList(u.uid, 'Liste 3').then( data => {
-        console.log('data returned for Liste 3', JSON.parse('budget', data.toString));
-      });*/
     });
   }
 
@@ -56,7 +39,6 @@ export class UserService implements OnDestroy {
 
   emmitUser() {
     this.userSubject.next(this._user);
-    // this.firebase.saveUser(this._user.uid);
   }
 
   signinVia(data: ConexionData) {

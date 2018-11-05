@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
-import { SearchMovieResponse, SearchTrendingQuery, MovieResult } from '../tmdb-data/searchMovie';
-import { MovieResponse } from '../tmdb-data/Movie';
+import { SearchMovieResponse, MovieResult } from '../tmdb-data/searchMovie';
 
 @Component({
   selector: 'app-home-page',
@@ -19,7 +18,6 @@ export class HomePageComponent implements OnInit {
       this.tmdb.getHomeMovies().then((d: SearchMovieResponse[]) => console.log('tab :', this._moviesTab = d.map(e => e.results))));
     setTimeout(() => {
       this.dom = document.querySelectorAll('.lnr');
-      console.log('dom', this.dom);
       this.slidingDM(this.dom);
     }, 3000);
   }
