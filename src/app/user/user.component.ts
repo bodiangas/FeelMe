@@ -54,7 +54,6 @@ export class UserComponent implements OnInit, OnDestroy {
   login() {
     const dialogRef = this.dialog.open(LoginDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
       if (result) {
         this.userService.loginVia(result).then(() => {
           console.log('Log in succes', this.isConnected);
