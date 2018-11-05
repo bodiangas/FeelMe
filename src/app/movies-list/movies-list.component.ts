@@ -42,8 +42,11 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       if (this.router.url !== '/movies') {
           this.idList = params['name'];
-          this._movies = this._moviesList.find(
-            (movie) => movie.name === this.idList).movies;
+          const list = this._moviesList.find(
+            (movie) => movie.name === this.idList);
+          if (list) {
+            this._movies = list.movies;
+          }
         }
     });
 
