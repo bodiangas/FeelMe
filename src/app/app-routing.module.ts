@@ -9,7 +9,6 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResearchComponent } from './research/research.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
 
@@ -32,19 +31,16 @@ const appRoutes: Routes = [
   },
   {
     path: 'movies',
-    canActivate: [AuthGuardService],
     component: MoviesListComponent
   },
   {
     path: 'list/:name',
+    canActivate: [AuthGuardService],
     component: MoviesListComponent
   },
-  // {
-  //   path: 'list/:id',
-  //   component: MoviesListComponent
-  // },
   {
     path: 'lists',
+    canActivate: [AuthGuardService],
     component: MoviesListComponent
   },
   {
@@ -56,17 +52,13 @@ const appRoutes: Routes = [
     component: ResearchComponent
   },
   {
-    path: '**',
-    component: PageNotFoundComponent
-  },
-  {
     path: 'not-found',
-    component: NotFoundComponent
+    component: PageNotFoundComponent
   },
   {
     path: '**',
     redirectTo: 'not-found'
-  }
+  },
 ];
 
 @NgModule({
@@ -82,6 +74,5 @@ export const routingComponents = [AppComponent,
   MoviesListComponent,
   UserComponent,
   HomePageComponent,
-  PageNotFoundComponent,
-  NotFoundComponent
+  PageNotFoundComponent
 ];

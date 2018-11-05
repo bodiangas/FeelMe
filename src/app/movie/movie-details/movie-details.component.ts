@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TmdbService } from '../../tmdb.service';
 import { MovieResponse } from '../../tmdb-data/Movie';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-movie-details',
@@ -11,9 +10,6 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./movie-details.component.scss']
 })
 export class MovieDetailsComponent implements OnInit {
-
-  // @Input() id: number;
-  // movieDetails$: Observable<MovieResponse>;
 
   private id;
   private _movieDetails: MovieResponse;
@@ -23,7 +19,6 @@ export class MovieDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
     });
-    console.log('ID ' + this.id);
   }
 
   ngOnInit() {

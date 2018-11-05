@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
 import { PersonlistResponse, PersonResult } from '../tmdb-data/SearchPeople';
 
@@ -7,7 +7,7 @@ import { PersonlistResponse, PersonResult } from '../tmdb-data/SearchPeople';
   templateUrl: './actors-list.component.html',
   styleUrls: ['./actors-list.component.css']
 })
-export class ActorsListComponent implements OnInit {
+export class ActorsListComponent {
 
   private _people: PersonResult[] = [];
 
@@ -21,7 +21,6 @@ export class ActorsListComponent implements OnInit {
         .catch(err => console.error('Error getting actor:', err));
     }
   }
-  ngOnInit() { }
 
   get people() {
     return this._people;

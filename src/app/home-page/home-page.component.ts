@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
 import { SearchMovieResponse, MovieResult } from '../tmdb-data/searchMovie';
 
@@ -7,21 +7,17 @@ import { SearchMovieResponse, MovieResult } from '../tmdb-data/searchMovie';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent {
 
   private _moviesTab: MovieResult[][] = null;
-  private dom;
 
   constructor(private tmdb: TmdbService) {
     this.tmdb.init('544a04ed01152432f1d7ed782ed24b73');
     setTimeout(() =>
-      this.tmdb.getHomeMovies().then((d: SearchMovieResponse[]) => console.log('tab :', this._moviesTab = d.map(e => e.results))));
+      this.tmdb.getHomeMovies().then((d: SearchMovieResponse[]) => this._moviesTab = d.map(e => e.results)));
     setTimeout(() => {
       this.slidingDM(document.querySelectorAll('.lnr'));
     }, 3000);
-  }
-
-  ngOnInit() {
   }
 
   get movies() {

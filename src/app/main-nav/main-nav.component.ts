@@ -7,8 +7,8 @@ import { SearchService } from '../search.service';
 import { FirebaseService, MovieList } from '../services/firebase.service';
 import { UserService } from '../services/user.service';
 import { User } from 'firebase';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatFormFieldModule } from '@angular/material';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-main-nav',
@@ -16,8 +16,6 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./main-nav.component.css']
 })
 export class MainNavComponent implements OnInit, OnDestroy {
-  // , OnDestroy {
-
   public searchText: string;
   private userLists: MovieList[];
   public isConnected = false;
@@ -26,25 +24,26 @@ export class MainNavComponent implements OnInit, OnDestroy {
   private firebaseSubscription = new Subscription();
   title;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(map(result => result.matches));
 
-  constructor(private breakpointObserver: BreakpointObserver,
-    private router: Router, private search: SearchService,
-    private firebase: FirebaseService, private userService: UserService,
-    public dialog: MatDialog) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private search: SearchService,
+    private firebase: FirebaseService,
+    private userService: UserService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.userSubscription = this.userService.userSubject.subscribe(
-      (user) => {
-        if (user) {
-          this._user = user;
-          this.isConnected = true;
-        }
+    this.userSubscription = this.userService.userSubject.subscribe(user => {
+      if (user) {
+        this._user = user;
+        this.isConnected = true;
       }
-    );
+    });
 
     this.firebaseSubscription = this.firebase.movieSubject.subscribe(movies => {
       this.userLists = movies;
@@ -69,7 +68,6 @@ export class MainNavComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       this.title = result;
-      console.log('Enregistrement liste vide ', this.title);
       this.firebase.createNewList(this._user.uid, {
         name: this.title,
         movies: []
@@ -81,20 +79,20 @@ export class MainNavComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
     this.firebaseSubscription.unsubscribe();
   }
-
 }
 
+// Dialog component for adding list
 @Component({
   selector: 'app-dialog-create-list',
-  templateUrl: './dialog-create-list.html',
+  templateUrl: './dialog-create-list.html'
 })
 export class DialogCreateListComponent implements OnInit {
-
   titleForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<DialogCreateListComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string }) { }
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }
+  ) {}
 
   ngOnInit(): void {
     this.titleForm = new FormGroup({
@@ -109,5 +107,4 @@ export class DialogCreateListComponent implements OnInit {
   onNoClick() {
     this.dialogRef.close();
   }
-
 }

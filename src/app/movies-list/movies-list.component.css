@@ -10,7 +10,6 @@ li {
 
 .list {
     width: 100%;
-    /* flex-wrap: nowrap; */
     display: inline-block;
 }
 

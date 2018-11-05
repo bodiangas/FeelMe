@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SearchMovieQuery, SearchMovieResponse } from '../tmdb-data/searchMovie';
 import { SearchService } from '../search.service';
 import { TmdbService } from '../tmdb.service';

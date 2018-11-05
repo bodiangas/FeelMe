@@ -151,8 +151,10 @@ export class FirebaseService {
   }
 
   addMovie(userId: string, idList: string, idMovie: number, movie: MovieResponse | MovieResult) {
-    this.firebase.database.ref(`/users/${userId}/lists/${idList}/${idMovie}`).set(movie);
-    this.getMoviesLists(userId);
+    this.moviesLists.find(e => {
+      return e.name === idList;
+    }).movies.push(movie);
+    this.saveMoviesLists(userId);
     this.emmitUserMoviesList();
   }
 

@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
-import { MovieResult, SearchMovieResponse } from '../tmdb-data/searchMovie';
-import { FirebaseDatabase } from '@angular/fire';
+import { MovieResult } from '../tmdb-data/searchMovie';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FirebaseService, MovieList } from '../services/firebase.service';
 import { MovieResponse } from '../tmdb-data/Movie';
@@ -41,9 +40,11 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     });
     this.firebase.emmitUserMoviesList();
     this.route.params.subscribe(params => {
-        this.idList = params['name'];
-        this._movies = this._moviesList.find(
+      if (this.router.url !== '/movies') {
+          this.idList = params['name'];
+          this._movies = this._moviesList.find(
             (movie) => movie.name === this.idList).movies;
+        }
     });
 
     this.userSubscription = this.userService.userSubject.subscribe(
@@ -58,9 +59,8 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
-     this.userSubscription.unsubscribe();
-    // this.firebaseSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.firebaseSubscription.unsubscribe();
   }
 
   deleteList() {

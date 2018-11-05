@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
 import { MovieResponse } from '../tmdb-data/Movie';
-import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FirebaseService, MovieList } from '../services/firebase.service';
 import { UserService } from '../services/user.service';
@@ -49,13 +48,12 @@ export class MovieComponent implements OnInit {
     this.userService.emmitUser();
     this.firebaseSubscription = this.firebase.movieSubject.subscribe(m =>
       this.lists = m);
-    // this.firebase.emmitUserMoviesList();
+    this.firebase.emmitUserMoviesList();
 
     this.value = this.movie.vote_average ? this.movie.vote_average * 10 : 0;
     this.posterUrl = this.tmdbservice.getPath(this.movie.poster_path);
     this.truncatedOverview = this.truncate(this.movie.overview, 130, '...');
   }
-
 
   truncate(elem, limit, after) {
     if (!elem || !limit) { return; }
@@ -80,7 +78,6 @@ export class MovieComponent implements OnInit {
   }
 
   deleteMovie() {
-    console.log('DELETE');
     const val = this.lists.find(m => m.name === this.listName).movies.findIndex(m => m === this.movie);
     this.firebase.deleteMovie(this._user.uid, this.listName, val);
   }

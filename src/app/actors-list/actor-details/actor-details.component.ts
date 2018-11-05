@@ -20,7 +20,7 @@ export class ActorDetailsComponent implements OnInit {
   ngOnInit() {
     this.tmdb
       .getPerson(this.route.params['_value'].id)
-      .then((a: PersonResponse) => console.log('id', this._person = a))
+      .then((a: PersonResponse) => this._person = a)
       .catch(err => console.error('Error getting actor:', err));
   }
 
