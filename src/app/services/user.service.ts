@@ -4,6 +4,7 @@ import { auth, User } from 'firebase';
 import { filter } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { reject } from 'q';
+import { FirebaseService } from './firebase.service';
 
 export interface ConexionData {
   via;
@@ -15,26 +16,23 @@ export interface ConexionData {
   providedIn: 'root'
 })
 
-export class UserService implements OnDestroy {
-  _user: User;
+export class UserService {
+  private _user: User;
   userSubject: Subject<User> = new Subject<User>();
   connectedSubject: Subject<boolean> = new Subject<boolean>();
-  private dbData: Observable<any>;
 
   constructor(
     private anAuth: AngularFireAuth,
+    private firebaseService: FirebaseService
     // private db: AngularFireDatabase,
   ) {
     this.anAuth.user.pipe(filter(u => !!u)).subscribe(u => {
       this._user = u;
       console.log('connection user service connection ok');
+      console.log('getting list saved for first time');
+      this.firebaseService.getMoviesLists(u.uid);
       this.emmitUser();
     });
-  }
-
-  ngOnDestroy() {
-    this.dbData = null;
-    this.connectedSubject = null;
   }
 
   emmitUser() {

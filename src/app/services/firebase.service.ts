@@ -109,6 +109,7 @@ export class FirebaseService {
             movies: e.val(),
           });
         });
+        console.log('get movies list', newMoviesLists);
         if (newMoviesLists.length !== 0) { this.moviesLists = newMoviesLists; }
         this.emmitUserMoviesList();
       }

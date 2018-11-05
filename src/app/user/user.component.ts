@@ -32,8 +32,6 @@ export class UserComponent implements OnInit, OnDestroy {
         if (user) {
           this._user = user;
           this.isConnected = true;
-          console.log('getting list saved for first time');
-          this.firebaseService.getMoviesLists(user.uid);
         }
       }
     );
@@ -42,26 +40,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
-  }
-
-  test() {
-    this.firebaseService.saveMoviesLists(this._user.uid);
-    console.log('user component test stockage');
-    this.firebaseService.getMoviesLists(this._user.uid);
-    // this.firebaseService.removeList(this._user.uid, {
-    //   name: 'Liste 3',
-    //   movies: [
-    //     {
-    //       budget: 3000000,
-    //       adult: false,
-    //       title: 'Jolie film'
-    //     }
-    //   ]
-    // });
-    this.firebaseService.deleteList(this._user.uid, 'Liste 3');
-    this.firebaseService.createNewList(this._user.uid, { name: 'Liste 4', movies: [{ adult: false, budget: 232332, title: 'ok' }] });
-    console.log('sssssssssssssssssssssssssss');
-    this.firebaseService.getMoviesLists(this._user.uid);
   }
 
   signin() {

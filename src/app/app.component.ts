@@ -13,47 +13,9 @@ import { FirebaseService } from './services/firebase.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  private _movie: MovieResponse;
-  private _user: User;
-  private dbData: Observable<any>;
+export class AppComponent {
 
-  private moviesListSubscription: Subscription = new Subscription();
-
-  constructor(private tmdb: TmdbService, public anAuth: AngularFireAuth, private db: AngularFireDatabase
-    , private fbService: FirebaseService) {
+  constructor() {
   }
-
-  ngOnInit() {
-    this.moviesListSubscription = this.fbService.movieSubject.subscribe(
-      movies => console.log('movies changed', movies)
-    );
-    this.fbService.emmitUserMoviesList();
-  }
-
-  get movie(): MovieResponse {
-    return this._movie;
-  }
-
-  getPath(path: string): string {
-    return `https://image.tmdb.org/t/p/w500${path}`;
-  }
-
-  // login() {
-  //   this.anAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-  // }
-
-  // logout() {
-  //   this.anAuth.auth.signOut();
-  //   this._user = undefined;
-  // }
-
-  // get user(): User {
-  //   return this._user;
-  // }
-
-  // get lists(): Observable<any> {
-  //   return this.dbData;
-  // }
 }
 // /yE5d3BUhE8hCnkMUJOo1QDoOGNz.jpg

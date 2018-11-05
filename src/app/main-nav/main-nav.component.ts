@@ -51,11 +51,6 @@ export class MainNavComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-    this.firebaseSubscription.unsubscribe();
-  }
-
   navigation() {
     this.search.searchText = this.searchText;
     this.router.navigateByUrl('/search');
@@ -74,20 +69,17 @@ export class MainNavComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       this.title = result;
-      console.log('Enregistrement lise vide ', this.title);
+      console.log('Enregistrement liste vide ', this.title);
       this.firebase.createNewList(this._user.uid, {
         name: this.title,
-        movies: [
-          {
-            id: 213,
-            title: 'Movie',
-            overview: 'Add movies .. ',
-            poster_path: null,
-            vote_average: 10
-          }
-        ]
+        movies: []
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+    this.firebaseSubscription.unsubscribe();
   }
 
 }
