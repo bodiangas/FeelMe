@@ -5,8 +5,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { SigninChoiceComponent } from './signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { UserService, ConexionData } from '../services/user.service';
-import { FirebaseService } from '../services/firebase.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user',

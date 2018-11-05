@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogConfig, MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogConfig, MatDialogRef, MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { UserService, ConexionData } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service';
 import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
 
 @Component({
@@ -29,7 +28,6 @@ export class LoginEmailComponent implements OnInit {
   }
 
   save() {
-    console.log(this.emailForm);
     if (this.emailForm.valid) {
       this.dialogRef.close(this.emailForm.value);
     }
@@ -38,7 +36,6 @@ export class LoginEmailComponent implements OnInit {
   forgotPassword() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    console.log(this.emailForm.value.email);
     dialogConfig.data = this.emailForm.value.email;
 
     const dialogRef = this.dialog.open(ForgetPasswordComponent, dialogConfig);

@@ -1,6 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { UserService, ConexionData } from 'src/app/services/user.service';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig, MatDialog } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SigninChoiceComponent } from '../signin-choice/signin-choice.component';
 import { LoginEmailComponent } from '../login-email/login-email.component';
@@ -30,9 +29,7 @@ export class LoginDialogComponent implements OnInit {
   setEmail() {
     const dialogRef = this.dialog.open(LoginEmailComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog login with email was closed', result);
       if (result) {
-        // this.userservices.loginVia(result);
         this.dialogRef.close(result);
       }
     });
@@ -42,7 +39,6 @@ export class LoginDialogComponent implements OnInit {
     this.emailForm.patchValue({
       via: via
     });
-    console.log(this.emailForm);
     if (this.emailForm.valid || via === 1 || via === 2) {
       this.dialogRef.close(this.emailForm.value);
     }
@@ -51,9 +47,7 @@ export class LoginDialogComponent implements OnInit {
   signup() {
     const dialogRef = this.dialog.open(SigninChoiceComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog signup was closed', result);
       if (result) {
-        // this.userservices.signinVia(result);
         this.dialogRef.close(result);
       }
     });
