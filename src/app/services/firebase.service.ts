@@ -31,9 +31,9 @@ export class FirebaseService {
   }
 
   getMoviesLists(userId: string) {
-    this.moviesLists = [];
     this.firebase.database.ref(`/users/${userId}/lists/`)
       .on('value', (data: DataSnapshot) => {
+        this.moviesLists = [];
         const newMoviesLists: MovieList[] = [];
         data.forEach(e => {
           newMoviesLists.push({
