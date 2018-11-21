@@ -25,11 +25,11 @@ If you would like to download the code and try it for yourself:
 
 ## Authors
 
-- Sami Ben salah
-- Halima Benabbou
-- Assane Bodiang
-- Ballé Traoré
-- Mohamed Benzaoui
+- Sami Ben salah UNION Mamadou Dian
+- Halima Benabbou The nose
+- Assane Bodiang de la Casamance...
+- Ballé Traoré Bambara
+- Mohamed Benzaoui.dz
 
 ## Further help
 
