@@ -15,8 +15,6 @@ import { ResearchComponent } from './research/research.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
 import { MovieComponent, DialogOverviewComponent } from './movie/movie.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
-import { ActorDetailsComponent } from './actors-list/actor-details/actor-details.component';
-import { ActorsListComponent } from './actors-list/actors-list.component';
 import { MainNavComponent, DialogCreateListComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SigninChoiceComponent } from './user/signin-choice/signin-choice.component';
@@ -40,8 +38,6 @@ import { FirebaseService } from './services/firebase.service';
     MovieDetailsComponent,
     MovieComponent,
     MoviesListComponent,
-    ActorDetailsComponent,
-    ActorsListComponent,
     MainNavComponent,
     SigninChoiceComponent,
     LoginDialogComponent,

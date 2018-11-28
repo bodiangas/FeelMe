@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ActorsListComponent } from './actors-list/actors-list.component';
 import { AppComponent } from './app.component';
-import { ActorDetailsComponent } from './actors-list/actor-details/actor-details.component';
 import { UserComponent } from './user/user.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -16,14 +14,6 @@ const appRoutes: Routes = [
   {
     path: '',
     component: HomePageComponent
-  },
-  {
-    path: 'actor/:id',
-    component: ActorDetailsComponent
-  },
-  {
-    path: 'actors',
-    component: ActorsListComponent
   },
   {
     path: 'movie/:id',
@@ -68,8 +58,6 @@ const appRoutes: Routes = [
 })
 export class AppRoutingModule { }
 export const routingComponents = [AppComponent,
-  ActorDetailsComponent,
-  ActorsListComponent,
   MovieDetailsComponent,
   MoviesListComponent,
   UserComponent,
