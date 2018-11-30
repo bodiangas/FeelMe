@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MovieQuery, MovieResponse } from './tmdb-data/Movie';
+import { MovieQuery, MovieResponse, SpokenLanguage, MovieGenre } from './tmdb-data/Movie';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { PersonQuery, PersonResponse } from './tmdb-data/Person';
 import { SearchMovieQuery, SearchMovieResponse, SearchTrendingQuery, GetMoviesQuery } from './tmdb-data/searchMovie';
@@ -11,6 +11,9 @@ import { PersonlistResponse } from './tmdb-data/SearchPeople';
 const tmdbApi = 'https://api.themoviedb.org/3';
 type HTTP_METHOD = 'GET' | 'POST' | 'DELETE' | 'PUT';
 
+interface MovieGenres {
+  genres: MovieGenre[];
+}
 function AlxToObjectString(data: Object): { [key: string]: string } {
   const res = {};
   for (const k in data) {
@@ -122,6 +125,12 @@ export class TmdbService {
   async searchTV(query: SearchTVQuery): Promise<SearchTVResponse> {
     const url = `${tmdbApi}/search/tv`;
     const res = await this.get<SearchTVResponse>(url, query);
+    return res.body;
+  }
+
+  async getGenres(options?: MovieQuery): Promise<MovieGenres> {
+    const url = `${tmdbApi}/genre/movie/list`;
+    const res = await this.get<MovieGenres>(url, options);
     return res.body;
   }
 

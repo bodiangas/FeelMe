@@ -1,15 +1,5 @@
-div ul {
-    list-style: none;
-    overflow: hidden;
-    text-align: right;
-  }
-
-div ul li {
+div {
   display: inline-block;
   margin-left: 20px;
   vertical-align: middle;
-}
-
-.icone {
-    vertical-align: middle;
 }

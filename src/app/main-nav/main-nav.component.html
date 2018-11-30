@@ -1,62 +1,65 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav mat-elevation-z6" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary"><img class="image" src="src\assets\image\film en folie.png" alt="Smiley face" /></mat-toolbar>
-    <input [(ngModel)]="searchText" placeholder="Rechercher film ou acteur" class=" research spacer">
-    <button mat-button class="search_box" (click)="navigation()">search</button>
+<div style="display: block">
+  <mat-toolbar class="header" color="gray">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <img class="image" src="src\assets\image\film en folie.png" alt="FeelMeLogo" />
+    <div class="app-name">
+      <span>FeelMe</span>
+    </div>
+    <div class="flex_container">
+      <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Acceuil</button>
+      <button mat-button routerLink="/movies" routerLinkActive="active">Mes Listes</button>
+      <button mat-button routerLink="/movies" routerLinkActive="active">Listes partagées</button>
+    </div>
     <span class="example-spacer"></span>
-    <mat-nav-list>
+    <app-user></app-user>
+  </mat-toolbar>
 
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav mat-elevation-z6" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+      <mat-form-field class="research" appearance="outline">
+        <mat-label>Recherche</mat-label>
+        <input matInput placeholder="Films, mots-clés" [(ngModel)]="searchText" (keyup.enter)="navigation()">
+        <mat-icon matSuffix>edit_mode</mat-icon>
+      </mat-form-field>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Recherche avancée + checkbox
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <!--<div *ngIf="isConnected">-->
-          <!--<div *ngFor="let list of lists" style="display: block;">-->
-            <!--<button mat-button [routerLink]="['/list', list.name]" style="width: 100%;">-->
-              <!--{{ list.name }}-->
-            <!--</button>-->
-          <!--</div>-->
-          <!--<div>-->
-            <!--<button mat-button (click)="openDialog()">-->
-              <!--<mat-icon>add</mat-icon> Ajouter une liste-->
-            <!--</button>-->
-          <!--</div>-->
-        <!--</div>-->
-      </mat-expansion-panel>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-           categories
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-selection-list>
-          <mat-list-option >
-            toto
-          </mat-list-option>
-        </mat-selection-list>
-      </mat-expansion-panel>
-      annee
-      <mat-slider></mat-slider>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary" style="z-index: 6;">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <div class="flex_container">
-        <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Acceuil</a>
-        <a mat-list-item routerLink="/movies" routerLinkActive="active">Mes Listes</a>
+      <mat-slide-toggle class="example-margin" labelPosition="before" color="warn" [(ngModel)]="advancedSearch">
+        Recherche avancée
+      </mat-slide-toggle>
+      <div *ngIf="advancedSearch">
+        <ul>
+          <li *ngFor="let genre of genres">
+            {{genre.name}}
+          </li>
+        </ul>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Recherche avancée + checkbox
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              categories
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list>
+            <mat-list-option *ngFor="let genre of genres" >
+              {{genre.name}}
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+        annee
+        <mat-slider color="green"></mat-slider>
       </div>
-      <span class="example-spacer"></span>
-      <app-user></app-user>
-    </mat-toolbar>
-    <!-- Add Content Here -->
-    <ng-content></ng-content>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <ng-content></ng-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

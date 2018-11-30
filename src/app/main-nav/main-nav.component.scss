@@ -1,14 +1,23 @@
-.sidenav-container {
-  height: 100%;
-}
-
-.sidenav {
-  width: 200px;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
+.header {
+  position: fixed;
   top: 0;
+  z-index: 2;
+}
+
+.app-name {
+  padding: 10px;
+}
+
+.sidenav-container {
+  top: 60px;
+  .sidenav {
+    padding: 10px 10px 0px 10px;
+    width: 18%;
+    overflow-x: hidden;
+  }
+  .research {
+    width: 100%;
+  }
 }
 
 .example-spacer {
@@ -17,16 +26,6 @@
 
 .flex_container {
   display: inline-block;
-}
-nav ul {
-  list-style: none;
-  overflow: hidden;
-  text-align: right;
-}
-
-nav ul li {
-  display: inline-block;
-  margin-left: 20px;
 }
 
 .icone {
@@ -37,6 +36,7 @@ nav ul li {
 .image{
     height: 60px;
     width: 60px;
+    margin-right: 1%;
     align-self: center;
   }
 

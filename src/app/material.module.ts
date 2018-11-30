@@ -13,7 +13,9 @@ import {
   MatExpansionModule,
   MatMenuModule,
   MatInputModule,
-  MatSliderModule
+  MatSliderModule,
+  MatCheckboxModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 @NgModule({
@@ -29,7 +31,9 @@ import {
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSliderModule
+    MatSliderModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
   ],
   exports: [
     MatToolbarModule,
@@ -44,7 +48,9 @@ import {
     MatExpansionModule,
     MatMenuModule,
     MatInputModule,
-    MatSliderModule
+    MatSliderModule,
+    MatCheckboxModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }

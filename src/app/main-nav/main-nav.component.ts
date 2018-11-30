@@ -9,20 +9,24 @@ import { UserService } from '../services/user.service';
 import { User } from 'firebase';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MovieGenre } from '../tmdb-data/Movie';
+import { TmdbService } from '../tmdb.service';
 
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
-  styleUrls: ['./main-nav.component.css']
+  styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent implements OnInit, OnDestroy {
   public searchText: string;
+  private _genres: string[];
   private userLists: MovieList[];
   public isConnected = false;
   private _user: User;
   private userSubscription = new Subscription();
   private firebaseSubscription = new Subscription();
   title;
+  advancedSearch: boolean = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -34,8 +38,9 @@ export class MainNavComponent implements OnInit, OnDestroy {
     private search: SearchService,
     private firebase: FirebaseService,
     private userService: UserService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private tmdb: TmdbService
+  ) { }
 
   ngOnInit() {
     this.userSubscription = this.userService.userSubject.subscribe(user => {
@@ -48,6 +53,11 @@ export class MainNavComponent implements OnInit, OnDestroy {
     this.firebaseSubscription = this.firebase.movieSubject.subscribe(movies => {
       this.userLists = movies;
     });
+
+    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').getGenres()
+      .then(genres => console.log("GENRES : ", genres.genres.map(e => {
+        this._genres.push(e.name);
+      })));
   }
 
   navigation() {
@@ -58,6 +68,10 @@ export class MainNavComponent implements OnInit, OnDestroy {
 
   get lists() {
     return this.userLists;
+  }
+
+  get genres() {
+    return this._genres;
   }
 
   openDialog() {
@@ -92,7 +106,7 @@ export class DialogCreateListComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogCreateListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { name: string }
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.titleForm = new FormGroup({

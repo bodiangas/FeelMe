@@ -1,24 +1,12 @@
-<!--div>
-  <button inline-block (click)="signin()">S'inscrire</button>
-  <button inline-block (click)="login()">Se connecter</button>
-</div-->
-
 <div *ngIf="!isConnected">
-  <ul class="mdc-list">
-    <li class="mdc-list-item">
-      <a (click)="signin()">
-        <i class="material-icons md-18 icone">person</i>
-        S'inscrire
-      </a>
-    </li>
-    <li class="mdc-list-item">
-      <a (click)="login()">
-        <i class="material-icons md-18 icone">arrow_right</i>
-        Se connecter
-      </a>
-    </li>
-  </ul>
+  <button mat-button (click)="signin()">
+    <mat-icon>person</mat-icon> S'inscrire
+  </button>
+  <button mat-button (click)="login()">
+    <mat-icon>arrow_right</mat-icon> Se connecter
+  </button>
 </div>
+
 <div *ngIf="isConnected">
-  <button mat-raised-button (click)="logout()"> Se déconnecter</button>
+  <button mat-button (click)="logout()"> Se déconnecter</button>
 </div>
