@@ -6,9 +6,11 @@ import { FirebaseService, MovieList } from '../services/firebase.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DialogAddMovieComponent } from './dialog-add-movie/dialog-add-movie.component';
 
 export interface DialogData {
-  overview: string;
+  lists: string[];
   title: string;
 }
 
@@ -60,21 +62,21 @@ export class MovieComponent implements OnInit {
     return elem.trim().slice(0, limit) + (after ? after : '');
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogOverviewComponent, {
+  openDialogAddMovie() {
+    const dialogRef = this.dialog.open(DialogAddMovieComponent, {
       width: '300px',
-      data: { title: this.movie.title, overview: this.movie.overview }
+      data: { title: this.movie.title, lists: this.lists }
     });
 
+    console.log("LISTES : " , this.lists)
     dialogRef.afterClosed().subscribe(() => {
+      result =>
+        this.addMovie(result);
     });
   }
 
-  addMovieDefault() {
-    const l = this.lists.length - 1;
-    const val = this.lists[l].name;
-    const idm = this.lists[l].movies.length;
-    this.firebase.addMovie(this._user.uid, val, idm, this.movie);
+  addMovie(list: string) {
+    this.firebase.addMovie(this._user.uid, list, this.movie);
   }
 
   deleteMovie() {
@@ -82,20 +84,41 @@ export class MovieComponent implements OnInit {
     this.firebase.deleteMovie(this._user.uid, this.listName, val);
   }
 
+  get user() {
+    return this._user;
+  }
+
 }
 
+// Dialog component for adding list
 @Component({
-  selector: 'app-dialog-overview',
-  templateUrl: './dialog-overview.html',
+  selector: 'app-dialog-create-list',
+  templateUrl: './dialog-create-list.html'
 })
-export class DialogOverviewComponent {
+export class DialogCreateListComponent implements OnInit {
+  titleForm: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    public dialogRef: MatDialogRef<DialogCreateListComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }
+  ) { }
+
+  ngOnInit(): void {
+    this.titleForm = new FormGroup({
+      listName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3)
+      ])
+    });
+  }
+
+  getErrorMessage() {
+    return this.titleForm.hasError('required') ? 'Un nom est requis' :
+      this.titleForm.hasError('length') ? 'Nom trop court' :
+        '';
+  }
 
   onNoClick() {
     this.dialogRef.close();
   }
-
 }

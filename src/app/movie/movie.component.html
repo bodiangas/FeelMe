@@ -16,13 +16,13 @@
         </div>
       </div>
     </mat-card-title-group>
-    <a class="overview" (click)="openDialog()" style="color:black">
+    <a class="overview" style="color:black">
       <p> {{ truncatedOverview }} </p>
     </a>
     <div class="actions">
       <button mat-raised-button [routerLink]="['/movie', movie.id]">Display details</button>
       <div *ngIf="add" class="right">
-        <button mat-mini-fab color="primitive" (click)="addMovieDefault()">
+        <button mat-mini-fab color="primitive" (click)="openDialogAddMovie()">
           <mat-icon>add</mat-icon>
         </button>
       </div>

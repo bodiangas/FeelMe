@@ -8,15 +8,23 @@
   padding: 10px;
 }
 
+.flex_container {
+  display: inline-block;
+}
+
 .sidenav-container {
   top: 60px;
   .sidenav {
     padding: 10px 10px 0px 10px;
+    margin-right: 40px;
     width: 18%;
     overflow-x: hidden;
   }
   .research {
     width: 100%;
+  }
+  mat-sidenav-content {
+   // min-height: 700px;
   }
 }
 
@@ -24,8 +32,14 @@
   flex: 1 1 auto;
 }
 
-.flex_container {
-  display: inline-block;
+
+.categories {
+  width: 50%;
+}
+
+div.mat-expansion-panel-body {
+  padding: 0;
+  color: pink;
 }
 
 .icone {

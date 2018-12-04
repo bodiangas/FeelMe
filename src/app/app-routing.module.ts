@@ -20,10 +20,6 @@ const appRoutes: Routes = [
     component: MovieDetailsComponent
   },
   {
-    path: 'movies',
-    component: MoviesListComponent
-  },
-  {
     path: 'list/:name',
     canActivate: [AuthGuardService],
     component: MoviesListComponent

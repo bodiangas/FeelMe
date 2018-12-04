@@ -14,11 +14,9 @@ li {
 }
 
 .list-header {
-    width: 95%;
     margin-left: 2%;
     overflow:hidden;
     display: inline-flex;
-    border-bottom: #f0ecec 3px solid;
     position: inherit;
     margin-bottom: 25px;
 }
@@ -29,10 +27,4 @@ div.cards {
     flex-wrap: wrap;
     justify-content: space-between;
     overflow: auto;
-}
-
-button {
-    margin: 15px 10px 0px 0px;
-    position: absolute;
-    right: 0px;
 }

@@ -1,0 +1,28 @@
+<div class="dialog-box">
+    <div class="header">
+        <h1 mat-dialog-title>Ajouter le film : <span> {{data.title}} </span></h1>
+    </div>
+    <div mat-dialog-content>
+        <h4>Listes :</h4>
+        <mat-form-field>
+            <mat-select placeholder="Liste" [(ngModel)]="selectedValue" name="liste">
+                <mat-option *ngFor="let list of data.lists" [value]="list.name">
+                    {{list.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p> Selected list: {{selectedValue}} </p>
+    </div>
+    <div class="new-list">
+        <p> Nouvelle liste</p>
+        <button mat-stroked-button color="accent" (click)="openDialogCreateList(user)">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button (click)="onNoClick()" color="warn">Annuler</button>
+        <button mat-raised-button [mat-dialog-close]="data.name" color="primary">
+            <mat-icon>add</mat-icon>Ajouter
+        </button>
+    </div>
+</div>

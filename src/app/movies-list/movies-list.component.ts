@@ -23,16 +23,10 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   private userSubscription = new Subscription();
   private firebaseSubscription = new Subscription();
   isConnected = false;
-  random = false;
+  loaded = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-    private firebase: FirebaseService, private tmdb: TmdbService, private userService: UserService) {
-    if (this.router.url === '/movies') {
-      this.random = true;
-      setTimeout(() => this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').searchMovie({ query: 'a' })
-        .then(e => this._movies = e.results));
-    }
-  }
+    private firebase: FirebaseService, private tmdb: TmdbService, private userService: UserService) { }
 
   ngOnInit() {
     this.firebaseSubscription = this.firebase.movieSubject.subscribe(m => {
@@ -40,14 +34,13 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     });
     this.firebase.emmitUserMoviesList();
     this.route.params.subscribe(params => {
-      if (this.router.url !== '/movies') {
-          this.idList = params['name'];
-          const list = this._moviesList.find(
-            (movie) => movie.name === this.idList);
-          if (list) {
-            this._movies = list.movies;
-          }
-        }
+      this.idList = params['name'];
+      const list = this._moviesList.find(
+        (movie) => movie.name === this.idList);
+      if (list) {
+        this.loaded = true;
+        this._movies = list.movies;
+      }
     });
 
     this.userSubscription = this.userService.userSubject.subscribe(
@@ -66,6 +59,11 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     this.firebaseSubscription.unsubscribe();
   }
 
+
+  showStatus(value: boolean) {
+    return value === true ? 'Publique' : 'Privée';
+  }
+
   deleteList() {
     this.firebase.deleteList(this._user.uid, this.idList);
     this.firebase.emmitUserMoviesList();
@@ -80,4 +78,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     return this.idList;
   }
 
+  get lists() {
+    return this._moviesList;
+  }
 }

@@ -13,9 +13,10 @@ import { UserComponent } from './user/user.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ResearchComponent } from './research/research.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
-import { MovieComponent, DialogOverviewComponent } from './movie/movie.component';
+import { MovieComponent, DialogCreateListComponent } from './movie/movie.component';
+import { DialogAddMovieComponent } from './movie/dialog-add-movie/dialog-add-movie.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
-import { MainNavComponent, DialogCreateListComponent } from './main-nav/main-nav.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SigninChoiceComponent } from './user/signin-choice/signin-choice.component';
 import { LoginDialogComponent } from './user/login-dialog/login-dialog.component';
@@ -43,7 +44,7 @@ import { FirebaseService } from './services/firebase.service';
     LoginDialogComponent,
     routingComponents,
     MovieComponent,
-    DialogOverviewComponent,
+    DialogAddMovieComponent,
     DialogCreateListComponent,
     ForgetPasswordComponent,
     LoginEmailComponent
@@ -66,10 +67,10 @@ import { FirebaseService } from './services/firebase.service';
   entryComponents: [
     SigninChoiceComponent,
     LoginDialogComponent,
-    DialogOverviewComponent,
+    DialogAddMovieComponent,
+    DialogCreateListComponent,
     LoginEmailComponent,
-    ForgetPasswordComponent,
-    DialogCreateListComponent
+    ForgetPasswordComponent
   ],
   providers: [TmdbService, UserService, SearchService, AuthGuardService, FirebaseService],
   bootstrap: [AppComponent]

@@ -1,0 +1,23 @@
+.dialog-box {
+    cursor: default;
+    width: 400px;
+    height: 600px;
+    background-color: #fff;
+    font-family: arial,sans-serif;
+    padding-top: 56px;
+    box-sizing: border-box;
+}
+
+header {
+    padding: 18px 16px 18px 16px;
+    color: rgba(0,0,0,.87);
+    font-size: 18px;
+    // font-family: arial,sans-serif;
+    background-color: #f5f5f5;
+    box-shadow: 0 1px 1px rgba(0,0,0,.16);
+    height: 56px;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    box-sizing: border-box;
+}

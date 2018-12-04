@@ -1,37 +1,27 @@
 <div>
-  <div *ngIf="random">
-    <div class="films">
-      <li *ngFor="let film of movies">
-        <app-movie [movie]="film" [add]="true"></app-movie>
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let list of lists" [routerLink]="['/list', list.name]" routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive">
+      {{list.name}}
+    </a>
+  </nav>
+  <div class="list">
+    <div class="list-header" *ngIf="loaded">
+      <mat-slide-toggle labelPosition="before" color="success" [(ngModel)]="value">
+        {{showStatus(value)}}
+      </mat-slide-toggle>
+      <button mat-stroked-button (click)="deleteList()" color="gray">
+        <mat-icon>edit</mat-icon> RENOMMER
+      </button>
+      <button mat-raised-button (click)="deleteList()" color="warn">
+        <mat-icon>delete</mat-icon> SUPPRIMER
+      </button>
+      <span> cree le </span>
+    </div>
+    <div class="cards">
+      <li *ngFor="let movie of movies">
+        <app-movie [movie]="movie" [add]="false" [listName]="idList"></app-movie>
       </li>
     </div>
   </div>
-  <div *ngIf="!random">
-    <div class="list">
-      <div class="list-header">
-        <h2> {{ name }} </h2>
-        <button mat-button (click)="deleteList()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-      <div class="cards">
-        <li *ngFor="let movie of movies">
-          <app-movie [movie]="movie" [add]="false" [listName]="idList"></app-movie>
-        </li>
-      </div>
-    </div>
-  </div>
-<!-- vient de main-nav 
-      <div *ngIf="isConnected">-->
-        <!--<div *ngFor="let list of lists" style="display: block;">-->
-        <!--<button mat-button [routerLink]="['/list', list.name]" style="width: 100%;">-->
-        <!--{{ list.name }}-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--<div>-->
-        <!--<button mat-button (click)="openDialog()">-->
-        <!--<mat-icon>add</mat-icon> Ajouter une liste-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--</div>-->
 </div>
