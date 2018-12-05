@@ -1,6 +1,6 @@
-# Films en Folie Web Application
+# FeelMe Web Application
 
-Films en Folie is an Angular app that uses Material design and get data from [The Movie Database](https://www.themoviedb.org/) API's.
+FeelMe is an Angular app that uses Material design and get data from [The Movie Database](https://www.themoviedb.org/) API's.
 You can manage personal movies lists, check informations about movies... 
 
 This project was generated with :
