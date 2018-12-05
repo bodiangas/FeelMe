@@ -9,6 +9,13 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "",
+      "pre-push": "",
+      "...": "..."
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.1.10",

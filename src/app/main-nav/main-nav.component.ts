@@ -25,7 +25,7 @@ export class MainNavComponent implements OnInit, OnDestroy {
   private userSubscription = new Subscription();
   private firebaseSubscription = new Subscription();
   title;
-  advancedSearch: boolean = false;
+  advancedSearch = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -58,9 +58,8 @@ export class MainNavComponent implements OnInit, OnDestroy {
   }
 
   navigation() {
-    this.search.searchText = this.searchText;
     this.router.navigateByUrl('/search');
-    this.search.emmitText();
+    this.search.search(this.searchText);
   }
 
   get lists() {

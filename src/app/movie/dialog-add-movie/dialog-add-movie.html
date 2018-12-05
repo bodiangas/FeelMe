@@ -1,27 +1,28 @@
 <div class="dialog-box">
     <div class="header">
-        <h1 mat-dialog-title>Ajouter le film : <span> {{data.title}} </span></h1>
+        <h1 mat-dialog-title>Ajouter le film : <span> {{data.movieName}} </span></h1>
     </div>
     <div mat-dialog-content>
         <h4>Listes :</h4>
         <mat-form-field>
-            <mat-select placeholder="Liste" [(ngModel)]="selectedValue" name="liste">
-                <mat-option *ngFor="let list of data.lists" [value]="list.name">
-                    {{list.name}}
+            <mat-select placeholder="Liste" [(ngModel)]="datasent.list" name="liste">
+                <mat-option *ngFor="let list of data.listsNames" [value]="list">
+                    {{list}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <p> Selected list: {{selectedValue}} </p>
+        <p> Selected list: {{datasent.list}} </p>
     </div>
     <div class="new-list">
         <p> Nouvelle liste</p>
-        <button mat-stroked-button color="accent" (click)="openDialogCreateList(user)">
+        <input matInput placeholder="Nom" [(ngModel)]="datasent.newListName" (keyup.enter)="popupListCreated()">
+        <button mat-stroked-button color="accent" [disabled]="!datasent.newListName" (click)="popupListCreated()">
             <mat-icon>add</mat-icon>
         </button>
     </div>
     <div mat-dialog-actions>
-        <button mat-raised-button (click)="onNoClick()" color="warn">Annuler</button>
-        <button mat-raised-button [mat-dialog-close]="data.name" color="primary">
+        <button mat-raised-button (click)="close()" color="warn">Annuler</button>
+        <button mat-raised-button [disabled]="!datasent.list" [mat-dialog-close]="datasent" color="primary">
             <mat-icon>add</mat-icon>Ajouter
         </button>
     </div>

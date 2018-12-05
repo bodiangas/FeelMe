@@ -1,7 +1,9 @@
-<div *ngIf="movies">
-  <div class="films">
-    <li *ngFor="let film of movies.results">
-      <app-movie [movie]="film" [add]="true"></app-movie>
-    </li>
+<div style="min-width: 100%; min-height: 100%">
+  <div *ngIf="movies">
+    <div class="films">
+      <li *ngFor="let film of movies.results">
+        <app-movie [movie]="film" [add]="true"></app-movie>
+      </li>
+    </div>
   </div>
 </div>

@@ -1,18 +1,12 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
 import { MovieResponse } from '../tmdb-data/Movie';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog} from '@angular/material';
 import { FirebaseService, MovieList } from '../services/firebase.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DialogAddMovieComponent } from './dialog-add-movie/dialog-add-movie.component';
-
-export interface DialogData {
-  lists: string[];
-  title: string;
-}
+import { DialogAddMovieComponent, DialogData, DataSent } from './dialog-add-movie/dialog-add-movie.component';
 
 @Component({
   selector: 'app-movie',
@@ -64,19 +58,37 @@ export class MovieComponent implements OnInit {
 
   openDialogAddMovie() {
     const dialogRef = this.dialog.open(DialogAddMovieComponent, {
-      width: '300px',
-      data: { title: this.movie.title, lists: this.lists }
+      // width: '300px',
+      data: {
+        movieName: this.movie.title,
+        listsNames: this.lists.map(e => e.name)
+      }
     });
 
-    console.log("LISTES : " , this.lists)
-    dialogRef.afterClosed().subscribe(() => {
-      result =>
-        this.addMovie(result);
+    console.log('LISTES : ' , this.lists);
+    dialogRef.afterClosed().subscribe( (data: DataSent) => {
+      if (data) {
+        console.log('dialog closed with', data);
+        if (data.newListName) {
+          this.createNewList(data.newListName);
+        } else {
+          if (data.list ) {
+            this.addMovie(data.list);
+          }
+        }
+      }
     });
   }
 
-  addMovie(list: string) {
-    this.firebase.addMovie(this._user.uid, list, this.movie);
+  private createNewList(listName) {
+    this.firebase.createNewList(this._user.uid, {
+      name: listName,
+      movies: [this.movie]
+    });
+  }
+
+  private addMovie(listName: string) {
+    this.firebase.addMovie(this._user.uid, listName, this.movie);
   }
 
   deleteMovie() {
@@ -88,37 +100,4 @@ export class MovieComponent implements OnInit {
     return this._user;
   }
 
-}
-
-// Dialog component for adding list
-@Component({
-  selector: 'app-dialog-create-list',
-  templateUrl: './dialog-create-list.html'
-})
-export class DialogCreateListComponent implements OnInit {
-  titleForm: FormGroup;
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogCreateListComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string }
-  ) { }
-
-  ngOnInit(): void {
-    this.titleForm = new FormGroup({
-      listName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3)
-      ])
-    });
-  }
-
-  getErrorMessage() {
-    return this.titleForm.hasError('required') ? 'Un nom est requis' :
-      this.titleForm.hasError('length') ? 'Nom trop court' :
-        '';
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
 }

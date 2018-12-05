@@ -1,51 +1,96 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { User } from "firebase";
-import { FirebaseService } from "src/app/services/firebase.service";
-import { UserService } from "src/app/services/user.service";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { DialogData, DialogCreateListComponent } from "../movie.component";
+import { Component, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+
+export interface DialogData {
+  movieName: string;
+  listsNames: string[];
+}
+
+export interface DataSent {
+  list?: string;
+  newListName?: string;
+}
 
 @Component({
     selector: 'app-dialog-add-movie',
     templateUrl: './dialog-add-movie.html',
   })
-  export class DialogAddMovieComponent implements OnInit {
-    selectedValue: string;
-    listName: string;
-    private _user: User;
-  
+  export class DialogAddMovieComponent {
+    datasent: DataSent = {};
+
     constructor(
-      private firebase: FirebaseService,
-      private userService: UserService,
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<DialogAddMovieComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-  
-    ngOnInit() {
-      this.userService.userSubject.subscribe(
-        (user) => {
-          if (user)
-            this._user = user;
-        }
-      )
+      @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+        console.log(data);
+      }
+
+    popupListCreated() {
+      console.log('create new list', this.datasent.newListName);
+      this.dialogRef.close(this.datasent);
     }
-  
-    openDialogCreateList() {
+
+    close() {
+      this.dialogRef.close();
+    }
+
+    /*createNewList() {
+      this.data.lists.push({
+        movies: [this.data.movie],
+        name: this.newListName
+      });
+      this.dialogRef.close();
+    }*/
+
+    /*openDialogCreateList() {
+
+
       const dialogRef = this.dialog.open(DialogCreateListComponent, {
         width: '250px',
         data: { name: this.listName }
       });
-  
+
       dialogRef.afterClosed().subscribe((result: string) => {
-        this.listName = result;
+        this.selectedValue = result;
         this.firebase.createNewList(this._user.uid, {
           name: this.listName,
           movies: []
         });
       });
-    }
-  
-    onNoClick() {
-      this.dialogRef.close();
-    }
+    }*/
   }
+
+  // Dialog component for adding list
+/*@Component({
+  selector: 'app-dialog-create-list',
+  templateUrl: './dialog-create-list.html'
+})
+export class DialogCreateListComponent implements OnInit {
+  titleForm: FormGroup;
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogCreateListComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }
+  ) { }
+
+  ngOnInit(): void {
+    this.titleForm = new FormGroup({
+      listName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3)
+      ])
+    });
+  }
+
+  getErrorMessage() {
+    return this.titleForm.hasError('required') ? 'Un nom est requis' :
+      this.titleForm.hasError('length') ? 'Nom trop court' :
+        '';
+  }
+
+  onNoClick() {
+    this.dialogRef.close();
+  }
+}*/

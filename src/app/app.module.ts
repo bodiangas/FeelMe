@@ -13,22 +13,20 @@ import { UserComponent } from './user/user.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ResearchComponent } from './research/research.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
-import { MovieComponent, DialogCreateListComponent } from './movie/movie.component';
-import { DialogAddMovieComponent } from './movie/dialog-add-movie/dialog-add-movie.component';
+import { MovieComponent} from './movie/movie.component';
+import { DialogAddMovieComponent} from './movie/dialog-add-movie/dialog-add-movie.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { SigninChoiceComponent } from './user/signin-choice/signin-choice.component';
-import { LoginDialogComponent } from './user/login-dialog/login-dialog.component';
 import { UserService } from './services/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { SearchService } from './search.service';
-import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
 import { AuthGuardService } from './services/auth-guard.service';
-import { LoginEmailComponent } from './user/login-email/login-email.component';
 import { FirebaseService } from './services/firebase.service';
+import { AuthDialogComponent } from './user/auth-dialog/auth-dialog.component';
+import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
@@ -40,14 +38,11 @@ import { FirebaseService } from './services/firebase.service';
     MovieComponent,
     MoviesListComponent,
     MainNavComponent,
-    SigninChoiceComponent,
-    LoginDialogComponent,
+    AuthDialogComponent,
     routingComponents,
     MovieComponent,
     DialogAddMovieComponent,
-    DialogCreateListComponent,
-    ForgetPasswordComponent,
-    LoginEmailComponent
+    ForgetPasswordComponent
   ],
   imports: [
     FormsModule,
@@ -65,11 +60,8 @@ import { FirebaseService } from './services/firebase.service';
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ],
   entryComponents: [
-    SigninChoiceComponent,
-    LoginDialogComponent,
+    AuthDialogComponent,
     DialogAddMovieComponent,
-    DialogCreateListComponent,
-    LoginEmailComponent,
     ForgetPasswordComponent
   ],
   providers: [TmdbService, UserService, SearchService, AuthGuardService, FirebaseService],

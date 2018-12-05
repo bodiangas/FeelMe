@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 
 export class ResearchComponent implements OnInit {
-  resMovies: SearchMovieResponse;
+  movies: SearchMovieResponse;
   moviesQuery: SearchMovieQuery;
   querySubscribtion: Subscription;
 
@@ -20,23 +20,10 @@ export class ResearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.querySubscribtion = this.search.searchTextSubject.subscribe(moviesQuery => {
-      this.moviesQuery = {
-        query: moviesQuery
-      };
-      this.getSearch();
+    this.querySubscribtion = this.search.searchMoviesSubject.subscribe(movies => {
+      this.movies =  movies;
     });
 
-  }
-
-  get movies() {
-    return this.resMovies;
-  }
-
-  getSearch(): void {
-    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').searchMovie(this.moviesQuery)
-      .then((res: SearchMovieResponse) => this.resMovies = res)
-      .catch(err => console.error('Error searching movies:', err));
   }
 
 }
