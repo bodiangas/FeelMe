@@ -17,8 +17,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Installation 
 If you would like to download the code and try it for yourself:
 
-1. Clone the repo: https://github.com/bodiangas/IHM_MIAGE_18_19.git
-2. Go to your local repo ` cd IHM_MIAGE_18_19 `
+1. Clone the repo: https://github.com/bodiangas/FeelMe.git
+2. Go to your local repo ` cd FeelMe `
 3. Install packages: ` npm install `
 4. Build project and launch: ` ng serve ` or ` npm start `
 5. Open your browser at: http://localhost:4200
