@@ -1,9 +1,17 @@
-<div style="min-width: 100%; min-height: 100%">
-  <div *ngIf="movies">
+<mat-card style="min-width: 100%; min-height: 100%">
+  <mat-card-header>
+      <mat-card-title>
+        <h2>Résultats de la recherche</h2>
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="movies">
     <div class="films">
       <li *ngFor="let film of movies.results">
         <app-movie [movie]="film" [add]="true"></app-movie>
       </li>
     </div>
-  </div>
-</div>
+  </mat-card-content>
+  <mat-card-content *ngIf="!movies || movies.results.length === 0">
+    <p>Aucun film correspondant à la récherche</p>
+  </mat-card-content>
+</mat-card>

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService implements OnInit{
+export class SearchService implements OnInit {
   searchMoviesSubject = new Subject<SearchMovieResponse>();
   movies: SearchMovieResponse;
 
@@ -33,7 +33,8 @@ export class SearchService implements OnInit{
       .searchMovie(moviesQuery)
       .then((res: SearchMovieResponse) => {
         this.movies = res;
-        this.movies.results = this.movies.results.filter(e => e.release_date > minYear);
+        console.log(res, minYear);
+        this.movies.results = this.movies.results.filter(e => e.release_date >= minYear);
         if (genres.length !== 0) {
           let resultFiltered: MovieResult[] = [];
           genres.forEach(g => {

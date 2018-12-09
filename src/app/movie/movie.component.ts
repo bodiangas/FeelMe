@@ -30,7 +30,7 @@ export class MovieComponent implements OnInit {
 
   constructor(private tmdbservice: TmdbService, private firebase: FirebaseService,
     private userService: UserService,
-    public dialog: MatDialog) { }
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.userSubscription = this.userService.userSubject.subscribe(
