@@ -8,19 +8,19 @@
         <div class="container">
             <div class="title">
                 <h2> {{ movieDetails.original_title }} </h2>
-                <p> {{ movieDetails.release_date | date : 'yyyy' }} </p>
+                <p> {{ movieDetails.release_date | date : 'yyyy' }}, {{ movieDetails.genres[0].name}} </p>
             </div>
             <div class="infos">
                 <h3> Synopsis </h3>
                 <div class="overview">
                     <p> {{ movieDetails.overview }} </p>
                 </div>
-                <button mat-raised-button="Add">
-                  Ajouter
+                <button mat-raised-button="Add" *ngIf="isConnected" color="primary" (click)="addMovie()">
+                  AJOUTER
                 </button>
             </div>
         </div>
-        <button mat-mini-fab color="warn" class="clear" routerLink="/">
+        <button mat-mini-fab color="warn" class="clear" (click)="goBack()">
             <mat-icon>close</mat-icon>
         </button>
     </div>

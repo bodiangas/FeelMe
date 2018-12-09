@@ -28,6 +28,8 @@ import { FirebaseService } from './services/firebase.service';
 import { AuthDialogComponent } from './user/auth-dialog/auth-dialog.component';
 import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
 
+import { TmdbResolver } from './tmdb.resolver';
+
 @NgModule({
   declarations: [
     AppComponent,

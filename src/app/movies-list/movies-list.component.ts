@@ -17,7 +17,7 @@ import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 export class MoviesListComponent implements OnInit, OnDestroy {
 
   private idList;
-  private _movies: MovieResult[] | MovieResponse[] = null;
+  private _movies: MovieResponse[] = null;
   private _moviesList: MovieList[] = null;
   private _user: User;
   private userSubscription = new Subscription();
@@ -40,7 +40,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
         (movie) => movie.name === this.idList);
       if (list) {
         this.loaded = true;
-        this._movies = list.movies;
+        console.log('MOVIES', this._movies = list.movies);
       }
     });
 
@@ -67,7 +67,6 @@ export class MoviesListComponent implements OnInit, OnDestroy {
 
   renameList() {
     const dialogRef = this.dialog.open(DialogRenameListComponent, {
-      // width: '300px',
       data: { }
     });
 

@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
-import { MovieResponse } from '../tmdb-data/Movie';
-import { MatDialog} from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { FirebaseService, MovieList } from '../services/firebase.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase';
-import { DialogAddMovieComponent, DialogData, DataSent } from './dialog-add-movie/dialog-add-movie.component';
+import { DialogAddMovieComponent, DataSent } from './dialog-add-movie/dialog-add-movie.component';
+import { Router } from '@angular/router';
+import { MovieResult } from '../tmdb-data/searchMovie';
 
 @Component({
   selector: 'app-movie',
@@ -15,13 +16,14 @@ import { DialogAddMovieComponent, DialogData, DataSent } from './dialog-add-movi
 })
 export class MovieComponent implements OnInit {
 
-  @Input() movie: MovieResponse;
+  @Input() movie: MovieResult;
   @Input() add: boolean;
   @Input() listName?: string;
 
   posterUrl: string;
   value;
   truncatedOverview;
+  oldPath;
   private userSubscription = new Subscription();
   private firebaseSubscription = new Subscription();
   private lists: MovieList[];
@@ -29,8 +31,7 @@ export class MovieComponent implements OnInit {
   private _user: User;
 
   constructor(private tmdbservice: TmdbService, private firebase: FirebaseService,
-    private userService: UserService,
-    public dialog: MatDialog) { }
+    private userService: UserService, private router: Router, public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.userSubscription = this.userService.userSubject.subscribe(
@@ -46,9 +47,10 @@ export class MovieComponent implements OnInit {
       this.lists = m);
     this.firebase.emmitUserMoviesList();
 
-    this.value = this.movie.vote_average ? this.movie.vote_average * 10 : 0;
+    this.oldPath = this.router.url;
+    this.value = this.movie.vote_average ? this.movie.vote_average : 0;
     this.posterUrl = this.tmdbservice.getPath(this.movie.poster_path);
-    this.truncatedOverview = this.truncate(this.movie.overview, 130, '...');
+    this.truncatedOverview = this.truncate(this.movie.overview, 60, '...');
   }
 
   truncate(elem, limit, after) {
@@ -64,14 +66,12 @@ export class MovieComponent implements OnInit {
       }
     });
 
-    console.log('LISTES : ' , this.lists);
-    dialogRef.afterClosed().subscribe( (data: DataSent) => {
+    dialogRef.afterClosed().subscribe((data: DataSent) => {
       if (data) {
-        console.log('dialog closed with', data);
         if (data.newListName) {
           this.createNewList(data.newListName);
         } else {
-          if (data.list ) {
+          if (data.list) {
             this.addMovie(data.list);
           }
         }
@@ -87,12 +87,22 @@ export class MovieComponent implements OnInit {
   }
 
   private addMovie(listName: string) {
-    this.firebase.addMovie(this._user.uid, listName, this.movie);
+    if (!this.firebase.movieExist(listName, this.movie)) {
+      this.firebase.addMovie(this._user.uid, listName, this.movie);
+      this.snackBar.open(`Le film a été ajouté avec succès !`, 'Fermer', {
+        duration: 4000,
+      });
+    } else {
+      this.snackBar.open(`Le film existe déja dans la liste !`, 'Fermer', {
+        duration: 4000,
+      });
+    }
   }
 
   deleteMovie() {
     const val = this.lists.find(m => m.name === this.listName).movies.findIndex(m => m === this.movie);
     this.firebase.deleteMovie(this._user.uid, this.listName, val);
+    this.router.navigateByUrl(this.oldPath);
   }
 
   get user() {

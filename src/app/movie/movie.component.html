@@ -1,4 +1,4 @@
-<mat-card class="my-card">
+<!-- <mat-card class="my-card">
   <a href="">
 
   </a>
@@ -6,21 +6,15 @@
   <div class="content">
     <mat-card-title-group>
       <mat-card-title class="card_title"> {{ movie.title }} </mat-card-title>
-      <mat-card-subtitle class="card_title"> {{ movie.release_date | date }} </mat-card-subtitle>
-      <div class="consensus">
-        <div class="outer-ring">
-          <div class="user-score">
-            <mat-progress-spinner [diameter]="32" mode="determinate" [value]="value"> </mat-progress-spinner>
-            <p> {{ movie.vote_average }} </p>
-          </div>
-        </div>
-      </div>
+      <mat-card-subtitle class="card_title"> {{ movie.release_date | date }}, <p> noté {{ movie.vote_average }} </p>
+      </mat-card-subtitle>
+
     </mat-card-title-group>
     <a class="overview" style="color:black">
       <p> {{ truncatedOverview }} </p>
     </a>
     <div class="actions">
-      <button mat-raised-button [routerLink]="['/movie', movie.id]">Display details</button>
+      <button mat-raised-button [routerLink]="['/movie', movie.id, oldPath]">Display details</button>
       <div *ngIf="add && isConnected" class="right">
         <button mat-mini-fab color="primitive" (click)="openDialogAddMovie()">
           <mat-icon>add</mat-icon>
@@ -31,4 +25,53 @@
   <button *ngIf="isConnected && !add" mat-mini-fab (click)="deleteMovie()" color="warn" class="clear">
     <mat-icon>clear</mat-icon>
   </button>
-</mat-card>
+</mat-card> -->
+
+<div class="example-1 card_1">
+  <div class="wrapper">
+    <a [routerLink]="['/movie', movie.id, oldPath]">
+      <img src="{{ posterUrl }}" wide class="card_img" />
+    </a>
+    <div class="date">
+      <span class="month">{{ movie.release_date | date: 'MMM' }}</span>
+      <span class="year">{{ movie.release_date | date: 'y' }}</span>
+    </div>
+    <div class="data">
+      <div class="content">
+        <span class="author">{{ value }} / 10 </span>
+        <h5 class="title1">{{ movie.title }}</h5>
+        <p class="text"><a href="#"></a> {{ truncatedOverview }} </p>
+        <button class="menu-button" mat-button [matMenuTriggerFor]="menu"><mat-icon>more_horiz</mat-icon></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item *ngIf="add && isConnected" (click)="openDialogAddMovie()" color="primary">
+            <mat-icon>add</mat-icon>Ajouter
+          </button>
+          <button mat-menu-item *ngIf="isConnected && !add" (click)="deleteMovie()">
+            <mat-icon>clear</mat-icon>Supprimer
+          </button>
+          <button mat-menu-item [routerLink]="['/movie', movie.id, oldPath]" color="accent">
+            <mat-icon>more</mat-icon> Détails
+          </button>
+        </mat-menu>
+        <!-- <label for="show-menu" class="menu-button"><span></span></label> -->
+      </div>
+      <!--  -->
+      <!-- <input type="checkbox" id="show-menu" /> -->
+      <ul class="menu-content">
+        <li>
+          <a><button *ngIf="isConnected && !add" mat-mini-fab (click)="deleteMovie()" color="warn">
+              <mat-icon>clear</mat-icon>
+            </button></a>
+        </li>
+        <li><a><button mat-mini-fab *ngIf="add && isConnected" (click)="openDialogAddMovie()" color="primary">
+              <mat-icon>add</mat-icon>
+            </button></a>
+        </li>
+        <li><a><button mat-mini-fab [routerLink]="['/movie', movie.id, oldPath]" color="accent">
+              <mat-icon>more</mat-icon>
+            </button></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

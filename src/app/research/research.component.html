@@ -8,9 +8,9 @@
       </button>
     </div>
     <div class="films">
-      <li *ngFor="let film of movies.results">
+      <div *ngFor="let film of movies.results">
         <app-movie [movie]="film" [add]="true"></app-movie>
-      </li>
+      </div>
     </div>
   </div>
 </div>

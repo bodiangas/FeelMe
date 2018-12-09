@@ -117,4 +117,16 @@ export class FirebaseService {
     this.emmitUserMoviesList();
   }
 
+  movieExist(idList: string, result: MovieResponse | MovieResult): boolean {
+    if (this.moviesLists.find(e => {
+      return e.name === idList;
+    }).movies.find(m => {
+      if (m = result) {
+        return true;
+      }
+    })) {
+      return true;
+    }
+    return false;
+  }
 }

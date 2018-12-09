@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SearchMovieQuery, SearchMovieResponse } from '../tmdb-data/searchMovie';
+import { SearchMovieResponse } from '../tmdb-data/searchMovie';
 import { SearchService } from '../search.service';
 import { Subscription } from 'rxjs';
 import { FirebaseService, MovieList } from '../services/firebase.service';

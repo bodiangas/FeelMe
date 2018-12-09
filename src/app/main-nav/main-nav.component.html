@@ -24,7 +24,7 @@
       <mat-icon matSuffix>edit_mode</mat-icon>
     </mat-form-field>
     <mat-slide-toggle class="example-margin" labelPosition="before" color="warn" [(ngModel)]="advancedSearch">
-      <p>Recherche avancée</p>
+      Recherche avancée
     </mat-slide-toggle>
     <div *ngIf="advancedSearch">
       <mat-form-field>
@@ -76,10 +76,15 @@
       -->
 
       <div>
-        <p>Année</p>
-        <mat-icon>calendar_today</mat-icon>
+        <div>
+          <p>
+            <mat-icon>calendar_today</mat-icon> A partir de {{minYear }} :
+          </p>
+        </div>
         <!--input placeholder="Année" type="number" min="1895" max="2019" [(ngModel)]="searchQuery.year"/-->
+        <strong>1895 </strong>
         <mat-slider [(ngModel)]="minYear" thumbLabel tickInterval="1" min="1895" max="2019"></mat-slider>
+        <strong> 2019</strong>
       </div>
       <button mat-raised-button color="primary" (click)="search()" [disabled]="!searchQuery.query">Rechercher</button>
     </div>

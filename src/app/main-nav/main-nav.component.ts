@@ -72,7 +72,7 @@ export class MainNavComponent implements OnInit, OnDestroy {
       this.userLists = movies;
     });
 
-    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').getGenres()
+    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').getGenres({language: 'fr-FR'})
       .then(e => this.genres = e.genres);
   }
 
@@ -82,18 +82,8 @@ export class MainNavComponent implements OnInit, OnDestroy {
     });
   }*/
 
-
   search() {
     this.router.navigateByUrl('/search');
-    /*this.moviesQuery = {
-      include_adult: false,
-      query: this.searchText,
-      language: 'fr',
-      page: 1,
-      primary_release_year: 2018,
-      region: '',
-      year: 2018,
-    };*/
     if (this.genreControl.value !== null) {
       this.searchService.search(this.searchQuery, this.genreControl.value.map(a => a.id), this.minYear.toString());
     } else {
