@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import {
+  MatAutocompleteModule,
   MatToolbarModule,
   MatCardModule,
   MatButtonModule,
@@ -23,6 +24,7 @@ import {
 
 @NgModule({
   imports: [
+    MatAutocompleteModule,
     MatToolbarModule,
     MatCardModule,
     MatButtonModule,
@@ -42,6 +44,7 @@ import {
     MatTabsModule
   ],
   exports: [
+    MatAutocompleteModule,
     MatToolbarModule,
     MatCardModule,
     MatButtonModule,

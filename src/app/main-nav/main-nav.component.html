@@ -14,39 +14,91 @@
   <span class="example-spacer"></span>
   <app-user></app-user>
 </mat-toolbar>
- 
+
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav mat-elevation-z6" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+  <mat-sidenav
+    #drawer
+    class="sidenav mat-elevation-z6"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)"
+  >
     <mat-form-field class="research" appearance="outline">
       <mat-label>Recherche</mat-label>
-      <input matInput placeholder="Films, mots-clés" [(ngModel)]="searchText" (keyup.enter)="navigation()">
+      <input
+        matInput
+        placeholder="Films, mots-clés"
+        [(ngModel)]="searchQuery.query"
+        (keyup.enter)="search()"
+      />
       <mat-icon matSuffix>edit_mode</mat-icon>
     </mat-form-field>
-
-    <mat-slide-toggle class="example-margin" labelPosition="before" color="warn" [(ngModel)]="advancedSearch">
-      Recherche avancée
+    <mat-slide-toggle
+      class="example-margin"
+      labelPosition="before"
+      color="warn"
+      [(ngModel)]="advancedSearch"
+    >
+    <p>Recherche avancée</p>
     </mat-slide-toggle>
     <div *ngIf="advancedSearch">
-      <mat-expansion-panel class="categories">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            categories
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="mat-expansion-panel-body">
-          <mat-selection-list style="padding: 0px -10px 0px -10px;">
-            <mat-list-option *ngFor="let genre of genres">
-              {{genre.name}}
-            </mat-list-option>
-          </mat-selection-list>
-        </div>
-      </mat-expansion-panel>
-      annee
-      <mat-slider color="green"></mat-slider>
+      <mat-form-field>
+          <mat-select placeholder="Genres" [formControl]="genreControl" multiple>
+            <mat-select-trigger>
+              {{genreControl.value && genreControl.value.length>0  ? genreControl.value[0].name : ''}}
+              <span *ngIf="genreControl.value?.length > 1" class="example-additional-selection">
+                (+{{genreControl.value.length - 1}} {{genreControl.value?.length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let genre of genres" [value]="genre">{{genre.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      <!--form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            placeholder="Genre"
+            aria-label="Genre"
+            [matAutocomplete]="auto"
+            [formControl]="genreControl"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let genre of (filteredGenre | async)"
+              [value]="genre.name"
+            ><span>{{ genre.name }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <br />
+      </form-->
+      <!--
+        mat-expansion-panel class="categories">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              categories
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="mat-expansion-panel-body">
+            <mat-selection-list style="padding: 0px -10px 0px -10px;">
+              <mat-list-option *ngFor="let genre of genres">
+                {{genre.name}}
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+        </mat-expansion-panel
+      -->
+      <p>Année</p>
+      <!--input placeholder="Année" type="number" min="1895" max="2019" [(ngModel)]="searchQuery.year"/-->
+      <mat-slider 
+      [(ngModel)]="minYear"
+      thumbLabel
+      tickInterval="1"
+      min="1895"
+      max="2019"></mat-slider>
     </div>
+    <button mat-raised-button color="primary" (click)="search()" [disabled]="!searchQuery.query">Rechercher</button>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
+  <mat-sidenav-content> <router-outlet></router-outlet> </mat-sidenav-content>
 </mat-sidenav-container>

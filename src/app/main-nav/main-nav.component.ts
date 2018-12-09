@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
 import { FirebaseService, MovieList } from '../services/firebase.service';
@@ -10,6 +10,8 @@ import { User } from 'firebase';
 import { MatDialog } from '@angular/material';
 import { TmdbService } from '../tmdb.service';
 import { MovieGenre } from '../tmdb-data/Movie';
+import { SearchMovieQuery } from '../tmdb-data/searchMovie';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-main-nav',
@@ -17,8 +19,22 @@ import { MovieGenre } from '../tmdb-data/Movie';
   styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent implements OnInit, OnDestroy {
-  public searchText: string;
-  private _genres: MovieGenre[] = null;
+
+  minYear = 1895;
+
+  public searchQuery: SearchMovieQuery = {
+    // include_adult: false,
+    query: '',
+    language: 'fr',
+    // page: 1,
+    // primary_release_year: 2018,
+    // region: '',
+    // year: 2018,
+  };
+
+  genreControl = new FormControl();
+  // filteredGenre: Observable<MovieGenre[]>;
+  genres: MovieGenre[] = null;
   private userLists: MovieList[];
   public isConnected = false;
   private _user: User;
@@ -34,12 +50,15 @@ export class MainNavComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
-    private search: SearchService,
+    private searchService: SearchService,
     private firebase: FirebaseService,
     private userService: UserService,
     public dialog: MatDialog,
     private tmdb: TmdbService
-  ) { }
+  ) {
+    /*this.filteredGenre = this.genreControl.valueChanges
+    .pipe(startWith(''), map(genre => genre ? this._filterGenres(genre) : this.genres.slice()))*/
+  }
 
   ngOnInit() {
     this.userSubscription = this.userService.userSubject.subscribe(user => {
@@ -54,20 +73,36 @@ export class MainNavComponent implements OnInit, OnDestroy {
     });
 
     this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').getGenres()
-      .then(e => this._genres = e.genres);
+      .then(e => this.genres = e.genres);
   }
 
-  navigation() {
+  /*private _filterGenres(matchValue: string): MovieGenre[] {
+    return this.genres.sort((a , b) => {
+      return a.name.toLowerCase().indexOf(matchValue);
+    });
+  }*/
+
+
+  search() {
     this.router.navigateByUrl('/search');
-    this.search.search(this.searchText);
+    /*this.moviesQuery = {
+      include_adult: false,
+      query: this.searchText,
+      language: 'fr',
+      page: 1,
+      primary_release_year: 2018,
+      region: '',
+      year: 2018,
+    };*/
+    if (this.genreControl.value !== null) {
+      this.searchService.search(this.searchQuery, this.genreControl.value.map(a => a.id), this.minYear.toString());
+    } else {
+      this.searchService.search(this.searchQuery, [], this.minYear.toString());
+    }
   }
 
   get lists() {
     return this.userLists;
-  }
-
-  get genres() {
-    return this._genres;
   }
 
   ngOnDestroy(): void {
