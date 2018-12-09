@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TmdbService } from '../../tmdb.service';
 import { MovieResponse } from '../../tmdb-data/Movie';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 
 @Component({
@@ -13,9 +14,11 @@ export class MovieDetailsComponent implements OnInit {
 
   private id;
   private _movieDetails: MovieResponse;
+  list : any;
+ 
 
   constructor(private tmdbservice: TmdbService,
-    private router: Router, private route: ActivatedRoute) {
+    private router: Router, private route: ActivatedRoute, private firebase : FirebaseService) {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
     });
@@ -41,5 +44,14 @@ export class MovieDetailsComponent implements OnInit {
 
   getPath(path: string): string {
     return this.tmdbservice.getPath(path);
+  }
+
+  isListPublic() {
+    return this.isListPublic;
+  }
+
+  updateList() {
+    //this.isListPublic = !this.isListPublic;
+    this.firebase.update(this.list, this.list.key);
   }
 }

@@ -4,6 +4,12 @@
     <div>
         <mat-form-field [formGroup]="titleForm">
             <input matInput [(ngModel)]="name" formControlName="listName" placeholder="Nom">
+            <!--
+                mat-radio-group>
+                <mat-radio-button value="1">public</mat-radio-button>
+                <mat-radio-button value="2">private</mat-radio-button>
+            </mat-radio-group>
+            -->
             <span matSuffix>
                 <mat-icon>edit</mat-icon>
             </span>

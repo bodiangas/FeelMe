@@ -60,6 +60,10 @@ export class FirebaseService {
       );
   }
 
+  update(list :any, $key){
+    this.firebase.object('listes/'+ $key).update(list)
+  }
+
   getOneList(userId: string, id: number) {
     return new Promise(
       (resolve, reject) => {
@@ -100,6 +104,10 @@ export class FirebaseService {
     }).movies.push(movie);
     this.saveMoviesLists(userId);
     this.emmitUserMoviesList();
+  }
+  
+  renameList(userId : string, idList : string, name : string){
+    this.firebase.database.ref(`/users/${userId}/lists/${idList}/${name}`).update({name:name})
   }
 
 }

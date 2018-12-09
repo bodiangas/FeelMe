@@ -18,6 +18,7 @@ import {
   MatSlideToggleModule,
   MatOptionModule,
   MatSelectModule,
+  MatDividerModule,
   MatTabsModule,
 } from '@angular/material';
 
@@ -39,10 +40,12 @@ import {
     MatSlideToggleModule,
     MatOptionModule,
     MatSelectModule,
+    MatDividerModule,
     MatTabsModule
   ],
   exports: [
     MatToolbarModule,
+    MatDividerModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,

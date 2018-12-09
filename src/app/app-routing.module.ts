@@ -8,6 +8,7 @@ import { MovieDetailsComponent } from './movie/movie-details/movie-details.compo
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResearchComponent } from './research/research.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { ShareListComponent } from './share-list/share-list.component';
 
 
 const appRoutes: Routes = [
@@ -42,6 +43,11 @@ const appRoutes: Routes = [
     component: PageNotFoundComponent
   },
   {
+    path: 'shareList',
+    canActivate: [AuthGuardService],
+    component : ShareListComponent
+  },
+  {
     path: '**',
     redirectTo: 'not-found'
   },
@@ -58,5 +64,6 @@ export const routingComponents = [AppComponent,
   MoviesListComponent,
   UserComponent,
   HomePageComponent,
-  PageNotFoundComponent
+  PageNotFoundComponent,
+  ShareListComponent
 ];
