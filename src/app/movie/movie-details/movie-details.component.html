@@ -1,4 +1,4 @@
-<div *ngIf="movieDetails">
+<div *ngIf="movieDetails" class="custom_bg">
     <div class="single_column">
         <div class="poster">
             <div class="image_content">
@@ -20,5 +20,9 @@
                 </button>
             </div>
         </div>
+        <button mat-mini-fab color="warn" class="clear" routerLink="/">
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
+    
 </div>

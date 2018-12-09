@@ -7,6 +7,7 @@ import { MovieResult } from '../tmdb-data/searchMovie';
 
 export interface MovieList {
   name: string;
+  // userName: string;
   // date: Date;
   // status: boolean;
   movies: MovieResponse[];
@@ -98,6 +99,12 @@ export class FirebaseService {
     this.moviesLists.find(e => {
       return e.name === idList;
     }).movies.push(movie);
+    this.saveMoviesLists(userId);
+    this.emmitUserMoviesList();
+  }
+
+  renameList(userId: string, idList: string, name: string) {
+    this.firebase.database.ref(`/users/${userId}/lists/${idList}`).set(name);
     this.saveMoviesLists(userId);
     this.emmitUserMoviesList();
   }
