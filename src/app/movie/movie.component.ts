@@ -58,7 +58,6 @@ export class MovieComponent implements OnInit {
 
   openDialogAddMovie() {
     const dialogRef = this.dialog.open(DialogAddMovieComponent, {
-      // width: '300px',
       data: {
         movieName: this.movie.title,
         listsNames: this.lists.map(e => e.name)

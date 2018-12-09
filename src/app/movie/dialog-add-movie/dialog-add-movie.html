@@ -1,9 +1,10 @@
 <div class="dialog-box">
-  <div class="header">
-    <h1 mat-dialog-title>Ajouter le film : <span> {{data.movieName}} </span></h1>
+  <div class="header" style="white-space: nowrap; max-width: 250px; overflow: hidden;">
+    <p style="text-overflow: ellipsis; font-size: 1.5rem;">Ajouter le film : <span> {{data.movieName}}
+      </span></p>
   </div>
   <div mat-dialog-content>
-    <h4>Listes :</h4>
+    <h5>Listes :</h5>
     <mat-form-field>
       <mat-select placeholder="Liste" [(ngModel)]="datasent.list" name="liste">
         <mat-option *ngFor="let list of data.listsNames" [value]="list">
@@ -11,23 +12,29 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <div class="new-list"> 
-      <p> Nouvelle liste</p>
-      <mat-form-field [formGroup]="titleForm">
-        <input matInput [(ngModel)]="datasent.newListName" formControlName="listName" placeholder="Nom">
-        <span matSuffix>
-          <mat-icon>edit</mat-icon>
-        </span>
-        <mat-error *ngIf="titleForm.invalid"> {{getErrorMessage()}} </mat-error>
-      </mat-form-field>
-      <button mat-stroked-button color="accent" [disabled]="titleForm.invalid" (click)="popupListCreated()">
-        <mat-icon>add</mat-icon>
-      </button>
+    <div class="new-list" style="border-top: 1px solid gray; 
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 16px 0px 0px; ">
+      <p style="font-size: 1rem;"> Nouvelle liste : </p>
     </div>
+    <mat-form-field [formGroup]="titleForm">
+      <input matInput [(ngModel)]="datasent.newListName" formControlName="listName" placeholder="Nom">
+      <span matSuffix>
+        <mat-icon>edit</mat-icon>
+      </span>
+      <mat-error *ngIf="titleForm.invalid"> {{getErrorMessage()}} </mat-error>
+    </mat-form-field>
+    <button style="margin-left: 10px" mat-mini-fab color="accent" [disabled]="titleForm.invalid" (click)="popupListCreated(datasent.newListName,'Fermer')">
+      <mat-icon>add</mat-icon>
+    </button>
+
   </div>
   <div mat-dialog-actions>
     <button mat-raised-button (click)="close()" color="warn">Annuler</button>
-    <button mat-raised-button [disabled]="!datasent.list" [mat-dialog-close]="datasent" color="primary">
+    <button style="float: right;" mat-raised-button style="float: right;" [disabled]="!datasent.list"
+      [mat-dialog-close]="datasent" color="primary">
       <mat-icon>add</mat-icon>Ajouter
     </button>
   </div>

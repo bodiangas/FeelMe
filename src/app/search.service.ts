@@ -6,13 +6,12 @@ import {
   SearchMovieQuery,
   MovieResult
 } from './tmdb-data/searchMovie';
-import { MovieGenre } from './tmdb-data/Movie';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService implements OnInit{
+export class SearchService implements OnInit {
   searchMoviesSubject = new Subject<SearchMovieResponse>();
   movies: SearchMovieResponse;
 

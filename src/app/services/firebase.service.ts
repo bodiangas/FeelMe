@@ -95,17 +95,25 @@ export class FirebaseService {
     this.emmitUserMoviesList();
   }
 
-  addMovie(userId: string, idList: string, movie: MovieResponse | MovieResult) {
+  addMovie(userId: string, idList: string, result: MovieResponse | MovieResult) {
     this.moviesLists.find(e => {
       return e.name === idList;
-    }).movies.push(movie);
+    }).movies.push(result);
+    this.saveMoviesLists(userId);
+    this.emmitUserMoviesList();
+  }
+
+  addMovies(userId: string, idList: string, result: MovieResponse[] | MovieResult[]) {
+    this.moviesLists.find(e => {
+      return e.name === idList;
+    }).movies.concat(result);
     this.saveMoviesLists(userId);
     this.emmitUserMoviesList();
   }
 
   renameList(userId: string, idList: string, name: string) {
     this.firebase.database.ref(`/users/${userId}/lists/${idList}`).set(name);
-    this.saveMoviesLists(userId);
+    this.getMoviesLists(userId);
     this.emmitUserMoviesList();
   }
 

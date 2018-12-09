@@ -1,30 +1,40 @@
 .films {
-    display: block; 
-    margin-left: 2%;
-    margin-top: 15px;
+  display: block;
+  margin-left: 2%;
+  margin-top: 15px;
 }
 
 li {
-    display: inline-block; 
+  display: inline-block;
 }
 
 .list {
-    width: 100%;
-    display: inline-block;
+  width: 100%;
+  display: inline-block;
 }
 
 .list-header {
-    margin-left: 2%;
-    overflow:hidden;
-    display: inline-flex;
-    position: inherit;
-    margin-bottom: 25px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+.header-action {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
 
 div.cards {
-    margin-left: 2%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    overflow: auto;
+  margin-left: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  overflow: auto;
 }

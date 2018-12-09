@@ -15,7 +15,7 @@ import { ResearchComponent } from './research/research.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
 import { MovieComponent} from './movie/movie.component';
 import { DialogAddMovieComponent} from './movie/dialog-add-movie/dialog-add-movie.component';
-import { MoviesListComponent } from './movies-list/movies-list.component';
+import { MoviesListComponent, DialogRenameListComponent } from './movies-list/movies-list.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { UserService } from './services/user.service';
@@ -42,7 +42,8 @@ import { ForgetPasswordComponent } from './user/forget-password/forget-password.
     routingComponents,
     MovieComponent,
     DialogAddMovieComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    DialogRenameListComponent
   ],
   imports: [
     FormsModule,
@@ -62,7 +63,8 @@ import { ForgetPasswordComponent } from './user/forget-password/forget-password.
   entryComponents: [
     AuthDialogComponent,
     DialogAddMovieComponent,
-    ForgetPasswordComponent
+    DialogRenameListComponent,
+    ForgetPasswordComponent,
   ],
   providers: [TmdbService, UserService, SearchService, AuthGuardService, FirebaseService],
   bootstrap: [AppComponent]

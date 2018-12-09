@@ -5,18 +5,19 @@
       {{list.name}}
     </a>
   </nav>
-  <div class="list col-md-6 col-md-offset-3">
+  <div class="list col-md-12 col-md-offset-3">
     <div class="list-header" *ngIf="loaded">
-      <mat-slide-toggle labelPosition="before" color="success" [(ngModel)]="value">
+      <mat-slide-toggle class="header-action" (click)="openSnackBar('Statut changé !', 'Fermer')" labelPosition="before" color="success" [(ngModel)]="value">
         {{showStatus(value)}}
       </mat-slide-toggle>
-      <button mat-stroked-button (click)="deleteList()" color="gray">
+      <span> créee le </span>
+      <span class="spacer"></span>
+      <button mat-stroked-button class="header-action" (click)="renameList()" color="gray">
         <mat-icon>edit</mat-icon> RENOMMER
       </button>
-      <button mat-raised-button (click)="deleteList()" color="warn">
+      <button mat-raised-button class="header-action" (click)="deleteList()" color="warn">
         <mat-icon>delete</mat-icon> SUPPRIMER
       </button>
-      <span> cree le </span>
     </div>
     <div class="cards">
       <li *ngFor="let movie of movies">
