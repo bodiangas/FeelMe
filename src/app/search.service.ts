@@ -6,7 +6,6 @@ import {
   SearchMovieQuery,
   MovieResult
 } from './tmdb-data/searchMovie';
-import { MovieGenre } from './tmdb-data/Movie';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -33,7 +32,7 @@ export class SearchService implements OnInit {
       .searchMovie(moviesQuery)
       .then((res: SearchMovieResponse) => {
         this.movies = res;
-        console.log(res, minYear);
+        // console.log(res, minYear);
         this.movies.results = this.movies.results.filter(e => e.release_date >= minYear);
         if (genres.length !== 0) {
           let resultFiltered: MovieResult[] = [];

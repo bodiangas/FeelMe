@@ -20,6 +20,10 @@ import {
   MatOptionModule,
   MatSelectModule,
   MatTabsModule,
+  MatSnackBarModule,
+  // MatDialogRef,
+  // MatDialog,
+  // MatSnackBar
 } from '@angular/material';
 
 @NgModule({
@@ -41,7 +45,11 @@ import {
     MatSlideToggleModule,
     MatOptionModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSnackBarModule
+    // MatDialogRef,
+    // MatDialog,
+    // MatSnackBar
   ],
   exports: [
     MatAutocompleteModule,
@@ -62,7 +70,11 @@ import {
     MatSlideToggleModule,
     MatOptionModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSnackBarModule,
+    // MatDialogRef,
+    // MatDialog,
+    // MatSnackBar
   ]
 })
 export class MaterialModule { }

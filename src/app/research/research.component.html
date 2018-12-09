@@ -1,17 +1,19 @@
-<mat-card style="min-width: 100%; min-height: 100%">
-  <mat-card-header>
-      <mat-card-title>
-        <h2>Résultats de la recherche</h2>
-      </mat-card-title>
-  </mat-card-header>
-  <mat-card-content *ngIf="movies">
-    <div class="films">
-      <li *ngFor="let film of movies.results">
-        <app-movie [movie]="film" [add]="true"></app-movie>
-      </li>
+<div style="min-width: 100%; min-height: 100%">
+    <div>
+      <div class="search-header">
+        <h2> Résultat de la recherche </h2>
+        <button mat-raised-button color="primary" (click)="addAll()">
+          TOUT AJOUTER
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="films" *ngIf="movies">
+        <li *ngFor="let film of movies.results">
+          <app-movie [movie]="film" [add]="true"></app-movie>
+        </li>
+      </div>
+      <div class="films" *ngIf="!movies || movies.results.length === 0">
+          <p>Aucun film correspondant à la récherche</p>
+      </div>
     </div>
-  </mat-card-content>
-  <mat-card-content *ngIf="!movies || movies.results.length === 0">
-    <p>Aucun film correspondant à la récherche</p>
-  </mat-card-content>
-</mat-card>
+  </div>

@@ -14,20 +14,21 @@
 
 .sidenav-container {
   top: 60px;
+
   .sidenav {
     padding: 10px 10px 0px 10px;
     margin-right: 40px;
     width: 18%;
     overflow-x: hidden;
   }
+
   .research {
     width: 100%;
-  }
-  mat-sidenav-content {
-   // min-height: 700px;
-  }
+  }  
 }
-
+mat-drawer-content {
+  overflow: hidden;
+}
 mat-sidenav-container {
   position: fixed;
   height: 100%;
@@ -51,23 +52,23 @@ div.mat-expansion-panel-body {
 }
 
 .icone {
-  display : inline-flex;
+  display: inline-flex;
   vertical-align: middle;
 }
 
-.image{
-    height: 60px;
-    width: 60px;
-    margin-right: 1%;
-    align-self: center;
-  }
+.image {
+  height: 60px;
+  width: 60px;
+  margin-right: 1%;
+  align-self: center;
+}
 
-  a {
-    border-bottom: #f0ecec 1px solid;
-  }
+a {
+  border-bottom: #f0ecec 1px solid;
+}
 
-  button {
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

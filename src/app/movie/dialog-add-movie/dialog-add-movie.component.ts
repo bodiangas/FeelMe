@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
@@ -14,68 +14,18 @@ export interface DataSent {
 }
 
 @Component({
-    selector: 'app-dialog-add-movie',
-    templateUrl: './dialog-add-movie.html',
-  })
-  export class DialogAddMovieComponent {
-    datasent: DataSent = {};
-
-    constructor(
-      public dialog: MatDialog,
-      public dialogRef: MatDialogRef<DialogAddMovieComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-        console.log(data);
-      }
-
-    popupListCreated() {
-      console.log('create new list', this.datasent.newListName);
-      this.dialogRef.close(this.datasent);
-    }
-
-    close() {
-      this.dialogRef.close();
-    }
-
-    /*createNewList() {
-      this.data.lists.push({
-        movies: [this.data.movie],
-        name: this.newListName
-      });
-      this.dialogRef.close();
-    }*/
-
-    /*openDialogCreateList() {
-
-
-      const dialogRef = this.dialog.open(DialogCreateListComponent, {
-        width: '250px',
-        data: { name: this.listName }
-      });
-
-      dialogRef.afterClosed().subscribe((result: string) => {
-        this.selectedValue = result;
-        this.firebase.createNewList(this._user.uid, {
-          name: this.listName,
-          movies: []
-        });
-      });
-    }*/
-  }
-
-  // Dialog component for adding list
-/*@Component({
-  selector: 'app-dialog-create-list',
-  templateUrl: './dialog-create-list.html'
+  selector: 'app-dialog-add-movie',
+  templateUrl: './dialog-add-movie.html',
 })
-export class DialogCreateListComponent implements OnInit {
+export class DialogAddMovieComponent {
+  datasent: DataSent = {};
   titleForm: FormGroup;
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogCreateListComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string }
-  ) { }
 
-  ngOnInit(): void {
+  constructor(
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<DialogAddMovieComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public snackBar: MatSnackBar) {
     this.titleForm = new FormGroup({
       listName: new FormControl('', [
         Validators.required,
@@ -89,8 +39,15 @@ export class DialogCreateListComponent implements OnInit {
       this.titleForm.hasError('length') ? 'Nom trop court' :
         '';
   }
+  popupListCreated(message: string, action: string) {
+    this.snackBar.open(`Liste ${message} créee avec succès avec son contenu :D !`, action, {
+      duration: 4000,
+    });
+    this.dialogRef.close(this.datasent);
+  }
 
-  onNoClick() {
+  close() {
     this.dialogRef.close();
   }
-}*/
+
+}

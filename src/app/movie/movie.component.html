@@ -21,7 +21,7 @@
     </a>
     <div class="actions">
       <button mat-raised-button [routerLink]="['/movie', movie.id]">Display details</button>
-      <div *ngIf="add" class="right">
+      <div *ngIf="add && isConnected" class="right">
         <button mat-mini-fab color="primitive" (click)="openDialogAddMovie()">
           <mat-icon>add</mat-icon>
         </button>
