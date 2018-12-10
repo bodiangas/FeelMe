@@ -20,7 +20,8 @@ import { FormControl } from '@angular/forms';
 })
 export class MainNavComponent implements OnInit, OnDestroy {
 
-  minYear = 1895;
+  minYear: FormControl = new FormControl(1895);
+  searchField: FormControl = new FormControl('');
 
   public searchQuery: SearchMovieQuery = {
     // include_adult: false,
@@ -56,11 +57,22 @@ export class MainNavComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private tmdb: TmdbService
   ) {
+    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').getGenres({language: 'fr'})
+      .then(e => this.genres = e.genres);
     /*this.filteredGenre = this.genreControl.valueChanges
     .pipe(startWith(''), map(genre => genre ? this._filterGenres(genre) : this.genres.slice()))*/
   }
 
   ngOnInit() {
+    this.searchField.valueChanges.subscribe(e => {
+      this.search();
+    });
+    this.minYear.valueChanges.subscribe(e => {
+      this.search();
+    });
+    this.genreControl.valueChanges.subscribe(e => {
+      this.search();
+    });
     this.userSubscription = this.userService.userSubject.subscribe(user => {
       if (user) {
         this._user = user;
@@ -71,9 +83,6 @@ export class MainNavComponent implements OnInit, OnDestroy {
     this.firebaseSubscription = this.firebase.movieSubject.subscribe(movies => {
       this.userLists = movies;
     });
-
-    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').getGenres({language: 'fr-FR'})
-      .then(e => this.genres = e.genres);
   }
 
   /*private _filterGenres(matchValue: string): MovieGenre[] {
@@ -83,11 +92,25 @@ export class MainNavComponent implements OnInit, OnDestroy {
   }*/
 
   search() {
-    this.router.navigateByUrl('/search');
-    if (this.genreControl.value !== null) {
-      this.searchService.search(this.searchQuery, this.genreControl.value.map(a => a.id), this.minYear.toString());
-    } else {
-      this.searchService.search(this.searchQuery, [], this.minYear.toString());
+    console.log('searched');
+    if (this.searchField.value) {
+      console.log('really searched', this.searchQuery);
+      this.searchQuery.query = this.searchField.value;
+      this.router.navigateByUrl('/search');
+      /*this.moviesQuery = {
+        include_adult: false,
+        query: this.searchText,
+        language: 'fr',
+        page: 1,
+        primary_release_year: 2018,
+        region: '',
+        year: 2018,
+      };*/
+      if (this.genreControl.value !== null) {
+        this.searchService.search(this.searchQuery, this.genreControl.value.map(a => a.id), `${this.minYear.value}`);
+      } else {
+        this.searchService.search(this.searchQuery, [], `${this.minYear.value}`);
+      }
     }
   }
 
