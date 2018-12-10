@@ -1,32 +1,3 @@
-<!-- <mat-card class="my-card">
-  <a href="">
-
-  </a>
-  <img src="{{ posterUrl }}" wide class="card_img" />
-  <div class="content">
-    <mat-card-title-group>
-      <mat-card-title class="card_title"> {{ movie.title }} </mat-card-title>
-      <mat-card-subtitle class="card_title"> {{ movie.release_date | date }}, <p> noté {{ movie.vote_average }} </p>
-      </mat-card-subtitle>
-
-    </mat-card-title-group>
-    <a class="overview" style="color:black">
-      <p> {{ truncatedOverview }} </p>
-    </a>
-    <div class="actions">
-      <button mat-raised-button [routerLink]="['/movie', movie.id, oldPath]">Display details</button>
-      <div *ngIf="add && isConnected" class="right">
-        <button mat-mini-fab color="primitive" (click)="openDialogAddMovie()">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-    </div>
-  </div>
-  <button *ngIf="isConnected && !add" mat-mini-fab (click)="deleteMovie()" color="warn" class="clear">
-    <mat-icon>clear</mat-icon>
-  </button>
-</mat-card> -->
-
 <div class="example-1 card_1">
   <div class="wrapper">
     <a [routerLink]="['/movie', movie.id, oldPath]">
@@ -53,10 +24,9 @@
             <mat-icon>more</mat-icon> Détails
           </button>
         </mat-menu>
-        <!-- <label for="show-menu" class="menu-button"><span></span></label> -->
+      
       </div>
-      <!--  -->
-      <!-- <input type="checkbox" id="show-menu" /> -->
+
       <ul class="menu-content">
         <li>
           <a><button *ngIf="isConnected && !add" mat-mini-fab (click)="deleteMovie()" color="warn">

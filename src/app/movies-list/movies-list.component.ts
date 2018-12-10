@@ -16,7 +16,8 @@ import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 
 export class MoviesListComponent implements OnInit, OnDestroy {
 
-  private idList;
+  idList;
+  currentList: MovieList;
   private _movies: MovieResponse[] = null;
   private _moviesList: MovieList[] = null;
   private _user: User;
@@ -24,6 +25,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   private firebaseSubscription = new Subscription();
   isConnected = false;
   loaded = false;
+  value;
 
   constructor(private router: Router, private route: ActivatedRoute,
     private firebase: FirebaseService, private userService: UserService,
@@ -36,11 +38,12 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     this.firebase.emmitUserMoviesList();
     this.route.params.subscribe(params => {
       this.idList = params['name'];
-      const list = this._moviesList.find(
+      this.currentList = this._moviesList.find(
         (movie) => movie.name === this.idList);
-      if (list) {
+      if (this.currentList) {
         this.loaded = true;
-        console.log('MOVIES', this._movies = list.movies);
+        this._movies = this.currentList.movies;
+        console.log('Get current MOVIES');
       }
     });
 
@@ -60,23 +63,25 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     this.firebaseSubscription.unsubscribe();
   }
 
+  changeStatus() {
+    this.snackBar.open('Statut changé !', 'Fermer');
+    this.firebase.changeStatus(this._user.uid, this.currentList.name, this.currentList.info);
+  }
 
   showStatus(value: boolean) {
     return value === true ? 'Publique' : 'Privée';
   }
 
   renameList() {
-    const dialogRef = this.dialog.open(DialogRenameListComponent, {
-      data: { }
-    });
+    const dialogRef = this.dialog.open(DialogRenameListComponent);
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
-        this.firebase.renameList(this._user.uid, this.idList, result);
+        this.currentList.name = result;
+        this.firebase.renameList(this._user.uid, this.idList, this.currentList);
+        this.firebase.emmitUserMoviesList();
       }
     });
-    this.firebase.emmitUserMoviesList();
-    this.router.navigateByUrl('/lists');
   }
 
   openSnackBar(message: string, action: string) {
@@ -111,7 +116,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   templateUrl: './dialog-rename-list.html'
 })
 export class DialogRenameListComponent {
-
+  name ;
   constructor(
     public dialogRef: MatDialogRef<DialogRenameListComponent>,
   ) {}

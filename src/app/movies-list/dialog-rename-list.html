@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>Renommer votre liste</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <input matInput [(ngModel)]="data" placeholder="Nouveau nom ...">
+    <input matInput [(ngModel)]="name" placeholder="Nouveau nom ...">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">ANNULER</button>
-  <button mat-button [disabled]="!data" [mat-dialog-close]="data" cdkFocusInitial>CONFIRMER</button>
+  <button mat-button [disabled]="!name" [mat-dialog-close]="name" cdkFocusInitial>CONFIRMER</button>
 </div>
 

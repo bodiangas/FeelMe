@@ -76,7 +76,11 @@ export class ResearchComponent implements OnInit, OnDestroy {
   private createNewList(listName) {
     this.firebase.createNewList(this._user.uid, {
       name: listName,
-      movies: this.movies.results
+      movies: this.movies.results,
+      info: {
+        date: new Date().toLocaleDateString('fr-FR', {timeZoneName: 'short'}),
+        status: false
+      }
     });
   }
 

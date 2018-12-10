@@ -81,7 +81,11 @@ export class MovieDetailsComponent implements OnInit {
   private createNewList(listName) {
     this.firebase.createNewList(this._user.uid, {
       name: listName,
-      movies: [this._movieDetails]
+      movies: [this._movieDetails],
+      info: {
+        date: new Date().toLocaleDateString('fr-FR', {timeZoneName: 'short'}),
+        status: false
+      }
     });
   }
 

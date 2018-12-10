@@ -7,10 +7,10 @@
   </nav>
   <div class="list col-md-12 ">
     <div class="list-header" *ngIf="loaded">
-      <mat-slide-toggle class="header-action" (click)="openSnackBar('Statut changé !', 'Fermer')" labelPosition="before" color="success" [(ngModel)]="value">
-        {{showStatus(value)}}
+      <mat-slide-toggle class="header-action" (click)="changeStatus()" labelPosition="before" color="success" [(ngModel)]="currentList.info.status">
+        {{showStatus(currentList.info.status)}}
       </mat-slide-toggle>
-      <span> créee le </span>
+      <span> créée le {{currentList.info.date}}</span>
       <span class="spacer"></span>
       <button mat-stroked-button class="header-action" (click)="renameList()" color="gray">
         <mat-icon>edit</mat-icon> RENOMMER
