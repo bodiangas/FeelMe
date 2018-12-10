@@ -67,11 +67,11 @@ export class FirebaseService {
       }
       );
 
-      // dates
-      this.firebase.database.ref(`/users/${userId}/info/`)
+    // dates
+    this.firebase.database.ref(`/users/${userId}/info/`)
       .on('value', (data: DataSnapshot) => {
         data.forEach(e => {
-          this.moviesLists.find( m => m.name === e.key).info  = e.val();
+          this.moviesLists.find(m => m.name === e.key).info = e.val();
         });
         console.log('get movies list');
         this.emmitUserMoviesList();
@@ -79,8 +79,8 @@ export class FirebaseService {
       );
   }
 
-  update(list :any, $key){
-    this.firebase.object('listes/'+ $key).update(list)
+  update(list: any, $key) {
+    this.firebase.object('listes/' + $key).update(list);
   }
 
   getOneList(userId: string, id: number) {
@@ -134,12 +134,12 @@ export class FirebaseService {
     this.saveMoviesLists(userId);
     this.emmitUserMoviesList();
   }
-  
-  renameList(userId : string, idList : string, name : string){
-    this.firebase.database.ref(`/users/${userId}/lists/${idList}/${name}`).update({name:name})
+
+  renameList(userId: string, idList: string, name: string) {
+    this.firebase.database.ref(`/users/${userId}/lists/${idList}/${name}`).update({ name: name });
   }
 
-  renameList(userId: string, idList: string, list: MovieList) {
+  renameList1(userId: string, idList: string, list: MovieList) {
     this.deleteList(userId, idList);
     this.createNewList(userId, list);
     this.getMoviesLists(userId);

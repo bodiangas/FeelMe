@@ -78,7 +78,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
         this.currentList.name = result;
-        this.firebase.renameList(this._user.uid, this.idList, this.currentList);
+        this.firebase.renameList1(this._user.uid, this.idList, this.currentList);
         this.firebase.emmitUserMoviesList();
       }
     });
@@ -96,9 +96,9 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/');
   }
 
-  changeName(){
+  changeName() {
     this.firebase.renameList(this._user.uid, this.idList, this.name);
-    this.firebase.emmitUserMoviesList();  
+    this.firebase.emmitUserMoviesList();
   }
 
   get movies() {
@@ -121,10 +121,10 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   templateUrl: './dialog-rename-list.html'
 })
 export class DialogRenameListComponent {
-  name ;
+  name;
   constructor(
     public dialogRef: MatDialogRef<DialogRenameListComponent>,
-  ) {}
+  ) { }
 
   onNoClick() {
     this.dialogRef.close();
