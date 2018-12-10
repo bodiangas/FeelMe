@@ -2,14 +2,13 @@
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
-  <img class="image" src="src\assets\image\film en folie.png" alt="FeelMeLogo" />
-  <div class="app-name">
+  <div routerLink="/"  class="app-name">
     <span>FeelMe</span>
   </div>
   <div class="flex_container">
     <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Acceuil</button>
     <button mat-button routerLink="/lists" routerLinkActive="active">Mes Listes</button>
-    <button mat-button routerLink="/movies" routerLinkActive="active">Listes partagées</button>
+    <button mat-button routerLink="/others-list" routerLinkActive="active">Listes partagées</button>
   </div>
   <span class="example-spacer"></span>
   <app-user></app-user>
@@ -92,8 +91,12 @@
       tickInterval="1"
       min="1895"
       max="2019"></mat-slider>
+<<<<<<< HEAD
+=======
+      <button mat-raised-button color="primary" (click)="search()" [disabled]="!searchField.value">Rechercher</button>
+>>>>>>> b5731102a931b98fe867cfc50923d4411dfbbdaf
     </div>
-    <button mat-raised-button color="primary" (click)="search()" [disabled]="!searchField.value">Rechercher</button>
+   
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

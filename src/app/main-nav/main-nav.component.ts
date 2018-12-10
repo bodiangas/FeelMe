@@ -97,15 +97,6 @@ export class MainNavComponent implements OnInit, OnDestroy {
       console.log('really searched', this.searchQuery);
       this.searchQuery.query = this.searchField.value;
       this.router.navigateByUrl('/search');
-      /*this.moviesQuery = {
-        include_adult: false,
-        query: this.searchText,
-        language: 'fr',
-        page: 1,
-        primary_release_year: 2018,
-        region: '',
-        year: 2018,
-      };*/
       if (this.genreControl.value !== null) {
         this.searchService.search(this.searchQuery, this.genreControl.value.map(a => a.id), `${this.minYear.value}`);
       } else {

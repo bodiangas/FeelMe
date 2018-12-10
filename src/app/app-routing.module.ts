@@ -9,6 +9,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ResearchComponent } from './research/research.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { TmdbResolver } from './tmdb.resolver';
+import { OtherListComponent } from './other-list/other-list.component';
 
 
 const appRoutes: Routes = [
@@ -40,6 +41,10 @@ const appRoutes: Routes = [
     component: ResearchComponent
   },
   {
+    path: 'others-list',
+    component: OtherListComponent
+  },
+  {
     path: 'not-found',
     component: PageNotFoundComponent
   },
@@ -64,5 +69,6 @@ export const routingComponents = [
   MoviesListComponent,
   UserComponent,
   HomePageComponent,
-  PageNotFoundComponent
+  PageNotFoundComponent,
+  OtherListComponent
 ];

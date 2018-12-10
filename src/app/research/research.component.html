@@ -8,9 +8,9 @@
         </button>
       </div>
       <div class="films" *ngIf="movies">
-        <li *ngFor="let film of movies.results">
+        <div *ngFor="let film of movies.results">
           <app-movie [movie]="film" [add]="true"></app-movie>
-        </li>
+        </div>
       </div>
       <div class="films" *ngIf="!movies || movies.results.length === 0">
           <p>Aucun film correspondant à la récherche</p>

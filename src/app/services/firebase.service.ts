@@ -11,6 +11,12 @@ export interface MovieList {
   // date: Date;
   // status: boolean;
   movies: MovieResponse[];
+  info?: Infos;
+}
+
+export interface Infos {
+  date?: string;
+  status?: boolean;
 }
 
 @Injectable({
@@ -28,8 +34,10 @@ export class FirebaseService {
 
   saveMoviesLists(userId: string) {
     console.log('save list');
-    this.moviesLists.forEach(e =>
-      this.firebase.database.ref(`/users/${userId}/lists/${e.name}`).set(e.movies)
+    this.moviesLists.forEach(e => {
+      this.firebase.database.ref(`/users/${userId}/lists/${e.name}`).set(e.movies);
+      if (e.info) { this.firebase.database.ref(`/users/${userId}/info/${e.name}`).set(e.info); }
+    }
     );
   }
 
@@ -46,7 +54,7 @@ export class FirebaseService {
         });
         newMoviesLists.forEach(list => {
           const realmovies: MovieResponse[] = [];
-          list.movies.forEach(movie => {
+          Array.prototype.forEach.call(list.movies, movie => {
             realmovies.push(movie);
           });
           this.moviesLists.push({
@@ -54,6 +62,16 @@ export class FirebaseService {
             movies: realmovies
           }
           );
+        });
+        // this.emmitUserMoviesList();
+      }
+      );
+
+      // dates
+      this.firebase.database.ref(`/users/${userId}/info/`)
+      .on('value', (data: DataSnapshot) => {
+        data.forEach(e => {
+          this.moviesLists.find( m => m.name === e.key).info  = e.val();
         });
         console.log('get movies list');
         this.emmitUserMoviesList();
@@ -64,7 +82,7 @@ export class FirebaseService {
   getOneList(userId: string, id: number) {
     return new Promise(
       (resolve, reject) => {
-        this.firebase.database.ref(`/users/${userId}/movies/` + id).once('value').then(
+        this.firebase.database.ref(`/users/${userId}/lists/` + id).once('value').then(
           (data: DataSnapshot) => {
             resolve(data.val());
           }, (error) => {
@@ -83,6 +101,8 @@ export class FirebaseService {
 
   deleteList(userId: string, idList: string) {
     this.firebase.database.ref(`/users/${userId}/lists/${idList}`)
+      .remove();
+    this.firebase.database.ref(`/users/${userId}/info/${idList}`)
       .remove();
     this.getMoviesLists(userId);
     this.emmitUserMoviesList();
@@ -111,10 +131,16 @@ export class FirebaseService {
     this.emmitUserMoviesList();
   }
 
-  renameList(userId: string, idList: string, name: string) {
-    this.firebase.database.ref(`/users/${userId}/lists/${idList}`).set(name);
+  renameList(userId: string, idList: string, list: MovieList) {
+    this.deleteList(userId, idList);
+    this.createNewList(userId, list);
     this.getMoviesLists(userId);
     this.emmitUserMoviesList();
+  }
+
+  changeStatus(userId: string, idList: string, infos: Infos) {
+    this.moviesLists.find(e => e.name === idList).info = infos;
+    this.firebase.database.ref(`/users/${userId}/info/${idList}`).set(infos);
   }
 
   movieExist(idList: string, result: MovieResponse | MovieResult): boolean {

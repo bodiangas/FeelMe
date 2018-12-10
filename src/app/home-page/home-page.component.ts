@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
 import { SearchMovieResponse, MovieResult } from '../tmdb-data/searchMovie';
 import { ActivatedRoute } from '@angular/router';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home-page',
