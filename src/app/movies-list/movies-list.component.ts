@@ -96,6 +96,11 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/');
   }
 
+  changeName(){
+    this.firebase.renameList(this._user.uid, this.idList, this.name);
+    this.firebase.emmitUserMoviesList();  
+  }
+
   get movies() {
     return this._movies;
   }

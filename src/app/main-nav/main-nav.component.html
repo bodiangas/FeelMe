@@ -2,7 +2,7 @@
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
-  <div routerLink="/"  class="app-name">
+  <div routerLink="/" class="app-name">
     <span>FeelMe</span>
   </div>
   <div class="flex_container">
@@ -19,12 +19,7 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
     <mat-form-field class="research" appearance="outline">
       <mat-label>Recherche</mat-label>
-      <input
-        [formControl]="searchField"
-        matInput
-        placeholder="Films, mots-clés"
-        (keyup.enter)="search()"
-      />
+      <input [formControl]="searchField" matInput placeholder="Films, mots-clés" (keyup.enter)="search()" />
       <mat-icon matSuffix>edit_mode</mat-icon>
     </mat-form-field>
     <mat-slide-toggle class="example-margin" labelPosition="before" color="warn" [(ngModel)]="advancedSearch">
@@ -32,71 +27,21 @@
     </mat-slide-toggle>
     <div *ngIf="advancedSearch">
       <mat-form-field>
-        <!--section class="example-section">
-            <li  *ngFor="let genre of genres" style="list-style: none" class="mdc-list-item">
-              <mat-checkbox class="example-margin" value="genre">{{genre.name}}</mat-checkbox>
-            </li>
-        </section-->
-          <mat-select placeholder="Genres" [formControl]="genreControl" multiple>
-            <mat-select-trigger>
-              {{genreControl.value && genreControl.value.length>0  ? genreControl.value[0].name : ''}}
-              <span *ngIf="genreControl.value?.length > 1" class="example-additional-selection">
-                (+{{genreControl.value.length - 1}} {{genreControl.value?.length === 2 ? 'other' : 'others'}})
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let genre of genres" [value]="genre">{{genre.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      <!--form class="example-form">
-        <mat-form-field class="example-full-width">
-          <input
-            matInput
-            placeholder="Genre"
-            aria-label="Genre"
-            [matAutocomplete]="auto"
-            [formControl]="genreControl"
-          />
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option
-              *ngFor="let genre of (filteredGenre | async)"
-              [value]="genre.name"
-            ><span>{{ genre.name }}</span>
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
-        <br />
-      </form-->
-      <!--
-        mat-expansion-panel class="categories">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              categories
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="mat-expansion-panel-body">
-            <mat-selection-list style="padding: 0px -10px 0px -10px;">
-              <mat-list-option *ngFor="let genre of genres">
-                {{genre.name}}
-              </mat-list-option>
-            </mat-selection-list>
-          </div>
-        </mat-expansion-panel
-      -->
+        <mat-select placeholder="Genres" [formControl]="genreControl" multiple>
+          <mat-select-trigger>
+            {{genreControl.value && genreControl.value.length>0 ? genreControl.value[0].name : ''}}
+            <span *ngIf="genreControl.value?.length > 1" class="example-additional-selection">
+              (+{{genreControl.value.length - 1}} {{genreControl.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let genre of genres" [value]="genre">{{genre.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
       <p>Année</p>
-      <!--input placeholder="Année" type="number" min="1895" max="2019" [(ngModel)]="searchQuery.year"/-->
-      <mat-slider 
-      [formControl]="minYear"
-      thumbLabel
-      tickInterval="1"
-      min="1895"
-      max="2019"></mat-slider>
-<<<<<<< HEAD
-=======
+      <mat-slider [formControl]="minYear" thumbLabel tickInterval="1" min="1895" max="2019"></mat-slider>
       <button mat-raised-button color="primary" (click)="search()" [disabled]="!searchField.value">Rechercher</button>
->>>>>>> b5731102a931b98fe867cfc50923d4411dfbbdaf
     </div>
-   
+
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

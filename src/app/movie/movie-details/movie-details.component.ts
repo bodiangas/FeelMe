@@ -109,4 +109,13 @@ export class MovieDetailsComponent implements OnInit {
   getPath(path: string): string {
     return this.tmdbService.getPath(path);
   }
+
+  isListPublic() {
+    return this.isListPublic;
+  }
+
+  updateList() {
+    // this.isListPublic = !this.isListPublic;
+    this.firebase.update(this.list, this.list.key);
+  }
 }
