@@ -1,16 +1,19 @@
 <div style="min-width: 100%; min-height: 100%">
-  <div *ngIf="movies">
-    <div class="search-header">
-      <h2> Résultat de la recherche </h2>
-      <button mat-raised-button color="primary" (click)="addAll()">
-        TOUT AJOUTER
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-    <div class="films">
-      <div *ngFor="let film of movies.results">
-        <app-movie [movie]="film" [add]="true"></app-movie>
+    <div>
+      <div class="search-header">
+        <h2> Résultat de la recherche </h2>
+        <button mat-raised-button color="primary" (click)="addAll()">
+          TOUT AJOUTER
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="films" *ngIf="movies">
+        <div *ngFor="let film of movies.results">
+          <app-movie [movie]="film" [add]="true"></app-movie>
+        </div>
+      </div>
+      <div class="films" *ngIf="!movies || movies.results.length === 0">
+          <p>Aucun film correspondant à la récherche</p>
       </div>
     </div>
   </div>
-</div>
