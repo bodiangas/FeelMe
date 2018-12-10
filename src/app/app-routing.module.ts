@@ -8,20 +8,19 @@ import { MovieDetailsComponent } from './movie/movie-details/movie-details.compo
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResearchComponent } from './research/research.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { TmdbResolver } from './tmdb.resolver';
+import { OtherListComponent } from './other-list/other-list.component';
 
 
 const appRoutes: Routes = [
   {
     path: '',
-    component: HomePageComponent
+    component: HomePageComponent,
+    resolve: { message: TmdbResolver }
   },
   {
-    path: 'movie/:id',
+    path: 'movie/:id/:oldPath',
     component: MovieDetailsComponent
-  },
-  {
-    path: 'movies',
-    component: MoviesListComponent
   },
   {
     path: 'list/:name',
@@ -42,6 +41,10 @@ const appRoutes: Routes = [
     component: ResearchComponent
   },
   {
+    path: 'others-list',
+    component: OtherListComponent
+  },
+  {
     path: 'not-found',
     component: PageNotFoundComponent
   },
@@ -55,12 +58,17 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
   declarations: [],
+  providers: [
+    TmdbResolver
+  ]
 })
 export class AppRoutingModule { }
-export const routingComponents = [AppComponent,
+export const routingComponents = [
+  AppComponent,
   MovieDetailsComponent,
   MoviesListComponent,
   UserComponent,
   HomePageComponent,
-  PageNotFoundComponent
+  PageNotFoundComponent,
+  OtherListComponent
 ];

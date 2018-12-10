@@ -11,7 +11,6 @@ export class ForgetPasswordComponent implements OnInit {
   email: string;
   constructor(
     private dialogRef: MatDialogRef<string>,
-    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data) {
       this.email = data;
     }

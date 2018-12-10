@@ -1,11 +1,17 @@
-  .conteneur {
+.conteneur {
     display: flex;
     justify-content: center;
     flex-direction: column;
   }
 
   .centerB {
+      text-align: center;
       align-self: center;
+      margin-top: auto;
+  }
+
+  div .center{
+      background-color: blue;
   }
   
   h1{
@@ -26,11 +32,4 @@
   
   .cancel{
       color: red;
-  }
-  
-mat-form-field{
-    display: inline-block;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-left: 0;
   }

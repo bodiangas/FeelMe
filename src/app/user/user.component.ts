@@ -3,9 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
-import { SigninChoiceComponent } from './signin-choice/signin-choice.component';
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { UserService } from '../services/user.service';
+import { AuthDialogComponent } from './auth-dialog/auth-dialog.component';
 
 @Component({
   selector: 'app-user',
@@ -40,26 +39,15 @@ export class UserComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  signin() {
-    const dialogRef = this.dialog.open(SigninChoiceComponent);
-    dialogRef.afterClosed().subscribe(result => {
+  auth() {
+    const dialogRef = this.dialog.open(AuthDialogComponent);
+    /* dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.userService.signinVia(result).then(() => {
           console.log('Sign up succes', this.isConnected);
         }).catch(error => this.handleError(error));
       }
-    });
-  }
-
-  login() {
-    const dialogRef = this.dialog.open(LoginDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.userService.loginVia(result).then(() => {
-          console.log('Log in succes', this.isConnected);
-        }).catch(error => this.handleError(error));
-      }
-    });
+    });*/
   }
 
   logout() {
@@ -67,7 +55,6 @@ export class UserComponent implements OnInit, OnDestroy {
     this._user = undefined;
     this.isConnected = false;
   }
-
 
   private handleError(error: Error) {
     console.error(error);

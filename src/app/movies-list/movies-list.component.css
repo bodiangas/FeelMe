@@ -1,38 +1,35 @@
-.films {
-    display: block; 
-    margin-left: 2%;
-    margin-top: 15px;
-}
-
 li {
-    display: inline-block; 
+  display: inline-block;
 }
 
 .list {
-    width: 100%;
-    display: inline-block;
+  width: 100%;
+  display: inline-block;
 }
 
 .list-header {
-    width: 95%;
-    margin-left: 2%;
-    overflow:hidden;
-    display: inline-flex;
-    border-bottom: #f0ecec 3px solid;
-    position: inherit;
-    margin-bottom: 25px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+.header-action {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
 
 div.cards {
-    margin-left: 2%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    overflow: auto;
-}
-
-button {
-    margin: 15px 10px 0px 0px;
-    position: absolute;
-    right: 0px;
+  margin-left: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  overflow: auto;
 }

@@ -1,0 +1,45 @@
+.dialog-box {
+  cursor: default;
+  width: 400px;
+  height: 600px;
+  background-color: #fff;
+  font-family: arial, sans-serif;
+  box-sizing: border-box;
+  border-radius: 7px;
+}
+
+header {
+  font-size: 1.25rem;
+  line-height: 2rem;
+  font-weight: 500;
+  margin: 0;
+  padding: 0 24px 9px;
+  border-bottom: 1px solid transparent;
+  // 
+  // padding: 18px 16px 18px 16px;
+  // color: rgba(0, 0, 0, .87);
+  font-size: 30px;
+
+  // font-family: arial,sans-serif;
+  background-color: violet;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .16);
+  height: 56px;
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+}
+
+.new-list {
+  border-top: 1px solid gray;
+  margin-bottom: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

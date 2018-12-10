@@ -1,28 +1,48 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
 import { FirebaseService, MovieList } from '../services/firebase.service';
 import { UserService } from '../services/user.service';
 import { User } from 'firebase';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { TmdbService } from '../tmdb.service';
+import { MovieGenre } from '../tmdb-data/Movie';
+import { SearchMovieQuery } from '../tmdb-data/searchMovie';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
-  styleUrls: ['./main-nav.component.css']
+  styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent implements OnInit, OnDestroy {
-  public searchText: string;
+
+  minYear: FormControl = new FormControl(1895);
+  searchField: FormControl = new FormControl('');
+
+  public searchQuery: SearchMovieQuery = {
+    // include_adult: false,
+    query: '',
+    language: 'fr',
+    // page: 1,
+    // primary_release_year: 2018,
+    // region: '',
+    // year: 2018,
+  };
+
+  genreControl = new FormControl();
+  // filteredGenre: Observable<MovieGenre[]>;
+  genres: MovieGenre[] = null;
   private userLists: MovieList[];
   public isConnected = false;
   private _user: User;
   private userSubscription = new Subscription();
   private firebaseSubscription = new Subscription();
   title;
+  advancedSearch = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -31,13 +51,28 @@ export class MainNavComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
-    private search: SearchService,
+    private searchService: SearchService,
     private firebase: FirebaseService,
     private userService: UserService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private tmdb: TmdbService
+  ) {
+    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').getGenres({language: 'fr'})
+      .then(e => this.genres = e.genres);
+    /*this.filteredGenre = this.genreControl.valueChanges
+    .pipe(startWith(''), map(genre => genre ? this._filterGenres(genre) : this.genres.slice()))*/
+  }
 
   ngOnInit() {
+    this.searchField.valueChanges.subscribe(e => {
+      this.search();
+    });
+    this.minYear.valueChanges.subscribe(e => {
+      this.search();
+    });
+    this.genreControl.valueChanges.subscribe(e => {
+      this.search();
+    });
     this.userSubscription = this.userService.userSubject.subscribe(user => {
       if (user) {
         this._user = user;
@@ -50,61 +85,32 @@ export class MainNavComponent implements OnInit, OnDestroy {
     });
   }
 
-  navigation() {
-    this.search.searchText = this.searchText;
-    this.router.navigateByUrl('/search');
-    this.search.emmitText();
+  /*private _filterGenres(matchValue: string): MovieGenre[] {
+    return this.genres.sort((a , b) => {
+      return a.name.toLowerCase().indexOf(matchValue);
+    });
+  }*/
+
+  search() {
+    console.log('searched');
+    if (this.searchField.value) {
+      console.log('really searched', this.searchQuery);
+      this.searchQuery.query = this.searchField.value;
+      this.router.navigateByUrl('/search');
+      if (this.genreControl.value !== null) {
+        this.searchService.search(this.searchQuery, this.genreControl.value.map(a => a.id), `${this.minYear.value}`);
+      } else {
+        this.searchService.search(this.searchQuery, [], `${this.minYear.value}`);
+      }
+    }
   }
 
   get lists() {
     return this.userLists;
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogCreateListComponent, {
-      width: '250px',
-      data: { name: this.title }
-    });
-
-    dialogRef.afterClosed().subscribe((result: string) => {
-      this.title = result;
-      this.firebase.createNewList(this._user.uid, {
-        name: this.title,
-        movies: []
-      });
-    });
-  }
-
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
     this.firebaseSubscription.unsubscribe();
-  }
-}
-
-// Dialog component for adding list
-@Component({
-  selector: 'app-dialog-create-list',
-  templateUrl: './dialog-create-list.html'
-})
-export class DialogCreateListComponent implements OnInit {
-  titleForm: FormGroup;
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogCreateListComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string }
-  ) {}
-
-  ngOnInit(): void {
-    this.titleForm = new FormGroup({
-      text: new FormControl('Test', Validators.minLength(2))
-    });
-  }
-
-  get text() {
-    return this.titleForm.get('text');
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
   }
 }

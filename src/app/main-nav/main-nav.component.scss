@@ -1,0 +1,74 @@
+.header {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+
+.app-name {
+  padding: 10px;
+}
+
+.flex_container {
+  display: inline-block;
+}
+
+.sidenav-container {
+  top: 60px;
+
+  .sidenav {
+    padding: 10px 10px 0px 10px;
+    margin-right: 40px;
+    width: 18%;
+    overflow-x: hidden;
+  }
+
+  .research {
+    width: 100%;
+  }  
+}
+mat-drawer-content {
+  overflow: hidden;
+}
+mat-sidenav-container {
+  position: fixed;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  min-width: 100%;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+
+.categories {
+  width: 50%;
+}
+
+div.mat-expansion-panel-body {
+  padding: 0;
+  color: pink;
+}
+
+.icone {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.image {
+  height: 60px;
+  width: 60px;
+  margin-right: 1%;
+  align-self: center;
+}
+
+a {
+  border-bottom: #f0ecec 1px solid;
+}
+
+button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

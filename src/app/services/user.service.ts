@@ -39,7 +39,22 @@ export class UserService {
     this.userSubject.next(this._user);
   }
 
-  signinVia(data: ConexionData) {
+  auth(data: ConexionData) {
+    if (data.via === 1) {
+      return this.googleLogin();
+    }
+    if (data.via === 2) {
+      return this.facebookLogin();
+    }
+    if (data.via === 3) {
+      return this.emailLogin(data.email, data.password);
+    }
+    if (data.via === 4) {
+      return this.emailSignUp(data.email, data.password);
+    }
+  }
+
+  /*signinVia(data: ConexionData) {
     if (data.via === 1) {
       return this.googleLogin();
     }
@@ -61,7 +76,7 @@ export class UserService {
     if (data.via === 3) {
       return this.emailLogin(data.email, data.password);
     }
-  }
+  }*/
 
   googleLogin() {
     const provider = new auth.GoogleAuthProvider();

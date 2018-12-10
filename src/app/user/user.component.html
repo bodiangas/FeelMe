@@ -6,15 +6,9 @@
 <div *ngIf="!isConnected">
   <ul class="mdc-list">
     <li class="mdc-list-item">
-      <a (click)="signin()">
+      <a (click)="auth()" style='color: blue'>
         <i class="material-icons md-18 icone">person</i>
-        S'inscrire
-      </a>
-    </li>
-    <li class="mdc-list-item">
-      <a (click)="login()">
-        <i class="material-icons md-18 icone">arrow_right</i>
-        Se connecter
+        S'identifier
       </a>
     </li>
   </ul>

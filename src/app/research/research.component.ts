@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { SearchMovieQuery, SearchMovieResponse } from '../tmdb-data/searchMovie';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SearchMovieResponse } from '../tmdb-data/searchMovie';
 import { SearchService } from '../search.service';
-import { TmdbService } from '../tmdb.service';
 import { Subscription } from 'rxjs';
+import { FirebaseService, MovieList } from '../services/firebase.service';
+import { DialogAddMovieComponent, DataSent } from '../movie/dialog-add-movie/dialog-add-movie.component';
+import { UserService } from '../services/user.service';
+import { User } from 'firebase';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-research',
@@ -10,33 +14,78 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./research.component.css']
 })
 
-export class ResearchComponent implements OnInit {
-  resMovies: SearchMovieResponse;
-  moviesQuery: SearchMovieQuery;
+export class ResearchComponent implements OnInit, OnDestroy {
+
+  movies: SearchMovieResponse;
   querySubscribtion: Subscription;
+  private userSubscription = new Subscription();
+  private firebaseSubscription = new Subscription();
+  private lists: MovieList[];
+  isConnected = false;
+  private _user: User;
 
 
-  constructor(private tmdb: TmdbService, private search: SearchService) {
-  }
+  constructor(private firebase: FirebaseService, private search: SearchService, private userService: UserService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.querySubscribtion = this.search.searchTextSubject.subscribe(moviesQuery => {
-      this.moviesQuery = {
-        query: moviesQuery
-      };
-      this.getSearch();
+    this.querySubscribtion = this.search.searchMoviesSubject.subscribe(movies => {
+      this.movies = movies;
     });
 
+    this.userSubscription = this.userService.userSubject.subscribe(
+      (user) => {
+        if (user) {
+          this._user = user;
+          this.isConnected = true;
+        }
+      }
+    );
+    this.userService.emmitUser();
+    this.firebaseSubscription = this.firebase.movieSubject.subscribe(m =>
+      this.lists = m);
+
   }
 
-  get movies() {
-    return this.resMovies;
+  ngOnDestroy() {
+    this.querySubscribtion.unsubscribe();
   }
 
-  getSearch(): void {
-    this.tmdb.init('544a04ed01152432f1d7ed782ed24b73').searchMovie(this.moviesQuery)
-      .then((res: SearchMovieResponse) => this.resMovies = res)
-      .catch(err => console.error('Error searching movies:', err));
+  addAll() {
+    const dialogRef = this.dialog.open(DialogAddMovieComponent, {
+      // width: '300px',
+      data: {
+        movieName: 'tout les films',
+        listsNames: this.lists.map(e => e.name)
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((data: DataSent) => {
+      if (data) {
+        if (data.newListName) {
+          this.createNewList(data.newListName);
+        } else {
+          if (data.list) {
+            this.addMovies(data.list);
+          }
+        }
+      }
+    });
+  }
+
+  private createNewList(listName) {
+    this.firebase.createNewList(this._user.uid, {
+      name: listName,
+      movies: this.movies.results,
+      info: {
+        date: new Date().toLocaleDateString('fr-FR', {timeZoneName: 'short'}),
+        status: false
+      }
+    });
+  }
+
+  private addMovies(listName: string) {
+    this.firebase.addMovies(this._user.uid, listName, this.movies.results);
   }
 
 }

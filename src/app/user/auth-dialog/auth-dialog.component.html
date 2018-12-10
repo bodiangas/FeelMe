@@ -1,0 +1,39 @@
+<h1 class="center" mat-dialog-title>{{title}}</h1>
+
+<mat-dialog-actions class="conteneur">
+  <div class="centerB">
+    <button mat-raised-button color="primary" (click)="save(1)">Via Google</button>
+    <button mat-raised-button color="primary" (click)="save(2)">Via Facebook</button>
+  </div>
+  <div *ngIf="loginEmail || signUpEmail" class="centerB">
+    <mat-dialog-content [formGroup]="emailForm">
+      <ul>
+        <li>
+          <mat-form-field>
+            <input matInput type="email" required placeholder="Email" formControlName="email">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input matInput type="password" required placeholder="Mot de passe" formControlName="password">
+          </mat-form-field>
+        </li>
+        <li *ngIf="loginEmail && attempted">
+          <button mat-button color="warn" (click)="forgotPassword()">Mot de passe oublié ?</button>
+        </li>
+        <li *ngIf="signUpEmail">
+          <mat-form-field>
+            <input matInput type="password" required placeholder="Confirmez le mot de passe" formControlName="confirmPassword">
+          </mat-form-field>
+        </li>
+        <div class="centerB">
+            <button mat-button color="warn" (click)="close()">{{cancelMessage}}</button>
+            <button mat-button color="primary" (click)="save(3)" [disabled]="emailForm.invalid">Valider</button>
+        </div>
+      </ul>
+    </mat-dialog-content>
+  </div>
+  <div *ngIf="!signUpEmail" class="centerB">
+    <button mat-button color="primary" (click)="signup()">Nouvel utilisateur?</button>
+  </div>
+</mat-dialog-actions>

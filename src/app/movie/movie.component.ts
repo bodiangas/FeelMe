@@ -1,16 +1,13 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { TmdbService } from '../tmdb.service';
-import { MovieResponse } from '../tmdb-data/Movie';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { FirebaseService, MovieList } from '../services/firebase.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase';
-
-export interface DialogData {
-  overview: string;
-  title: string;
-}
+import { DialogAddMovieComponent, DataSent } from './dialog-add-movie/dialog-add-movie.component';
+import { Router } from '@angular/router';
+import { MovieResult } from '../tmdb-data/searchMovie';
 
 @Component({
   selector: 'app-movie',
@@ -19,13 +16,14 @@ export interface DialogData {
 })
 export class MovieComponent implements OnInit {
 
-  @Input() movie: MovieResponse;
+  @Input() movie: MovieResult;
   @Input() add: boolean;
   @Input() listName?: string;
 
   posterUrl: string;
   value;
   truncatedOverview;
+  oldPath;
   private userSubscription = new Subscription();
   private firebaseSubscription = new Subscription();
   private lists: MovieList[];
@@ -33,8 +31,7 @@ export class MovieComponent implements OnInit {
   private _user: User;
 
   constructor(private tmdbservice: TmdbService, private firebase: FirebaseService,
-    private userService: UserService,
-    public dialog: MatDialog) { }
+    private userService: UserService, private router: Router, public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.userSubscription = this.userService.userSubject.subscribe(
@@ -50,9 +47,10 @@ export class MovieComponent implements OnInit {
       this.lists = m);
     this.firebase.emmitUserMoviesList();
 
-    this.value = this.movie.vote_average ? this.movie.vote_average * 10 : 0;
+    this.oldPath = this.router.url;
+    this.value = this.movie.vote_average ? this.movie.vote_average : 0;
     this.posterUrl = this.tmdbservice.getPath(this.movie.poster_path);
-    this.truncatedOverview = this.truncate(this.movie.overview, 130, '...');
+    this.truncatedOverview = this.truncate(this.movie.overview, 60, '...');
   }
 
   truncate(elem, limit, after) {
@@ -60,42 +58,59 @@ export class MovieComponent implements OnInit {
     return elem.trim().slice(0, limit) + (after ? after : '');
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogOverviewComponent, {
-      width: '300px',
-      data: { title: this.movie.title, overview: this.movie.overview }
+  openDialogAddMovie() {
+    const dialogRef = this.dialog.open(DialogAddMovieComponent, {
+      data: {
+        movieName: this.movie.title,
+        listsNames: this.lists.map(e => e.name)
+      }
     });
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe((data: DataSent) => {
+      if (data) {
+        if (data.newListName) {
+          this.createNewList(data.newListName);
+        } else {
+          if (data.list) {
+            this.addMovie(data.list);
+          }
+        }
+      }
     });
   }
 
-  addMovieDefault() {
-    const l = this.lists.length - 1;
-    const val = this.lists[l].name;
-    const idm = this.lists[l].movies.length;
-    this.firebase.addMovie(this._user.uid, val, idm, this.movie);
+  private createNewList(listName) {
+    this.firebase.createNewList(this._user.uid, {
+      name: listName,
+      movies: [this.movie],
+      info: {
+        date: new Date().toLocaleDateString('fr-FR', {timeZoneName: 'short'}),
+        status: false
+      }
+    });
+  }
+
+  private addMovie(listName: string) {
+    if (!this.firebase.movieExist(listName, this.movie)) {
+      this.firebase.addMovie(this._user.uid, listName, this.movie);
+      this.snackBar.open(`Le film a été ajouté avec succès !`, 'Fermer', {
+        duration: 4000,
+      });
+    } else {
+      this.snackBar.open(`Le film existe déja dans la liste !`, 'Fermer', {
+        duration: 4000,
+      });
+    }
   }
 
   deleteMovie() {
     const val = this.lists.find(m => m.name === this.listName).movies.findIndex(m => m === this.movie);
     this.firebase.deleteMovie(this._user.uid, this.listName, val);
+    this.router.navigateByUrl(this.oldPath);
   }
 
-}
-
-@Component({
-  selector: 'app-dialog-overview',
-  templateUrl: './dialog-overview.html',
-})
-export class DialogOverviewComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-  onNoClick() {
-    this.dialogRef.close();
+  get user() {
+    return this._user;
   }
 
 }
