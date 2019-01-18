@@ -24,6 +24,7 @@ export class MovieDetailsComponent implements OnInit {
   private firebaseSubscription = new Subscription();
   private _user: User;
   isConnected;
+
   lists;
 
   constructor(private tmdbService: TmdbService, private firebase: FirebaseService, private userService: UserService,
@@ -108,5 +109,14 @@ export class MovieDetailsComponent implements OnInit {
 
   getPath(path: string): string {
     return this.tmdbService.getPath(path);
+  }
+
+  isListPublic() {
+    return this.isListPublic;
+  }
+
+  updateList() {
+    // this.isListPublic = !this.isListPublic;
+    // this.firebase.update(this.list, this.list.key);
   }
 }

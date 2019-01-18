@@ -10,6 +10,7 @@ import { ResearchComponent } from './research/research.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { TmdbResolver } from './tmdb.resolver';
 import { OtherListComponent } from './other-list/other-list.component';
+import { ShareListComponent } from './share-list/share-list.component';
 
 
 const appRoutes: Routes = [
@@ -49,6 +50,11 @@ const appRoutes: Routes = [
     component: PageNotFoundComponent
   },
   {
+    path: 'shareList',
+    canActivate: [AuthGuardService],
+    component : ShareListComponent
+  },
+  {
     path: '**',
     redirectTo: 'not-found'
   },
@@ -70,5 +76,6 @@ export const routingComponents = [
   UserComponent,
   HomePageComponent,
   PageNotFoundComponent,
-  OtherListComponent
+  OtherListComponent,
+  ShareListComponent
 ];

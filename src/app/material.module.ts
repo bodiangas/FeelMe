@@ -19,6 +19,7 @@ import {
   MatSlideToggleModule,
   MatOptionModule,
   MatSelectModule,
+  MatDividerModule,
   MatTabsModule,
   MatSnackBarModule,
   // MatDialogRef,
@@ -54,6 +55,7 @@ import {
   exports: [
     MatAutocompleteModule,
     MatToolbarModule,
+    MatDividerModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,

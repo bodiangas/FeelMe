@@ -1,0 +1,55 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 10px;
+}
+
+* { box-sizing:border-box; }
+
+.container{ 
+  margin:30px auto 0; 
+  display:block; 
+  background:#FFF;
+  padding:10px 50px 50px;
+}
+
+/* Div parent. Is in relative
+in order to let us put the "Seach" label "inside" of the "input" tag*/
+.group{ 
+  position:relative;
+}
+
+input{
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:300px;
+  border:2px solid #6c2ece;
+  border-radius:5px;
+}
+
+input:focus { outline:none; }
+
+label {
+  font-family: "Roboto";
+  color:#999; 
+  font-size : 14px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:8px;
+  top:12px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* When the label is active */
+input:focus ~ label { 
+  background : #FFF;
+  top:-8px;
+  left: 8px;
+  font-size:14px;
+  color:#6c2ece;
+}
+

@@ -29,6 +29,7 @@ import { AuthDialogComponent } from './user/auth-dialog/auth-dialog.component';
 import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
 
 import { TmdbResolver } from './tmdb.resolver';
+import { ShareListComponent } from './share-list/share-list.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { TmdbResolver } from './tmdb.resolver';
     MovieComponent,
     DialogAddMovieComponent,
     ForgetPasswordComponent,
+    ShareListComponent,
     DialogRenameListComponent
   ],
   imports: [
